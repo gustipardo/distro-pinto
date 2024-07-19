@@ -1,0 +1,34 @@
+{
+  "name": "forum",
+  "version": "1.0.0",
+  "description": "Api server as a forum from Caelis Chaos",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "start:sqlite3-turso": "node --watch server-with-sqlite-turso.js",
+    "start:sqlite3-local": "node --watch server-with-sqlite-local.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gustipardo/forum.git"
+  },
+  "keywords": [
+    "forum"
+  ],
+  "author": "Gustavo Martin Alvarez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gustipardo/forum/issues"
+  },
+  "homepage": "https://github.com/gustipardo/forum#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "pg": "^8.12.0",
+    "sqlite3": "^5.1.7",
+    "zod": "^3.22.4"
+  }
+}

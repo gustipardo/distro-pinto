@@ -1,0 +1,26 @@
+{
+  "name": "distro-pinto",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces":[
+    "api",
+    "app"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build --workspaces==app",
+    "start:api-local": "npm run start:sqlite3-local --workspace=api",
+    "start:app": "npm run dev --workspace=app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1"
+  }
+}
