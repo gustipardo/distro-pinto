@@ -6,6 +6,9 @@
     "api",
     "app"
   ],
+  "engines": {
+    "npm": "10.2.4"
+  },
   "main": "index.js",
   "scripts": {
     "build": "npm run build --workspace=app",
