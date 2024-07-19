@@ -2,13 +2,13 @@
   "name": "distro-pinto",
   "version": "1.0.0",
   "private": true,
-  "workspaces":[
+  "workspaces": [
     "api",
     "app"
   ],
   "main": "index.js",
   "scripts": {
-    "build": "npm run build --workspaces==app",
+    "build": "npm run build --workspace=app",
     "start:api-local": "npm run start:sqlite3-local --workspace=api",
     "start:app": "npm run dev --workspace=app"
   },
