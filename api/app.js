@@ -12,7 +12,6 @@ export const createApp = ({ invoicesModel }) => {
   app.use(corsMiddleware());
   app.disable("x-powered-by");
 
-
   const db = new sqlite3.Database("database/distribuidora_dev.db", (err) => {
     if (err) {
       console.error("Error on open database:", err.message);
@@ -36,8 +35,6 @@ export const createApp = ({ invoicesModel }) => {
   });
 
   const PORT = process.env.PORT ?? 1234;
-
-
 
   app.listen(PORT, () => {
     console.log(`server listening on port http://localhost:${PORT}`);
