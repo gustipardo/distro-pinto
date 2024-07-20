@@ -9,7 +9,7 @@ function App() {
     async function fetchInvoices() {
       try {
         const response = await fetch(
-          `https://distro-pinto-production.up.railway.app/invoices`
+          `${import.meta.env.VITE_API_URL}/invoices`
         ); // Realiza la petición GET a http://localhost:1234/invoices
         if (!response.ok) {
           throw new Error("Error getting invoices");
