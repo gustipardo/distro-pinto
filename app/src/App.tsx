@@ -9,7 +9,7 @@ function App() {
     async function fetchInvoices() {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_URL}/invoices`
+          `https://distro-pinto-production.up.railway.app/invoices`
         ); // Realiza la petición GET a http://localhost:1234/invoices
         if (!response.ok) {
           throw new Error("Error getting invoices");
