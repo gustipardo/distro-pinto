@@ -3,7 +3,8 @@ import cors from "cors";
 // Configurars CORS desde fuera
 
 const ACCEPTED_ORIGINS = [
-  "http://localhost:5173"
+  "http://localhost:5173",
+  "https://distro-pinto-app.vercel.app/",
 ];
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
