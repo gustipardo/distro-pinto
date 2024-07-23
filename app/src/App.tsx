@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import InvoicesList from "./components/InvoicesList";
@@ -14,6 +14,7 @@ const App: React.FC = () => {
         <Route path="/invoices" element={<InvoicesList />} />
         <Route path="/add-invoice" element={<AddInvoice />} />
         <Route path="/placeholder" element={<Placeholder />} />
+        <Route path="/" element={<Navigate to="/invoices" />} />
       </Routes>
     </div>
   );
