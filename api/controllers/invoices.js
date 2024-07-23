@@ -6,8 +6,8 @@ export class InvoicesController {
 
   getInvoices = async (req, res) => {
     try {
-      const topics = await this.invoicesModel.getAllInvoices();
-      res.json(topics);
+      const invoices = await this.invoicesModel.getAllInvoices();
+      res.json(invoices);
     } catch (err) {
       console.log("Error getting invoices:", err.message);
       res.status(500).send("Error getting invoices");
