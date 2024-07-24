@@ -43,7 +43,7 @@ GROUP BY
 
 
 -- Factura 1: Saldo= 1000 - 500 - 500 -100 -100= -200
-INSERT INTO invoices (date, client, remit) VALUES ('2024-07-16', 'Client A', 1000.00);
+INSERT INTO invoices (date, client, amount) VALUES ('2024-07-16', 'Client A', 1000.00);
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (1, 500.00, 'mp_Gus');
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (1, 500.00, 'Cash');
 INSERT INTO credit_notes (invoice_id, amount) VALUES (1, 100.00);
@@ -52,22 +52,22 @@ INSERT INTO credit_notes (invoice_id, amount) VALUES (1, 100.00);
 
 MORE INSERTS:
 -- Factura 2: Sin pagos ni notas de crédito.  Saldo = 1500
-INSERT INTO invoices (date, client, remit) VALUES ('2024-07-17', 'Client B', 1500.00);
+INSERT INTO invoices (date, client, amount) VALUES ('2024-07-17', 'Client B', 1500.00);
 
 -- Factura 3: Pagos parciales y nota de crédito. Saldo = 2000 - 1000 - 500 - 300 = 200
-INSERT INTO invoices (date, client, remit) VALUES ('2024-07-18', 'Client C', 2000.00);
+INSERT INTO invoices (date, client, amount) VALUES ('2024-07-18', 'Client C', 2000.00);
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (3, 1000.00, 'mp_Vani');
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (3, 500.00, 'Cash');
 INSERT INTO credit_notes (invoice_id, amount) VALUES (3, 300.00);
 
 -- Factura 4: Todos pagos y notas de crédito aplicados. Saldo = 1200 - 600 - 600 - 0 = 0
-INSERT INTO invoices (date, client, remit) VALUES ('2024-07-19', 'Client D', 1200.00);
+INSERT INTO invoices (date, client, amount) VALUES ('2024-07-19', 'Client D', 1200.00);
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (4, 600.00, 'mp_Gus');
 INSERT INTO payments (invoice_id, amount, payment_type) VALUES (4, 600.00, 'Cash');
 INSERT INTO credit_notes (invoice_id, amount) VALUES (4, 0.00);
 
 -- Factura 5: Solo nota de crédito.Saldo = 800 - 100 = 700
-INSERT INTO invoices (date, client, remit) VALUES ('2024-07-20', 'Client E', 800.00);
+INSERT INTO invoices (date, client, amount) VALUES ('2024-07-20', 'Client E', 800.00);
 INSERT INTO credit_notes (invoice_id, amount) VALUES (5, 100.00);
 
 
