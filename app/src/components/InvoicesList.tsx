@@ -11,28 +11,31 @@ interface Invoice {
 const InvoicesList: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
-  useEffect(() => {
-    async function fetchInvoices() {
-      try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/invoices`);
-        if (!response.ok) {
-          throw new Error("Error getting invoices");
-        }
-        const data = await response.json();
-        setInvoices(data);
-      } catch (error) {
-        console.error(error);
+  async function fetchInvoices() {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/invoices`);
+      if (!response.ok) {
+        throw new Error("Error getting invoices");
       }
+      const data = await response.json();
+      setInvoices(data);
+    } catch (error) {
+      console.error(error);
     }
+    console.log(invoices);
+  }
 
+  useEffect(() => {
     fetchInvoices();
+    console.log(invoices);
   }, []);
 
   return (
     <div>
       <h1>Listado de Facturas</h1>
+      <button onClick={()=> fetchInvoices()}>Recargar</button>
       <ul>
-        {invoices.map((invoice) => (
+        {invoices[0] && invoices.map((invoice) => (
           <li key={invoice.id}>
             <p>ID: {invoice.id}</p>
             <p>Fecha: {invoice.date}</p>

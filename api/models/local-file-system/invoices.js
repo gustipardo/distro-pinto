@@ -10,9 +10,7 @@ export class invoicesModel {
   static async getAllInvoices() {
     try {
       const invoices = await db.execute("SELECT * FROM invoices");
-      console.log("data", invoices.rows);
-
-      return invoices;
+      return invoices.rows;
     } catch (err) {
       throw err;
     }
