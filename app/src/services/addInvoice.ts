@@ -3,7 +3,7 @@ export const addInvoice = async ({date, client, amount}: any) => {
 
   console.log(`date`, date, `client`, client, `amount`, amount);
   try {
-    const response = await fetch('http://localhost:1234/invoices', {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/invoices`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
