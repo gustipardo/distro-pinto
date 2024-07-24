@@ -1,6 +1,20 @@
 
-export const addInvoice = (data: any) => {
+export const addInvoice = async ({date, client, amount}: any) => {
 
-  console.log(`data`, data);
-};
+  console.log(`date`, date, `client`, client, `amount`, amount);
+  try {
+    const response = await fetch('http://localhost:1234/invoices', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({date, client, amount})
+    });
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+
+}
 

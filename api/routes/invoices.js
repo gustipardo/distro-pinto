@@ -7,5 +7,7 @@ export const createInvoicesRouter = ({ invoicesModel }) => {
 
   InvoicesRouter.get('/', invoicesController.getInvoices)
 
+  InvoicesRouter.post('/', invoicesController.addInvoice)
+
   return InvoicesRouter
 }

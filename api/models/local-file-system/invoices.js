@@ -15,4 +15,14 @@ export class invoicesModel {
       throw err;
     }
   }
+
+  static async addInvoice({ date, client, amount }) {
+    try {
+      const invoice = await db.execute({ sql: "INSERT INTO invoices (date, client, amount) VALUES (?, ?, ?)",
+      args: [date, client, amount] });
+      return invoice.rows;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

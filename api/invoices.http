@@ -1,0 +1,13 @@
+### GET /invoices
+GET http://localhost:1234/invoices
+Accept: application/json
+
+### Add invoice
+POST http://localhost:1234/invoices
+Content-Type: application/json
+
+{
+    "date": "2020-01-01",
+    "client": "John Doe",
+    "amount": 1000
+}

@@ -1,13 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import * as XLSX from "xlsx";
+import { addInvoice } from "../services/addInvoice";
 
 const AddInvoice: React.FC = () => {
   const [fileData, setFileData] = useState<any[]>([]);
-
-  useEffect(() => {
-
-    console.log(`fileData`, fileData[0]?.Fecha);
-  }, [fileData]);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -31,13 +27,24 @@ const AddInvoice: React.FC = () => {
     };
     reader.readAsArrayBuffer(file);
 
-    
+  };
+
+  const handleClick = () => {
+    if (!fileData.length) return;
+    fileData.forEach(async (row: any) => {
+      await addInvoice({
+        date: row.Fecha,
+        client: row.Cliente,
+        amount: row.Total,
+      });
+    });
   };
 
   return (
     <div>
       <h1>Upload and Process Excel File</h1>
       <input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
+      <button onClick={handleClick}>Enviar Facturas</button>
       <div>
         <h2>Data from Excel</h2>
         <table>
