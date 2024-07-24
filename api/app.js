@@ -13,8 +13,6 @@ export const createApp = ({ invoicesModel }) => {
   app.disable("x-powered-by");
 
   app.use("/invoices", createInvoicesRouter({ invoicesModel }));
-
-
   const PORT = process.env.PORT ?? 1234;
 
   app.listen(PORT, () => {
