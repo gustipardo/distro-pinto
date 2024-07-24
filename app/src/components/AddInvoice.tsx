@@ -45,6 +45,7 @@ const AddInvoice: React.FC = () => {
       <h1>Upload and Process Excel File</h1>
       <input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
       <button onClick={handleClick}>Enviar Facturas</button>
+      <button onClick={()=> {addInvoice({date: "14/06/2024", client: "Hola", amount: 153789.57})}}>Enviar Factura</button>
       <div>
         <h2>Data from Excel</h2>
         <table>
