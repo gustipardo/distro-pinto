@@ -1,15 +1,10 @@
-import { config } from "dotenv";
-// Aca tiene que ser SQLite3 Local o  puede ser tanto local como production?
-/* import {db} from "../../database/connection.js"; */
-import { db } from "../../database/connectionTurso.js";
- 
-config();
+import { db } from "../../database/connection.js";// Asegúrate de que este archivo sea el correcto para tu conexión local 
 
 export class invoicesModel {
   static async getAllInvoices() {
     try {
-      const invoices = await db.execute("SELECT * FROM invoices");
-      return invoices.rows;
+      const invoices = await db.allAsync("SELECT * FROM invoices");
+      return invoices;
     } catch (err) {
       throw err;
     }
@@ -17,9 +12,20 @@ export class invoicesModel {
 
   static async addInvoice({ date, client, amount }) {
     try {
-      const invoice = await db.execute({ sql: "INSERT INTO invoices (date, client, amount) VALUES (?, ?, ?)",
-      args: [date, client, amount] });
-      return invoice.rows;
+      const result = await new Promise((resolve, reject) => {
+        db.run(
+          "INSERT INTO invoices (date, client, amount) VALUES (?, ?, ?)",
+          [date, client, amount],
+          function (err) {
+            if (err) {
+              reject(err);
+            } else {
+              resolve({ id: this.lastID }); // `this.lastID` gives the ID of the inserted row
+            }
+          }
+        );
+      });
+      return result;
     } catch (err) {
       throw err;
     }
@@ -27,11 +33,8 @@ export class invoicesModel {
 
   static async getInvoicesByDate(date) {
     try {
-      const invoices = await db.execute({
-        sql: "SELECT * FROM invoices WHERE date = ?",
-        args: [date],
-      });
-      return invoices.rows;
+      const invoices = await db.allAsync("SELECT * FROM invoices WHERE date = ?", [date]);
+      return invoices;
     } catch (err) {
       throw err;
     }
