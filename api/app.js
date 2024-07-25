@@ -2,7 +2,6 @@ import express, { json } from "express";
 import { corsMiddleware } from "./middleware/cors.js";
 import { config } from "dotenv";
 import { createInvoicesRouter } from "./routes/invoices.js";
-import { db } from "./database/connection.js";
 
 config();
 

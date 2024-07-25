@@ -1,7 +1,4 @@
 import { config } from "dotenv";
-// Aca tiene que ser SQLite3 Local o  puede ser tanto local como production?
-// El metodo de db de sqlite3 local no es el mismo que el de Turso, por el momento solo uso turso
-/* import {db} from "../../database/connection.js"; */
 import { db } from "../../database/connectionTurso.js";
  
 config();

@@ -1,4 +1,4 @@
-import { db } from "../../database/connection.js";// Asegúrate de que este archivo sea el correcto para tu conexión local 
+import { db } from "../../database/connection.js";
 
 export class invoicesModel {
   static async getAllInvoices() {
