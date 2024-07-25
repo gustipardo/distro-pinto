@@ -10,8 +10,8 @@ interface Invoice {
 
 const InvoicesList: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [dateSelected, setDateSelected] = useState<string>("2024-07-16");
-
+/*   const [dateSelected, setDateSelected] = useState<string>("2024-07-16");
+ */
   async function fetchInvoices() {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/invoices`);
