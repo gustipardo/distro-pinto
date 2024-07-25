@@ -12,7 +12,7 @@
     "start:api-local": "npm run start:sqlite3-local --workspace=api",
     "start:api-turso": "npm run start:sqlite3-turso --workspace=api",
     "start:app": "npm run dev --workspace=app",
-    "start": "npm run start:api-local && npm run start:app"
+    "start": "npm run start:api-turso"
   },
   "keywords": [],
   "author": "",
