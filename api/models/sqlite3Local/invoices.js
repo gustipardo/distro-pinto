@@ -1,6 +1,7 @@
 import { db } from "../../database/connection.js";
 
 export class invoicesModel {
+
   static async getAllInvoices() {
     try {
       const invoices = await db.allAsync("SELECT * FROM invoices");
