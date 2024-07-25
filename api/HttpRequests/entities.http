@@ -1,0 +1,25 @@
+### GET /entities
+GET http://localhost:1234/entities
+Accept: application/json
+
+### POST /entities
+POST http://localhost:1234/entities
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "type": "customer"
+}
+
+### GET /entities/:id
+GET http://localhost:1234/entities/3
+Accept: application/json
+
+### PUT /entities/:id
+PUT http://localhost:1234/entities/5
+Content-Type: application/json
+
+{
+  "name": "GUs Doe",
+  "type": "supplier"
+}

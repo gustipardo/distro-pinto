@@ -1,7 +1,7 @@
 -- Crear tablas
 CREATE TABLE entities (
   id INTEGER PRIMARY KEY,
-  name VARCHAR NOT NULL,
+  name VARCHAR NOT NULL UNIQUE,
   type VARCHAR NOT NULL CHECK (type IN ('customer', 'supplier'))
 );
 
