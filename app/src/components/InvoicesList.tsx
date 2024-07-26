@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getInvoices } from "../services/getInvoices";
 
 interface Invoice {
   id: number;
@@ -10,33 +11,32 @@ interface Invoice {
 
 const InvoicesList: React.FC = () => {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-/*   const [dateSelected, setDateSelected] = useState<string>("2024-07-16");
- */
-  async function fetchInvoices() {
+  const [dateSelected, setDateSelected] = useState<string>(new Date().toISOString().split('T')[0]); // Default to today's date
+
+  const loadInvoices = async (date?: string) => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/invoices`);
-      if (!response.ok) {
-        throw new Error("Error getting invoices");
-      }
-      const data = await response.json();
+      const data = await getInvoices(date);
       setInvoices(data);
     } catch (error) {
-      console.error(error);
+      console.error("Error loading invoices:", error);
     }
-    console.log(invoices);
-  }
+  };
 
   useEffect(() => {
-    fetchInvoices();
-    console.log(invoices);
-  }, []);
+    loadInvoices(dateSelected);
+  }, [dateSelected]);
 
   return (
     <div>
       <h1>Listado de Facturas</h1>
-      <button onClick={()=> fetchInvoices()}>Recargar</button>
+      <input
+        type="date"
+        value={dateSelected}
+        onChange={(e) => setDateSelected(e.target.value)}
+      />
+      <button onClick={() => loadInvoices(dateSelected)}>Recargar</button>
       <ul>
-        {invoices[0] && invoices.map((invoice) => (
+        {invoices.map((invoice) => (
           <li key={invoice.id}>
             <p>ID: {invoice.id}</p>
             <p>Fecha: {invoice.date}</p>
@@ -51,4 +51,3 @@ const InvoicesList: React.FC = () => {
 }
 
 export default InvoicesList;
-    
