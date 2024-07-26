@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import InvoicesList from "./components/InvoicesList";
 import AddInvoice from "./components/AddInvoice";
 import Placeholder from "./components/Placeholder";
+import Home from "./components/Home";
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,7 @@ const App: React.FC = () => {
         <Route path="/invoices" element={<InvoicesList />} />
         <Route path="/add-invoice" element={<AddInvoice />} />
         <Route path="/placeholder" element={<Placeholder />} />
-        <Route path="/" element={<Navigate to="/invoices" />} />
+        <Route path="/" element={<Home />} />
       </Routes>
     </div>
   );
