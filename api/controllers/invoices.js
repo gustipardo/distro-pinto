@@ -5,15 +5,20 @@ export class InvoicesController {
   }
 
   getInvoices = async (req, res) => {
+    const { date } = req.query;
     try {
-      const invoices = await this.invoicesModel.getAllInvoices();
+      let invoices;
+      if (date) {
+        invoices = await this.invoicesModel.getInvoicesByDate(date);
+      } else {
+        invoices = await this.invoicesModel.getAllInvoices();
+      }
       res.json(invoices);
     } catch (err) {
       console.log("Error getting invoices:", err.message);
       res.status(500).send("Error getting invoices");
     }
   };
-
   addInvoice = async (req, res) => {
     try {
       const { date, client, amount } = req.body;

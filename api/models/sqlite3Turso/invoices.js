@@ -34,4 +34,13 @@ export class invoicesModel {
       throw err;
     }
   }
+
+  static async getInvoicesByDate(date) {
+    try {
+      const invoices = await db.execute("SELECT * FROM invoices WHERE date = ?", [date]);
+      return invoices;
+    } catch (err) {
+      throw err;
+    }
+  }
 }

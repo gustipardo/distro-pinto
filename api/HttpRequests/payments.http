@@ -1,9 +1,9 @@
-### GET /invoices
-GET http://localhost:1234/invoices
+### Get payments
+GET http://localhost:1234/payments
 Accept: application/json
 
-### GET Invoices by date
-GET http://localhost:1234/invoices?date=2024-06-26
+## GET payments by date
+GET http://localhost:1234/invoices?date=2024-07-16
 Accept: application/json
 
 ### Add invoice
@@ -15,3 +15,4 @@ Content-Type: application/json
     "client": "John Doe",
     "amount": 1000
 }
+
