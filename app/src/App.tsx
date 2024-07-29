@@ -12,8 +12,8 @@ const App: React.FC = () => {
     <div className="App">
       <Sidebar />
       <Routes>
-        <Route path="/invoices" element={<InvoicesList />} />
-        <Route path="/add-invoice" element={<AddInvoice />} />
+        <Route path="/facturas" element={<InvoicesList />} />
+        <Route path="/agregar-facturas" element={<AddInvoice />} />
         <Route path="/placeholder" element={<Placeholder />} />
         <Route path="/" element={<Home />} />
       </Routes>

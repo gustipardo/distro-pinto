@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ClipboardIcon, PlusIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon, AngleIcon } from '@radix-ui/react-icons';
 import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,22 +18,30 @@ export default function Sidebar() {
             <h2 className="text-2xl font-bold">Distro Pinto</h2>
           </div>
           <nav className="mt-5 flex-1 px-2 space-y-1">
-            <Button variant="ghost" className="w-full flex ">
-              <ClipboardIcon className="h-6 w-6 mr-3" />
-              Facturas
-            </Button>
-            <Button variant="ghost" className="w-full flex items-center">
-              <PlusIcon className="h-6 w-6 mr-3" />
-              Agregar facturas
-            </Button>
-            <Button variant="ghost" className="w-full flex items-center">
-              <MagnifyingGlassIcon className="h-6 w-6 mr-3" />
-              Consultar facturas
-            </Button>
-            <Button variant="ghost" className="w-full flex items-center">
-              <AngleIcon className="h-6 w-6 mr-3" />
-              Estadisticas
-            </Button>
+          <Link to="/facturas" className="no-underline text-white hover:no-underline">
+              <Button variant="ghost" className="w-full flex items-center">
+                <ClipboardIcon className="h-6 w-6 mr-3" />
+                Facturas
+              </Button>
+            </Link>
+            <Link to="/agregar-facturas" className="no-underline text-white hover:no-underline">
+              <Button variant="ghost" className="w-full flex items-center">
+                <PlusIcon className="h-6 w-6 mr-3" />
+                Agregar facturas
+              </Button>
+            </Link>
+            <Link to="/consultar-facturas" className="no-underline text-white hover:no-underline">
+              <Button variant="ghost" className="w-full flex items-center">
+                <MagnifyingGlassIcon className="h-6 w-6 mr-3" />
+                Consultar facturas
+              </Button>
+            </Link>
+            <Link to="/estadisticas" className="no-underline text-white hover:no-underline">
+              <Button variant="ghost" className="w-full flex items-center">
+                <AngleIcon className="h-6 w-6 mr-3" />
+                Estadisticas
+              </Button>
+            </Link>
             {/* Añadir más botones según sea necesario */}
           </nav>
         </div>

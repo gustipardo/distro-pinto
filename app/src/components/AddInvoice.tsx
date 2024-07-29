@@ -1,6 +1,18 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { addInvoice } from "../services/addInvoice";
+import { Input } from "@/components/ui/input";
+import { Button } from "./ui/button";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const AddInvoice: React.FC = () => {
   const [fileData, setFileData] = useState<any[]>([]);
@@ -18,7 +30,7 @@ const AddInvoice: React.FC = () => {
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
       // Remove the header row and process the data
-      const rows = jsonData.slice(3,-1).map((row: any) => ({
+      const rows = jsonData.slice(3, -1).map((row: any) => ({
         Fecha: row[3],
         Cliente: row[4],
         Total: row[5],
@@ -26,7 +38,6 @@ const AddInvoice: React.FC = () => {
       setFileData(rows);
     };
     reader.readAsArrayBuffer(file);
-
   };
 
   const handleClick = () => {
@@ -42,34 +53,43 @@ const AddInvoice: React.FC = () => {
 
   return (
     <div>
-      <h1>Upload and Process Excel File</h1>
-      <input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
-      <button onClick={handleClick}>Enviar Facturas</button>
-      <button onClick={()=> {addInvoice({date: "14/06/2024", client: "Hola", amount: 153789.57})}}>Enviar Factura</button>
+      <h1>Agregar Facturas</h1>
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
+        <Button onClick={handleClick}>Enviar Facturas</Button>
+      </div>
       <div>
-        <h2>Data from Excel</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Fecha</th>
-              <th>Cliente</th>
-              <th>TOTAL</th>
-            </tr>
-          </thead>
-          <tbody>
+        <h2>Datos del excel</h2>
+        <Table>
+          <TableCaption>Datos importados desde el archivo Excel.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[150px]">Fecha</TableHead>
+              <TableHead className="w-[150px]">Cliente</TableHead>
+              <TableHead className="text-right">Total</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {fileData.map((row, index) => (
-              <tr key={index}>
-                <td>{row.Fecha}</td>
-                <td>{row.Cliente}</td>
-                <td>{row.Total}</td>
-              </tr>
+              <TableRow key={index}>
+                <TableCell>{row.Fecha}</TableCell>
+                <TableCell>{row.Cliente}</TableCell>
+                <TableCell className="text-right">{row.Total}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={2}>Total</TableCell>
+              <TableCell className="text-right">
+                {/* Puedes agregar una suma total aquí si lo deseas */}
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
       </div>
     </div>
   );
 };
-
 
 export default AddInvoice;

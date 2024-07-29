@@ -6,7 +6,22 @@ config();
 export class invoicesModel {
   static async getAllInvoices() {
     try {
-      const invoices = await db.execute("SELECT * FROM invoices");
+      const query = `
+        SELECT
+          i.id AS "id",
+          i.date AS "date",
+          e.name AS "client",
+          i.total AS "amount",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'cash' THEN p.amount ELSE 0 END), 0) AS "cash",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'mp_vani' THEN p.amount ELSE 0 END), 0) AS "mp_vani",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'mp_gus' THEN p.amount ELSE 0 END), 0) AS "mp_gus"
+        FROM invoices i
+        JOIN entities e ON i.entity_id = e.id
+        LEFT JOIN payments p ON i.id = p.invoice_id
+        GROUP BY i.id, i.date, e.name, i.total
+        ORDER BY i.date, i.id;
+      `;
+      const invoices = await db.execute(query);
       return invoices.rows;
     } catch (err) {
       throw err;
@@ -35,10 +50,27 @@ export class invoicesModel {
     }
   }
 
+
   static async getInvoicesByDate(date) {
     try {
-      const invoices = await db.execute("SELECT * FROM invoices WHERE date = ?", [date]);
-      return invoices;
+      const query = `
+        SELECT
+          i.id AS "id",
+          i.date AS "date",
+          e.name AS "client",
+          i.total AS "amount",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'cash' THEN p.amount ELSE 0 END), 0) AS "cash",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'mp_vani' THEN p.amount ELSE 0 END), 0) AS "mp_vani",
+          COALESCE(SUM(CASE WHEN p.payment_method = 'mp_gus' THEN p.amount ELSE 0 END), 0) AS "mp_gus"
+        FROM invoices i
+        JOIN entities e ON i.entity_id = e.id
+        LEFT JOIN payments p ON i.id = p.invoice_id
+        WHERE i.date = ?
+        GROUP BY i.id, i.date, e.name, i.total
+        ORDER BY i.date, i.id;
+      `;
+      const invoices = await db.execute(query, [date]);
+      return invoices.rows;
     } catch (err) {
       throw err;
     }

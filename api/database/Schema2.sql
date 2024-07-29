@@ -68,3 +68,18 @@ INSERT INTO payments (id, invoice_id, date, amount, type, payment_method) VALUES
 (5, 5, '2024-07-26', 50000, 'income', 'cash'),  -- Pago parcial en efectivo
 (6, 5, '2024-07-26', 50000, 'income', 'mp_vani');  -- Segundo pago parcial que completa el total
 
+
+
+SELECT
+  i.id AS "ID",
+  i.date AS "Fecha",
+  e.name AS "Cliente",
+  i.total AS "Monto",
+  COALESCE(SUM(CASE WHEN p.payment_method = 'cash' THEN p.amount ELSE 0 END), 0) AS "Pagado en Efectivo",
+  COALESCE(SUM(CASE WHEN p.payment_method = 'mp_vani' THEN p.amount ELSE 0 END), 0) AS "Pagado en MP Vani",
+  COALESCE(SUM(CASE WHEN p.payment_method = 'mp_gus' THEN p.amount ELSE 0 END), 0) AS "Pagado en MP Gus"
+FROM invoices i
+JOIN entities e ON i.entity_id = e.id
+LEFT JOIN payments p ON i.id = p.invoice_id
+GROUP BY i.id, i.date, e.name, i.total
+ORDER BY i.date, i.id;
