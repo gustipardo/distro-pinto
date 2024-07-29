@@ -37,7 +37,7 @@ export default function Sidebar() {
           </nav>
         </div>
       </div>
-      <Button variant="ghost" onClick={toggleSidebar} className="fixed top-0 right-0 m-4 z-50">
+      <Button variant="outline" onClick={toggleSidebar} className="fixed top-0 right-0 m-4 z-50">
         {isOpen ? <Cross1Icon className="h-6 w-6" /> : <HamburgerMenuIcon className="h-6 w-6" />}
       </Button>
       <div className="flex-1">
