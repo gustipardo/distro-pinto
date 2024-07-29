@@ -52,10 +52,10 @@ const AddInvoice: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Agregar Facturas</h1>
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Input type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Agregar Facturas</h1>
+      <div className="flex items-center gap-4 mb-6">
+        <Input className="w-fit" type="file" accept=".xls,.xlsx" onChange={handleFileUpload} />
         <Button onClick={handleClick}>Enviar Facturas</Button>
       </div>
       <div>
