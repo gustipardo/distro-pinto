@@ -40,19 +40,6 @@ export class invoicesModel {
 
   static async getInvoicesByDate(date) {
     try {
-      const invoices = await db.execute({
-        sql: "SELECT * FROM invoices WHERE date = ?",
-        args: [date],
-      });
-      return invoices.rows;
-    } catch (err) {
-      throw err;
-    }
-  }
-
-
-  static async getInvoicesByDate(date) {
-    try {
       const query = `
         SELECT
           i.id AS "id",
@@ -69,7 +56,7 @@ export class invoicesModel {
         GROUP BY i.id, i.date, e.name, i.total
         ORDER BY i.date, i.id;
       `;
-      const invoices = await db.execute(query, [date]);
+      const invoices = await db.execute({ sql: query, args: [date] });
       return invoices.rows;
     } catch (err) {
       throw err;
