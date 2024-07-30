@@ -39,6 +39,14 @@ export class entitiesModel {
           throw err;
         }
       }
-
+    
+    static async getAllCustomers() {
+        try {
+            const entities = await db.execute("SELECT * FROM entities WHERE type = 'customer'");
+            return entities.rows;
+        } catch (err) {
+            throw err;
+        }
+    }
 
 }

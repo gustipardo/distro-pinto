@@ -3,6 +3,8 @@ import * as XLSX from "xlsx";
 import { addInvoice } from "../services/addInvoice";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
+import { PlusIcon } from "@radix-ui/react-icons";
+
 import {
   Table,
   TableBody,
@@ -13,9 +15,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { SelectClient } from "./SelectClient";
+import { CalendarPicker } from "./CalendarPicker";
 
 const AddInvoice: React.FC = () => {
   const [fileData, setFileData] = useState<any[]>([]);
+  const [additionalRows, setAdditionalRows] = useState<number[]>([]); // State to store additional rows
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -51,6 +56,10 @@ const AddInvoice: React.FC = () => {
     });
   };
 
+  const handleAddRow = () => {
+    setAdditionalRows([...additionalRows, additionalRows.length]); // Add a new row
+  };
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Agregar Facturas</h1>
@@ -77,6 +86,26 @@ const AddInvoice: React.FC = () => {
                 <TableCell className="text-right">{row.Total}</TableCell>
               </TableRow>
             ))}
+            {additionalRows.map(( index) => (
+              <TableRow key={index}>
+                <TableCell>
+                  <CalendarPicker />
+                </TableCell>
+                <TableCell>
+                  <SelectClient />
+                </TableCell>
+                <TableCell>
+                  <Input placeholder="Total" type="number" min={0}></Input>
+                </TableCell>
+              </TableRow>
+            ))}
+            <TableRow>
+              <TableCell>
+                <Button variant="outline" size="icon" onClick={handleAddRow}>
+                  <PlusIcon/>
+                </Button>
+              </TableCell>
+            </TableRow>
           </TableBody>
           <TableFooter>
             <TableRow>

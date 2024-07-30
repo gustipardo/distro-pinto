@@ -1,9 +1,11 @@
-import React from "react";
+import React from "react";import { SelectClient } from "./SelectClient";
+
 
 const Placeholder: React.FC = () => {
  
   return (
-    <div>a
+    <div>
+      <SelectClient />
     </div>
   );
 };

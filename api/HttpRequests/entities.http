@@ -23,3 +23,7 @@ Content-Type: application/json
   "name": "GUs Doe",
   "type": "supplier"
 }
+
+### GET All Customers
+GET http://localhost:1234/entities/customers
+Accept: application/json    

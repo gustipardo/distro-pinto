@@ -47,6 +47,15 @@ export class EntitiesController {
         res.status(500).send("Error updating entity by id");
       }
     }
-  
+
+    getAllCustomers = async (req, res) => {
+      try {
+        const customers = await this.entitiesModel.getAllCustomers();
+        res.json(customers);
+      } catch (err) {
+        console.log("Error getting customers:", err.message);
+        res.status(500).send("Error getting customers");
+      }
+    }
   }
   
