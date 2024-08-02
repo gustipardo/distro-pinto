@@ -77,6 +77,7 @@ export class invoicesModel {
       const query = `
               SELECT
                 i.id AS invoice_id,
+                i.date AS invoice_date,
                 e.name AS supplier_name,
                 ROUND(i.total, 2) AS invoice_total,
                 ROUND(COALESCE(SUM(p.amount), 0), 2) AS total_paid,

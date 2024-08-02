@@ -99,3 +99,18 @@ LEFT JOIN payments p ON i.id = p.invoice_id
 WHERE e.type = 'supplier' AND i.status = 'pending'
 GROUP BY i.id, e.name, i.total
 HAVING remaining_amount > 0;
+
+
+
+SELECT
+  i.date AS invoice_date,
+  e.name AS supplier_name,
+  ROUND(i.total, 2) AS invoice_total,
+  ROUND(COALESCE(SUM(p.amount), 0), 2) AS total_paid,
+  ROUND((i.total - COALESCE(SUM(p.amount), 0)), 2) AS remaining_amount
+FROM invoices i
+JOIN entities e ON i.entity_id = e.id
+LEFT JOIN payments p ON i.id = p.invoice_id
+WHERE e.type = 'supplier' AND i.status = 'pending'
+GROUP BY i.id, e.name, i.total
+HAVING remaining_amount > 0;

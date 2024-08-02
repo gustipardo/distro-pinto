@@ -12,6 +12,7 @@ export interface InvoiceAndPayments {
 
 export interface PendingInvoiceFromSupplier {
     invoice_id: number;
+    invoice_date: string;
     supplier_name: string;
     invoice_total: string;
     total_paid: number;

@@ -52,7 +52,7 @@ export const Suppliers = () => {
           <TableCaption>Facturas pendientes de pago para proveedores.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[150px]">ID</TableHead>
+              <TableHead className="w-[150px]">Fecha</TableHead>
               <TableHead className="w-[150px]">Proveedor</TableHead>
               <TableHead className="text-left">Total</TableHead>
               <TableHead className="text-left">Total Pagado</TableHead>
@@ -62,7 +62,7 @@ export const Suppliers = () => {
           <TableBody>
             {PendingInvoicesSuppliers.map((row, index) => (
               <TableRow key={index} className="text-left">
-                <TableCell>{row.invoice_id}</TableCell>
+                <TableCell>{row.invoice_date}</TableCell>
                 <TableCell>{row.supplier_name}</TableCell>
                 <TableCell className="text-left">$ {row.invoice_total}</TableCell>
                 <TableCell className="text-left">$ {row.total_paid}</TableCell>
