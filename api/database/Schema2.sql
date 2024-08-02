@@ -7,11 +7,11 @@ CREATE TABLE entities (
 
 CREATE TABLE invoices (
   id INTEGER PRIMARY KEY,
-  entity_id INTEGER,
+  entity_id,
   date DATE,
   total DECIMAL(10, 2),
   credit_note DECIMAL(10, 2) DEFAULT 0,
-  status VARCHAR,
+  status VARCHAR DEFAULT 'pending',
   FOREIGN KEY (entity_id) REFERENCES entities(id)
 );
 
@@ -83,3 +83,19 @@ JOIN entities e ON i.entity_id = e.id
 LEFT JOIN payments p ON i.id = p.invoice_id
 GROUP BY i.id, i.date, e.name, i.total
 ORDER BY i.date, i.id;
+
+
+
+-- Facturas pendientes:
+SELECT
+  i.id AS invoice_id,
+  e.name AS supplier_name,
+  i.total AS invoice_total,
+  COALESCE(SUM(p.amount), 0) AS total_paid,
+  (i.total - COALESCE(SUM(p.amount), 0)) AS remaining_amount
+FROM invoices i
+JOIN entities e ON i.entity_id = e.id
+LEFT JOIN payments p ON i.id = p.invoice_id
+WHERE e.type = 'supplier' AND i.status = 'pending'
+GROUP BY i.id, e.name, i.total
+HAVING remaining_amount > 0;

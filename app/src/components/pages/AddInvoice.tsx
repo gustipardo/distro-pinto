@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import { addInvoice } from "../services/addInvoice";
+import { addInvoice } from "../../services/addInvoice";
 import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { PlusIcon } from "@radix-ui/react-icons";
-
 import {
   Table,
   TableBody,
@@ -15,10 +14,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { SelectClient } from "./SelectClient";
-import { CalendarPicker } from "./CalendarPicker";
+import { SelectEntities } from "../reusable/SelectEntities";
+import { CalendarPicker } from "../reusable/CalendarPicker";
 
-const AddInvoice: React.FC = () => {
+
+export const AddInvoice= () => {
   const [fileData, setFileData] = useState<any[]>([]);
   const [additionalRows, setAdditionalRows] = useState<number[]>([]); // State to store additional rows
 
@@ -60,6 +60,16 @@ const AddInvoice: React.FC = () => {
     setAdditionalRows([...additionalRows, additionalRows.length]); // Add a new row
   };
 
+  const handleEntitySelect = (selectedEntity: { id: string; name: string }) => {
+    // Lógica para manejar la entidad seleccionada
+    console.log("Entidad seleccionada:", selectedEntity);
+  };
+
+  const handleDateChange = (date: Date | undefined) => {
+    console.log("Fecha seleccionada:", date);
+  };
+
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Agregar Facturas</h1>
@@ -89,10 +99,10 @@ const AddInvoice: React.FC = () => {
             {additionalRows.map(( index) => (
               <TableRow key={index}>
                 <TableCell>
-                  <CalendarPicker />
+                  <CalendarPicker onDateChange={handleDateChange} />
                 </TableCell>
                 <TableCell>
-                  <SelectClient />
+                  <SelectEntities onSelectEntity={handleEntitySelect} />
                 </TableCell>
                 <TableCell>
                   <Input placeholder="Total" type="number" min={0}></Input>
@@ -120,5 +130,3 @@ const AddInvoice: React.FC = () => {
     </div>
   );
 };
-
-export default AddInvoice;

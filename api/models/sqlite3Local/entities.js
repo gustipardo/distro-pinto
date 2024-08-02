@@ -38,9 +38,18 @@ export class entitiesModel {
         }
       }
 
-      static async getAllCustomers() {
+    static async getAllCustomers() {
         try {
             const entities = await db.allAsync("SELECT * FROM entities WHERE type = 'customer'");
+            return entities;
+        } catch (err) {
+            throw err;
+        }
+    }
+
+    static async getAllSuppliers() {
+        try {
+            const entities = await db.allAsync("SELECT * FROM entities WHERE type = 'supplier'");
             return entities;
         } catch (err) {
             throw err;

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { ClipboardIcon, PlusIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon, AngleIcon } from '@radix-ui/react-icons';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
+import { CookieIcon } from 'lucide-react';
 
-export default function Sidebar() {
+export const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -42,6 +43,13 @@ export default function Sidebar() {
                 Estadisticas
               </Button>
             </Link>
+            <Link to="/proveedores" className="no-underline text-white hover:no-underline">
+              <Button variant="ghost" className="w-full flex items-center">
+                <CookieIcon className="h-6 w-6 mr-3" />
+                Proveedores
+              </Button>
+            </Link>
+
             {/* Añadir más botones según sea necesario */}
           </nav>
         </div>

@@ -49,4 +49,12 @@ export class entitiesModel {
         }
     }
 
+    static async getAllSuppliers() {
+        try {
+            const entities = await db.execute("SELECT * FROM entities WHERE type = 'supplier'");
+            return entities.rows;
+        } catch (err) {
+            throw err;
+        }
+    }
 }

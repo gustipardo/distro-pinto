@@ -26,12 +26,12 @@ export class invoicesModel {
     }
   }
 
-  static async addInvoice({ date, client, amount }) {
+  static async addInvoice({ date, entity_id, total }) {
     try {
       const result = await new Promise((resolve, reject) => {
         db.run(
-          "INSERT INTO invoices (date, client, amount) VALUES (?, ?, ?)",
-          [date, client, amount],
+          "INSERT INTO invoices (date, entity_id, total) VALUES (?, ?, ?)",
+          [date, entity_id, total],
           function (err) {
             if (err) {
               reject(err);
@@ -66,6 +66,30 @@ export class invoicesModel {
         ORDER BY i.date, i.id;
       `;
       const invoices = await db.allAsync(query, [date]);
+      return invoices;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  static async getPendingInvoicesFromSuppliers() {
+    try {
+      const query = `
+              SELECT
+                i.id AS invoice_id,
+                e.name AS supplier_name,
+                ROUND(i.total, 2) AS invoice_total,
+                ROUND(COALESCE(SUM(p.amount), 0), 2) AS total_paid,
+                ROUND((i.total - COALESCE(SUM(p.amount), 0)), 2) AS remaining_amount
+              FROM invoices i
+              JOIN entities e ON i.entity_id = e.id
+              LEFT JOIN payments p ON i.id = p.invoice_id
+              WHERE e.type = 'supplier' AND i.status = 'pending'
+              GROUP BY i.id, e.name, i.total
+              HAVING remaining_amount > 0;
+
+      `;
+      const invoices = await db.allAsync(query);
       return invoices;
     } catch (err) {
       throw err;

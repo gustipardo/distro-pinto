@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { getInvoices } from "../services/getInvoices";
-import { Button } from "./ui/button";
+import { useEffect, useState } from "react";
+import { getInvoices } from "@/services/getInvoices";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { CalendarIcon } from "@radix-ui/react-icons";
@@ -14,20 +14,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { InvoiceAndPayments } from "@/commons/Interfaces";
 
-interface Invoice {
-  id: number;
-  date: string;
-  client: string;
-  amount: number;
-  cash: number;
-  mp_vani: number;
-  mp_gus: number;
-  created_at: string;
-}
-
-const InvoicesList: React.FC = () => {
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
+export const InvoicesList = () => {
+  const [invoices, setInvoices] = useState<InvoiceAndPayments[]>([]);
   const [dateSelected, setDateSelected] = useState<Date | undefined>(new Date()); // Default to today's date
 
   const loadInvoices = async (date?: string) => {

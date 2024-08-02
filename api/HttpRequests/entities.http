@@ -27,3 +27,7 @@ Content-Type: application/json
 ### GET All Customers
 GET http://localhost:1234/entities/customers
 Accept: application/json    
+
+### GET All Suppliers
+GET http://localhost:1234/entities/suppliers
+Accept: application/json

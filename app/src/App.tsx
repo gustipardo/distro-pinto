@@ -1,13 +1,13 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Sidebar from "./components/Sidebar";
-import InvoicesList from "./components/InvoicesList";
-import AddInvoice from "./components/AddInvoice";
-import Placeholder from "./components/Placeholder";
+import {Sidebar} from "./components/Sidebar";
+import InvoicesList from "./components/pages/InvoicesList";
+import {AddInvoice} from "./components/pages/AddInvoice";
+import {Placeholder} from "./components/Placeholder";
 import Home from "./components/Home";
+import { Suppliers } from "./components/pages/Suppliers";
 
-const App: React.FC = () => {
+export const App = () => {
   return (
     <div className="App">
       <Sidebar />
@@ -16,6 +16,7 @@ const App: React.FC = () => {
         <Route path="/agregar-facturas" element={<AddInvoice />} />
         <Route path="/placeholder" element={<Placeholder />} />
         <Route path="/" element={<Home />} />
+        <Route path="/proveedores" element={<Suppliers />} />
       </Routes>
     </div>
   );

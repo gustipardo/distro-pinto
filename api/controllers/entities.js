@@ -57,5 +57,15 @@ export class EntitiesController {
         res.status(500).send("Error getting customers");
       }
     }
+
+    getAllSuppliers = async (req, res) => {
+      try {
+        const suppliers = await this.entitiesModel.getAllSuppliers();
+        res.json(suppliers);
+      } catch (err) {
+        console.log("Error getting suppliers:", err.message);
+        res.status(500).send("Error getting suppliers");
+      }
+    }
   }
   

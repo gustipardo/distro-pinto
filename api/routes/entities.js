@@ -9,12 +9,13 @@ export const createEntitiesRouter = ({ entitiesModel }) => {
 
   EntitiesRouter.get('/customers', entitiesController.getAllCustomers)
 
+  EntitiesRouter.get('/suppliers', entitiesController.getAllSuppliers)
+
   EntitiesRouter.post('/', entitiesController.addEntity)
 
   EntitiesRouter.get('/:id', entitiesController.getEntityById)
 
   EntitiesRouter.put('/:id', entitiesController.updateEntityById)
-
 
   return EntitiesRouter
 }

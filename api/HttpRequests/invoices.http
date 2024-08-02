@@ -11,7 +11,11 @@ POST http://localhost:1234/invoices
 Content-Type: application/json
 
 {
-    "date": "2020-01-01",
-    "client": "John Doe",
-    "amount": 1000
+    "date": "2020-12-01",
+    "entity_id": 1,
+    "total": 1000
 }
+
+### Get Pending Invoices from suppliers
+GET http://localhost:1234/invoices/pending-suppliers
+Accept: application/json

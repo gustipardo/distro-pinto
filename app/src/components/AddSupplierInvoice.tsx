@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,8 +14,19 @@ import { Input } from "@/components/ui/input";
 import { addSupplierInvoiceSchemaResolver } from "@/commons/Schemas";
 import { SelectEntities } from "./reusable/SelectEntities";
 import { CalendarPicker } from "./reusable/CalendarPicker";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { addInvoice } from "@/services/addInvoice";
 
-export const Placeholder = () => {
+interface AddSupplierInvoiceProps {
+  onInvoiceAdded: () => void;
+}
+
+export const AddSupplierInvoice = ({ onInvoiceAdded }: AddSupplierInvoiceProps) => {
+  const [open, setOpen] = useState(false);
   const form = useForm({
     resolver: addSupplierInvoiceSchemaResolver,
     defaultValues: {
@@ -32,8 +43,16 @@ export const Placeholder = () => {
     form.setValue("date", formattedDate);
   }, [form]);
 
-  const onSubmit = (values: { date: string; total: string; entity_id: string }) => {
+  const onSubmit = async (values: { date: string; total: string; entity_id: string }) => {
     console.log("Formulario enviado con valores:", values);
+    const response = await addInvoice({date: values.date, entity_id: values.entity_id, total: values.total});
+    console.log("Respuesta de la API:", response);
+    setOpen(false);
+    console.log("response", response)
+    if (response) {
+      console.log("Se agregó la factura con éxito");
+      onInvoiceAdded(); 
+    }
   };
 
   const handleEntitySelect = (selectedEntity: { id: string; name: string }) => {
@@ -47,8 +66,14 @@ export const Placeholder = () => {
   };
 
   return (
+
+    <Popover open={open} onOpenChange={setOpen}>
+    <PopoverTrigger asChild>
+        <Button >Agregar facturas de proveedores</Button>
+      </PopoverTrigger>
+    <PopoverContent>
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
         <FormField
           control={form.control}
           name="date"
@@ -85,12 +110,16 @@ export const Placeholder = () => {
                 <Input type="number" placeholder="Total" {...field} />
               </FormControl>
               <FormMessage />
-              <FormDescription>Agregar facturas de proveedores</FormDescription>
-            </FormItem>
+{/*               <FormDescription>Agregar facturas de proveedores</FormDescription>
+ */}            </FormItem>
           )}
         />
-        <Button type="submit">Agregar</Button>
+        <Button className="w-full" type="submit">Agregar</Button>
       </form>
     </Form>
+    </PopoverContent>
+    </Popover>
+
+
   );
 };
