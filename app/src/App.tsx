@@ -15,7 +15,7 @@ export const App = () => {
         <Route path="/facturas" element={<InvoicesList />} />
         <Route path="/agregar-facturas" element={<AddInvoice />} />
         <Route path="/placeholder" element={<Placeholder />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Suppliers />} />
         <Route path="/proveedores" element={<Suppliers />} />
       </Routes>
     </div>
