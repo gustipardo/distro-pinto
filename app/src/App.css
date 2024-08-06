@@ -1,10 +1,9 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 0px;
   text-align: center;
 }
-
 
 .App {
   text-align: center;
@@ -24,4 +23,14 @@ li {
 
 li p {
   margin: 5px 0;
+}
+
+body {
+  padding-inline: 0; /* Padding 0 en móviles */
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-inline: 4rem; /* Padding horizontal de 4rem en pantallas grandes */
+  }
 }

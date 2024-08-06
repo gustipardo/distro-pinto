@@ -1,5 +1,11 @@
+interface AddInvoiceParams {
+  date: string;
+  entity_id: number;
+  total: number;
+}
 
-export const addInvoice = async ({date, entity_id, total}: any) => {
+
+export const addInvoice = async ({date, entity_id, total}: AddInvoiceParams) => {
 
   console.log(`Fetching: date`, date, `client`, entity_id, `total`, total);
   try {

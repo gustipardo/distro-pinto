@@ -24,3 +24,19 @@ const addSupplierInvoiceSchema = z.object({
 });
 
 export const addSupplierInvoiceSchemaResolver = zodResolver(addSupplierInvoiceSchema);
+
+const addSupplierPaymentSchema = z.object({
+  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
+    message: "La fecha debe ser válida",
+  }),
+  amount: z.string()
+    .transform((val) => parseFloat(val))
+    .refine((val) => !isNaN(val) && val > 0, {
+      message: "El total debe ser un número mayor a 0",
+    }),
+  payment_method: z.enum(["cash", "mp_vani", "mp_gus"], {
+    message: "Se debe seleccionar un tipo de pago válido",
+  }),
+});
+
+export const addSupplierPaymentSchemaResolver = zodResolver(addSupplierPaymentSchema);

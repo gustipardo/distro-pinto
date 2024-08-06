@@ -39,12 +39,22 @@ export interface Invoice {
   created_at: string;
 }
 
-export interface Payment {
-  id: number;
-  invoice_id: number;
-  date: string;
-  amount: number;
-  type: string;
-  payment_method: string;
-  created_at: string;
+  export interface Payment {
+    id: number;
+    invoice_id: number;
+    date: string;
+    amount: number;
+    type: string;
+    payment_method: string;
+    created_at: string;
+  }
+
+export type PaymentMethod = "cash" | "mp_vani" | "mp_gus";
+
+export type PaymentType = "expense" | "income";
+
+export const paymentMethodDictionary = {
+  cash: "Efectivo",
+  mp_vani: "Mp Vani",
+  mp_gus: "Mp Gus",
 }

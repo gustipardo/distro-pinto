@@ -1,65 +1,101 @@
-import { useState } from 'react';
-import { ClipboardIcon, PlusIcon, Cross1Icon, HamburgerMenuIcon, MagnifyingGlassIcon, AngleIcon } from '@radix-ui/react-icons';
-import { Button } from "@/components/ui/button";
-import { Link } from 'react-router-dom';
-import { CookieIcon } from 'lucide-react';
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+} from "./ui/navigation-menu";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTrigger,
+} from "./ui/sheet";
+import {
+  HamburgerMenuIcon,
+  ClipboardIcon,
+  PlusIcon,
+  MagnifyingGlassIcon,
+  AngleIcon,
+  CookieIcon
+} from "@radix-ui/react-icons";
+import { useLocation } from 'react-router-dom'; // Importa useLocation
+
+const links = [
+  { label: "Inicio", path: "/", icon: <ClipboardIcon className="h-6 w-6" /> },
+  { label: "Agregar facturas", path: "/agregar-facturas", icon: <PlusIcon className="h-6 w-6" /> },
+  { label: "Consultar facturas", path: "/consultar-facturas", icon: <MagnifyingGlassIcon className="h-6 w-6" /> },
+  { label: "Estadísticas", path: "/estadisticas", icon: <AngleIcon className="h-6 w-6" /> },
+  { label: "Proveedores", path: "/proveedores", icon: <CookieIcon className="h-6 w-6" /> },
+];
 
 export const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
+  const location = useLocation(); // Obtén la ubicación actual
 
   return (
-    <div className="relative">
-      <div className={`fixed top-0 right-0 bg-gray-800 text-white z-50 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out`} style={{ width: '300px', height: '100vh' }}>
-        <div className="flex flex-col h-full">
-          <div className="flex justify-between items-center p-4">
-            <h2 className="text-2xl font-bold">Distro Pinto</h2>
-          </div>
-          <nav className="mt-5 flex-1 px-2 space-y-1">
-          <Link to="/facturas" className="no-underline text-white hover:no-underline">
-              <Button variant="ghost" className="w-full flex items-center">
-                <ClipboardIcon className="h-6 w-6 mr-3" />
-                Facturas
-              </Button>
-            </Link>
-            <Link to="/agregar-facturas" className="no-underline text-white hover:no-underline">
-              <Button variant="ghost" className="w-full flex items-center">
-                <PlusIcon className="h-6 w-6 mr-3" />
-                Agregar facturas
-              </Button>
-            </Link>
-            <Link to="/consultar-facturas" className="no-underline text-white hover:no-underline">
-              <Button variant="ghost" className="w-full flex items-center">
-                <MagnifyingGlassIcon className="h-6 w-6 mr-3" />
-                Consultar facturas
-              </Button>
-            </Link>
-            <Link to="/estadisticas" className="no-underline text-white hover:no-underline">
-              <Button variant="ghost" className="w-full flex items-center">
-                <AngleIcon className="h-6 w-6 mr-3" />
-                Estadisticas
-              </Button>
-            </Link>
-            <Link to="/proveedores" className="no-underline text-white hover:no-underline">
-              <Button variant="ghost" className="w-full flex items-center">
-                <CookieIcon className="h-6 w-6 mr-3" />
-                Proveedores
-              </Button>
-            </Link>
+    <div className="w-screen">
+      <Sheet>
+        <SheetTrigger asChild>
+          <Button
+            variant="outline"
+            size="icon"
+            className="text-foreground transition-colors md:hidden absolute top-0 right-0 m-4 z-50"
+          >
+            <HamburgerMenuIcon className="h-6 w-6" />
+          </Button>
+        </SheetTrigger>
+        <SheetContent className="flex flex-col items-center gap-4 w-[300px] h-screen">
+          <SheetHeader>
+          </SheetHeader>
 
-            {/* Añadir más botones según sea necesario */}
-          </nav>
+          <NavigationMenu className="flex-initial ">
+            <NavigationMenuList className="flex-col justify-between h-14 items-center ">
+              {links.map(({ label, path, icon }, i) => (
+                <NavigationMenuItem key={i}>
+                  <SheetClose asChild>
+                    <NavigationMenuLink
+                      href={path}
+                      className={cn("border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
+                        'text-black': location.pathname === path,
+                        'text-gray-500': location.pathname !== path,
+                      })}
+                    >
+                      {icon}
+                      {label}
+                    </NavigationMenuLink>
+                  </SheetClose>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <SheetFooter>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
+
+      <NavigationMenu className="hidden md:block h-16 w-full border-b border-gray-300">
+        <div className="flex items-center justify-center h-full w-screen">
+          <NavigationMenuList className="flex items-center space-x-4">
+            {links.map(({ label, path, icon }, i) => (
+              <NavigationMenuLink
+                key={i}
+                href={path}
+                className={cn("font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
+                  'text-black': location.pathname === path,
+                  'text-gray-500': location.pathname !== path,
+                })}
+              >
+                {icon}
+                <span className="ml-2">{label}</span>
+              </NavigationMenuLink>
+            ))}
+          </NavigationMenuList>
         </div>
-      </div>
-      <Button variant="outline" onClick={toggleSidebar} className="fixed top-0 right-0 m-4 z-50">
-        {isOpen ? <Cross1Icon className="h-6 w-6" /> : <HamburgerMenuIcon className="h-6 w-6" />}
-      </Button>
-      <div className="flex-1">
-        {/* Contenido principal */}
-      </div>
+      </NavigationMenu>
     </div>
   );
-}
+};
