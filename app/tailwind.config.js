@@ -51,6 +51,9 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+/*         numbers: {
+          debt: hsl(var(--debt))
+        } */
       },
       borderRadius: {
         lg: "var(--radius)",

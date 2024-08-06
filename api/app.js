@@ -4,10 +4,11 @@ import { config } from "dotenv";
 import { createInvoicesRouter } from "./routes/invoices.js";
 import { createUsersRouter } from "./routes/users.js";
 import { createEntitiesRouter } from "./routes/entities.js";
+import { createPaymentsRouter } from "./routes/payments.js";
 
 config();
 
-export const createApp = ({ invoicesModel, usersModel, entitiesModel }) => {
+export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsModel }) => {
   const app = express();
   app.use(json());
   app.use(corsMiddleware());
@@ -16,6 +17,7 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel }) => {
   app.use("/invoices", createInvoicesRouter({ invoicesModel }));
   app.use("/users", createUsersRouter({ usersModel }));
   app.use("/entities", createEntitiesRouter({ entitiesModel }));
+  app.use("/payments", createPaymentsRouter({ paymentsModel }));
 
   const PORT = process.env.PORT ?? 1234;
 

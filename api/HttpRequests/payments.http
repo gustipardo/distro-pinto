@@ -2,17 +2,19 @@
 GET http://localhost:1234/payments
 Accept: application/json
 
-## GET payments by date
-GET http://localhost:1234/invoices?date=2024-07-16
+### GET payments by invpuce id
+GET http://localhost:1234/payments?invoice_id=1
 Accept: application/json
 
 ### Add invoice
-POST http://localhost:1234/invoices
+POST http://localhost:1234/payments
 Content-Type: application/json
 
 {
-    "date": "2020-01-01",
-    "client": "John Doe",
-    "amount": 1000
+    "invoice_id": 1,
+    "date": "2024-08-02",
+    "amount": 10,
+    "payment_method": "cash",
+    "type": "expense"
 }
 

@@ -16,8 +16,8 @@ export class InvoicesController {
       }
       res.json(invoices);
     } catch (err) {
-      console.log("Error getting invoices:", err.message);
-      res.status(500).send("Error getting invoices");
+      console.log("Error getting payments:", err.message);
+      res.status(500).send("Error getting payments");
     }
   };
   
