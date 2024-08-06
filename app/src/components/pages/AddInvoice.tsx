@@ -50,8 +50,8 @@ export const AddInvoice= () => {
     fileData.forEach(async (row: any) => {
       await addInvoice({
         date: row.Fecha,
-        client: row.Cliente,
-        amount: row.Total,
+        entity_id: row.Cliente,
+        total: row.Total,
       });
     });
   };

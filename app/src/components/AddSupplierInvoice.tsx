@@ -45,7 +45,7 @@ export const AddSupplierInvoice = ({ onInvoiceAdded }: AddSupplierInvoiceProps) 
 
   const onSubmit = async (values: { date: string; total: string; entity_id: string }) => {
     console.log("Formulario enviado con valores:", values);
-    const response = await addInvoice({date: values.date, entity_id: values.entity_id, total: values.total});
+    const response = await addInvoice({date: values.date, entity_id: parseInt(values.entity_id), total: parseInt(values.total)});
     console.log("Respuesta de la API:", response);
     setOpen(false);
     console.log("response", response)
