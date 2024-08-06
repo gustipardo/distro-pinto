@@ -4,8 +4,9 @@ import {Sidebar} from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
 import {AddInvoice} from "./components/pages/AddInvoice";
 import {Placeholder} from "./components/Placeholder";
-import Home from "./components/Home";
+import Home from "./components/pages/Home";
 import { Suppliers } from "./components/pages/Suppliers";
+import { Stadistic } from "./components/pages/Statistics";
 
 export const App = () => {
   return (
@@ -17,6 +18,7 @@ export const App = () => {
         <Route path="/placeholder" element={<Placeholder />} />
         <Route path="/" element={<Home />} />
         <Route path="/proveedores" element={<Suppliers />} />
+        <Route path="/estadisticas" element={<Stadistic />} />
       </Routes>
     </div>
   );

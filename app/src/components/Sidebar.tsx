@@ -26,7 +26,7 @@ import { Link, useLocation } from 'react-router-dom'; // Importa useLocation
 const links = [
   { label: "Inicio", path: "/", icon: <ClipboardIcon className="h-6 w-6" /> },
   { label: "Agregar facturas", path: "/agregar-facturas", icon: <PlusIcon className="h-6 w-6" /> },
-  { label: "Consultar facturas", path: "/consultar-facturas", icon: <MagnifyingGlassIcon className="h-6 w-6" /> },
+  { label: "Consultar facturas", path: "/facturas", icon: <MagnifyingGlassIcon className="h-6 w-6" /> },
   { label: "Estadísticas", path: "/estadisticas", icon: <AngleIcon className="h-6 w-6" /> },
   { label: "Proveedores", path: "/proveedores", icon: <CookieIcon className="h-6 w-6" /> },
 ];
