@@ -4,7 +4,6 @@ import {Sidebar} from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
 import {AddInvoice} from "./components/pages/AddInvoice";
 import {Placeholder} from "./components/Placeholder";
-import Home from "./components/Home";
 import { Suppliers } from "./components/pages/Suppliers";
 
 export const App = () => {
