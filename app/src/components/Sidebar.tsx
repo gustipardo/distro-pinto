@@ -3,7 +3,6 @@ import { Button } from "./ui/button";
 import {
   NavigationMenu,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
 } from "./ui/navigation-menu";
 import {
@@ -22,7 +21,7 @@ import {
   AngleIcon,
   CookieIcon
 } from "@radix-ui/react-icons";
-import { useLocation } from 'react-router-dom'; // Importa useLocation
+import { Link, useLocation } from 'react-router-dom'; // Importa useLocation
 
 const links = [
   { label: "Inicio", path: "/", icon: <ClipboardIcon className="h-6 w-6" /> },
@@ -56,8 +55,8 @@ export const Sidebar = () => {
               {links.map(({ label, path, icon }, i) => (
                 <NavigationMenuItem key={i}>
                   <SheetClose asChild>
-                    <NavigationMenuLink
-                      href={path}
+                    <Link
+                      to={path}
                       className={cn("border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
                         'text-black': location.pathname === path,
                         'text-gray-500': location.pathname !== path,
@@ -65,7 +64,7 @@ export const Sidebar = () => {
                     >
                       {icon}
                       {label}
-                    </NavigationMenuLink>
+                    </Link>
                   </SheetClose>
                 </NavigationMenuItem>
               ))}
@@ -81,9 +80,9 @@ export const Sidebar = () => {
         <div className="flex items-center justify-center h-full w-screen">
           <NavigationMenuList className="flex items-center space-x-4">
             {links.map(({ label, path, icon }, i) => (
-              <NavigationMenuLink
+              <Link
                 key={i}
-                href={path}
+                to={path}
                 className={cn("font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
                   'text-black': location.pathname === path,
                   'text-gray-500': location.pathname !== path,
@@ -91,7 +90,7 @@ export const Sidebar = () => {
               >
                 {icon}
                 <span className="ml-2">{label}</span>
-              </NavigationMenuLink>
+              </Link>
             ))}
           </NavigationMenuList>
         </div>
