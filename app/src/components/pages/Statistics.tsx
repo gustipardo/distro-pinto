@@ -8,7 +8,6 @@ export const Stadistic = () => {
         <div>
             Estadisticas
             <Chart2 />
-
             <Chart />
         </div>
     )

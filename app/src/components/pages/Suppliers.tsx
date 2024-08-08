@@ -16,8 +16,7 @@ import { AddSupplierInvoice } from "@/components/AddSupplierInvoice";
 import { AddSupplierPayment } from "../AddSupplierPayment";
 import { PaymentsOnHover } from "../PaymentsOnHover";
 import { formatNumber } from "@/services/formatNumber";
-import { Button } from "../ui/button";
-import { PlusIcon } from "@radix-ui/react-icons";
+import { AddEntity } from "../AddEntity";
 
 
 export const Suppliers = () => {
@@ -55,10 +54,7 @@ export const Suppliers = () => {
         <div>
         <h1 className="text-4xl font-bold mb-4 underline">Facturas de Proveedores Pendientes</h1>
         <div className="flex justify-end mb-4 gap-4">
-        <Button variant="outline" className="ml-4" onClick={handleOperationMade}>
-          <PlusIcon className="h-5 w-5" />
-          Agregar Proveedor
-        </Button>
+        <AddEntity onEntityAdded={handleOperationMade} isCustomer={false} />
         <AddSupplierInvoice onInvoiceAdded={handleOperationMade} />
 
       </div>
@@ -80,7 +76,7 @@ export const Suppliers = () => {
                 <TableCell>{row.invoice_date}</TableCell>
                 <TableCell>{row.supplier_name}</TableCell>
                 <TableCell className="text-left">$ {formatNumber(parseInt(row.invoice_total))}</TableCell>
-                <TableCell className="text-left"><PaymentsOnHover amount={row.invoice_total} invoice_id={row.invoice_id}/></TableCell>
+                <TableCell className="text-left"><PaymentsOnHover amount={row.total_paid} invoice_id={row.invoice_id} updateCount={updateCount}/></TableCell>
                 <TableCell className="text-left text-red-500">$ {formatNumber(row.remaining_amount)}</TableCell>
                 <TableCell className="text-left"><AddSupplierPayment invoice_id={row.invoice_id} onPaymentAdded={handleOperationMade}/></TableCell>
               </TableRow>

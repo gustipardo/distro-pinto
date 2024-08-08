@@ -40,3 +40,11 @@ const addSupplierPaymentSchema = z.object({
 });
 
 export const addSupplierPaymentSchemaResolver = zodResolver(addSupplierPaymentSchema);
+
+const addEntitySchema = z.object({
+  name: z.string().min(2, {
+    message: "El nombre de usuario debe tener al menos 2 caracteres.",
+  })
+});
+
+export const addEntitySchemaResolver = zodResolver(addEntitySchema);

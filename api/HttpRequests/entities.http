@@ -20,8 +20,17 @@ PUT http://localhost:1234/entities/5
 Content-Type: application/json
 
 {
-  "name": "GUs Doe",
+  "name": "Papu Doe",
   "type": "supplier"
+}
+
+### Add a new customer
+POST http://localhost:1234/entities
+Content-Type: application/json
+
+{
+  "name": "Papu Doe",
+  "type": "customer"
 }
 
 ### GET All Customers
