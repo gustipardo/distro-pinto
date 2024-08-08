@@ -51,8 +51,8 @@ export const Suppliers = () => {
   
 
     return (
-        <div>
-        <h1 className="text-4xl font-bold mb-4 underline">Facturas de Proveedores Pendientes</h1>
+        <div className="mt-4">
+        <h1 className="text-3xl text-center font-bold mb-4 ">Facturas de Proveedores Pendientes</h1>
         <div className="flex justify-end mb-4 gap-4">
         <AddEntity onEntityAdded={handleOperationMade} isCustomer={false} />
         <AddSupplierInvoice onInvoiceAdded={handleOperationMade} />

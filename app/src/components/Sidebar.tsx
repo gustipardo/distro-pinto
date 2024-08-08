@@ -15,7 +15,6 @@ import {
 } from "./ui/sheet";
 import {
   HamburgerMenuIcon,
-  ClipboardIcon,
   PlusIcon,
   MagnifyingGlassIcon,
   AngleIcon,
@@ -24,7 +23,6 @@ import {
 import { Link, useLocation } from 'react-router-dom'; // Importa useLocation
 
 const links = [
-  { label: "Inicio", path: "/", icon: <ClipboardIcon className="h-6 w-6" /> },
   { label: "Agregar facturas", path: "/agregar-facturas", icon: <PlusIcon className="h-6 w-6" /> },
   { label: "Consultar facturas", path: "/facturas", icon: <MagnifyingGlassIcon className="h-6 w-6" /> },
   { label: "Estadísticas", path: "/estadisticas", icon: <AngleIcon className="h-6 w-6" /> },
@@ -37,21 +35,33 @@ export const Sidebar = () => {
   return (
     <div className="w-screen">
       <Sheet>
-        <SheetTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="text-foreground transition-colors md:hidden absolute top-0 right-0 m-4 z-50"
-          >
-            <HamburgerMenuIcon className="h-6 w-6" />
-          </Button>
-        </SheetTrigger>
+
+        <NavigationMenu className="h-16 w-full border-b border-gray-300 md:hidden">
+          <div className="flex items-center justify-between h-full w-screen">
+            <div className="flex items-center">
+            <Link to="/" className="border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline">
+            <img src="/distribuidoraLogo.svg" alt="logo" className="h-8 w-8" />
+            <h1 className="text-xl font-bold">DistroApp</h1>
+            </Link>
+            </div>
+            <SheetTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="text-foreground transition-colors md:hidden m-4 z-50"
+            >
+              <HamburgerMenuIcon className="h-6 w-6" />
+            </Button>
+            </SheetTrigger>
+          </div>
+        </NavigationMenu>
+
         <SheetContent className="flex flex-col items-center gap-4 w-[300px] h-screen">
-          <SheetHeader>
-          </SheetHeader>
+          <SheetHeader>Distribuidora Pinto</SheetHeader>
 
           <NavigationMenu className="flex-initial ">
             <NavigationMenuList className="flex-col justify-between h-14 items-center ">
+
               {links.map(({ label, path, icon }, i) => (
                 <NavigationMenuItem key={i}>
                   <SheetClose asChild>
@@ -78,7 +88,14 @@ export const Sidebar = () => {
 
       <NavigationMenu className="hidden md:block h-16 w-full border-b border-gray-300">
         <div className="flex items-center justify-center h-full w-screen">
-          <NavigationMenuList className="flex items-center space-x-4">
+          <NavigationMenuList className="flex items-center space-x-8">
+          <div className="flex items-center ml-4">
+            <Link to="/" className="border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline">
+            <img src="/distribuidoraLogo.svg" alt="logo" className="h-8 w-8" />
+            <h1 className="text-xl font-bold">DistroApp</h1>
+            </Link>
+          </div>
+          
             {links.map(({ label, path, icon }, i) => (
               <Link
                 key={i}
@@ -93,6 +110,7 @@ export const Sidebar = () => {
               </Link>
             ))}
           </NavigationMenuList>
+
         </div>
       </NavigationMenu>
     </div>

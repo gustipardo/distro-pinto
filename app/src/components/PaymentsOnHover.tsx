@@ -32,7 +32,7 @@ export const PaymentsOnHover = ({amount, invoice_id, updateCount}: paymentsOnHov
 
     return (
         <HoverCard>
-        <HoverCardTrigger className="select-none">$ {formatNumber(amount)}</HoverCardTrigger>
+        <HoverCardTrigger>$ {formatNumber(amount)}</HoverCardTrigger>
         <HoverCardContent>
             <div className="space-y-2">
             {Payments.length === 0 ? (

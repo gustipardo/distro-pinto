@@ -31,6 +31,6 @@ body {
 
 @media (min-width: 1024px) {
   body {
-    padding-inline: 4rem; /* Padding horizontal de 4rem en pantallas grandes */
+    padding-inline: 0; /* Padding horizontal de 4rem en pantallas grandes */
   }
 }
