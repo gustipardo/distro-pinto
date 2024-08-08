@@ -15,8 +15,9 @@ export class entitiesModel {
 
     static async addEntity({ name, type }) {
         try {
-        const entity = await db.execute("INSERT INTO entities (name, type) VALUES (?, ?)", [name, type]);
-          return entity;
+        const query= `INSERT INTO entities (NAME, TYPE) VALUES (?, ?)`;
+        const entity = await db.execute({sql: query, args: [name, type]});
+          return entity.rows;
         } catch (err) {
           throw err;
         }

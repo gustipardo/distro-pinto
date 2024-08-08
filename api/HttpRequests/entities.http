@@ -29,7 +29,7 @@ POST http://localhost:1234/entities
 Content-Type: application/json
 
 {
-  "name": "Papu Doe",
+  "name": "Papu Doe2",
   "type": "customer"
 }
 
