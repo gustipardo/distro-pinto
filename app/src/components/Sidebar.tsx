@@ -33,12 +33,11 @@ export const Sidebar = () => {
   const location = useLocation(); // Obtén la ubicación actual
 
   return (
-    <div className="w-screen">
-      <Sheet>
-
-        <NavigationMenu className="h-16 w-full border-b border-gray-300 md:hidden">
-          <div className="flex items-center justify-between h-full w-screen">
-            <div className="flex items-center">
+    <div className="w-full bg-gray">
+      <Sheet >
+        <NavigationMenu className="h-16 w-full max-w-none border-b border-gray-300 md:hidden">
+          <div className="flex items-center justify-between h-full w-full">
+            <div className="flex items-center ">
             <Link to="/" className="border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline">
             <img src="/distribuidoraLogo.svg" alt="logo" className="h-8 w-8" />
             <h1 className="text-xl font-bold">DistroApp</h1>
@@ -63,11 +62,11 @@ export const Sidebar = () => {
             <NavigationMenuList className="flex-col justify-between h-14 items-center ">
 
               {links.map(({ label, path, icon }, i) => (
-                <NavigationMenuItem key={i}>
+                <NavigationMenuItem key={i} className="border-hidden flex flex-col items-center justify-center">
                   <SheetClose asChild>
                     <Link
                       to={path}
-                      className={cn("border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
+                      className={cn("font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline", {
                         'text-black': location.pathname === path,
                         'text-gray-500': location.pathname !== path,
                       })}
@@ -86,8 +85,8 @@ export const Sidebar = () => {
         </SheetContent>
       </Sheet>
 
-      <NavigationMenu className="hidden md:block h-16 w-full border-b border-gray-300">
-        <div className="flex items-center justify-center h-full w-screen">
+      <NavigationMenu className="hidden max-w-none md:block h-16 border-b border-gray-300">
+        <div className="flex items-center justify-center h-full ">
           <NavigationMenuList className="flex items-center space-x-8">
           <div className="flex items-center ml-4">
             <Link to="/" className="border-hidden font-medium flex items-center text-sm transition-colors hover:text-black hover:no-underline">
