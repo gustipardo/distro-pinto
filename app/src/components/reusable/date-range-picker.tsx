@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import { Label } from '@/components/ui/label'
+import { es } from "date-fns/locale"
 import {
   Select,
   SelectContent,
@@ -68,15 +69,15 @@ interface Preset {
 
 // Define presets
 const PRESETS: Preset[] = [
-  { name: 'today', label: 'Today' },
-  { name: 'yesterday', label: 'Yesterday' },
-  { name: 'last7', label: 'Last 7 days' },
-  { name: 'last14', label: 'Last 14 days' },
-  { name: 'last30', label: 'Last 30 days' },
-  { name: 'thisWeek', label: 'This Week' },
-  { name: 'lastWeek', label: 'Last Week' },
-  { name: 'thisMonth', label: 'This Month' },
-  { name: 'lastMonth', label: 'Last Month' }
+  { name: 'today', label: 'Hoy' },
+  { name: 'yesterday', label: 'Ayer' },
+  { name: 'last7', label: 'Ultimos 7 días' },
+  { name: 'last14', label: 'Ultimos 14 días' },
+  { name: 'last30', label: 'Ultimos 30 días' },
+  { name: 'thisWeek', label: 'Esta semana' },
+  { name: 'lastWeek', label: 'Semana pasada' },
+  { name: 'thisMonth', label: 'Este mes' },
+  { name: 'lastMonth', label: 'Mes pasado' }
 ]
 
 /** The DateRangePicker component allows a user to select a range of dates */
@@ -489,6 +490,8 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
               )}
               <div>
                 <Calendar
+                  weekStartsOn={1}
+                  locale={es}
                   mode="range"
                   onSelect={(value: { from?: Date, to?: Date } | undefined) => {
                     if (value?.from != null) {
@@ -531,7 +534,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
             }}
             variant="ghost"
           >
-            Cancel
+            Cancelar
           </Button>
           <Button
             onClick={() => {
@@ -544,7 +547,7 @@ export const DateRangePicker: FC<DateRangePickerProps> & {
               }
             }}
           >
-            Update
+            Actualizar
           </Button>
         </div>
       </PopoverContent>
