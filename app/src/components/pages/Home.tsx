@@ -4,7 +4,7 @@ import { DateRangePicker } from "../reusable/date-range-picker";
 const Home: React.FC = () => {
   return (
     <div>Home
-      <DateRangePicker />ftrg54
+      <DateRangePicker />
     </div>
     
   );
