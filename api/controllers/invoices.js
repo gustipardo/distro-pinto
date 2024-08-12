@@ -6,18 +6,18 @@ export class InvoicesController {
   }
 
   getInvoices = async (req, res) => {
-    const { date } = req.query;
+    const { from, to } = req.query;
     try {
       let invoices;
-      if (date) {
-        invoices = await this.invoicesModel.getInvoicesByDate(date);
+      if (from) {
+        invoices = await this.invoicesModel.getInvoicesByDate(from, to);
       } else {
         invoices = await this.invoicesModel.getAllInvoices();
       }
       res.json(invoices);
     } catch (err) {
-      console.log("Error getting payments:", err.message);
-      res.status(500).send("Error getting payments");
+      console.log("Error getting invoices:", err.message);
+      res.status(500).send("Error getting invoices");
     }
   };
   

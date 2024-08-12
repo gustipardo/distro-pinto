@@ -47,8 +47,12 @@ export class invoicesModel {
     }
   }
 
-  static async getInvoicesByDate(date) {
+  static async getInvoicesByDate(from, to = null) {
     try {
+      // Si 'to' no se proporciona, establece 'to' igual a 'from'
+      if (!to) {
+        to = from;
+      }
       const query = `
         SELECT
           i.id AS "id",
@@ -61,16 +65,19 @@ export class invoicesModel {
         FROM invoices i
         JOIN entities e ON i.entity_id = e.id
         LEFT JOIN payments p ON i.id = p.invoice_id
-        WHERE i.date = ?
+        WHERE i.date BETWEEN ? AND ?
         GROUP BY i.id, i.date, e.name, i.total
         ORDER BY i.date, i.id;
       `;
-      const invoices = await db.allAsync(query, [date]);
+  
+      // Ejecuta la consulta con los parámetros 'from' y 'to'
+      const invoices = await db.allAsync(query, [from, to]);
       return invoices;
     } catch (err) {
       throw err;
     }
   }
+  
 
   static async getPendingInvoicesFromSuppliers() {
     try {

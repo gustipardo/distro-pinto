@@ -3,7 +3,7 @@ GET http://localhost:1234/invoices
 Accept: application/json
 
 ### GET Invoices by date
-GET http://localhost:1234/invoices?date=2024-06-26
+GET http://localhost:1234/invoices?from=2024-08-08&to=2024-08-10
 Accept: application/json
 
 ### Add invoice

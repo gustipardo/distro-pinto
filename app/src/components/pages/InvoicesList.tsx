@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { getInvoices } from "@/services/getInvoices";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "@radix-ui/react-icons";
+import { DateRangePicker } from "../reusable/date-range-picker";
 import {
   Table,
   TableBody,
@@ -15,25 +12,27 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { InvoiceAndPayments } from "@/commons/Interfaces";
+import { formatDateToYYYYMMDD } from "@/services/formatDate";
 
 export const InvoicesList = () => {
   const [invoices, setInvoices] = useState<InvoiceAndPayments[]>([]);
-  const [dateSelected, setDateSelected] = useState<Date | undefined>(new Date()); // Default to today's date
 
-  const loadInvoices = async (date?: string) => {
+
+  useEffect(() => {
+    handleDateRangeUpdate({ range: { from: new Date(), to: new Date() } });
+  }, []);
+
+  const handleDateRangeUpdate = async (values: { range: any}) => {
+    /* console.log("From:", values.range.from, "To:", values.range.to); */
+    const from = formatDateToYYYYMMDD(values.range.from);
+    const to = values.range.to ? formatDateToYYYYMMDD(values.range.to) : from;
     try {
-      const data = await getInvoices(date);
+      const data = await getInvoices(from, to);
       setInvoices(data);
     } catch (error) {
       console.error("Error loading invoices:", error);
     }
   };
-
-  useEffect(() => {
-    if (dateSelected) {
-      loadInvoices(dateSelected.toISOString().split('T')[0]);
-    }
-  }, [dateSelected]);
 
   const totals = invoices.reduce(
     (acc, invoice) => {
@@ -50,29 +49,12 @@ export const InvoicesList = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Listado de Facturas</h1>
       <div className="flex items-center gap-4 mb-6">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button variant="outline" className="w-[240px] pl-3 text-left font-normal">
-              {dateSelected ? (
-                new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium' }).format(dateSelected)
-              ) : (
-                <span>Selecciona una fecha</span>
-              )}
-              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              mode="single"
-              selected={dateSelected}
-              onSelect={setDateSelected}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-        <Button onClick={() => loadInvoices(dateSelected?.toISOString().split('T')[0])}>
-          Recargar
-        </Button>
+
+        <DateRangePicker
+            locale="es-AR"
+            showCompare={false}
+            onUpdate={handleDateRangeUpdate} // Pasa el callback aquí
+          />
       </div>
       <Table>
         <TableCaption>Listado de facturas para la fecha seleccionada.</TableCaption>

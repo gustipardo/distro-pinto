@@ -1,7 +1,7 @@
-export const getInvoices = async (date?: string) => {
+export const getInvoices = async (from?: string, to?: string) => {
     try {
-      const url = date
-        ? `${import.meta.env.VITE_API_URL}/invoices?date=${date}`
+      const url = from
+        ? `${import.meta.env.VITE_API_URL}/invoices?from=${from}&to=${to}`
         : `${import.meta.env.VITE_API_URL}/invoices`;
       const response = await fetch(url);
       if (!response.ok) {
