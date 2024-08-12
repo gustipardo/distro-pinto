@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/popover"
 import { PlusIcon } from "@radix-ui/react-icons";
 import { addEntity } from "@/services/addEntity";
+import { useToast } from "./ui/use-toast";
 
 interface AddEntityProps {
   onEntityAdded: () => void,
@@ -26,6 +27,7 @@ interface AddEntityProps {
 
 export const AddEntity = ({ onEntityAdded, isCustomer = true }: AddEntityProps) => {
   const [open, setOpen] = useState(false);
+  const { toast } = useToast();
   const form = useForm({
     resolver: addEntitySchemaResolver,
     defaultValues: {
@@ -34,13 +36,16 @@ export const AddEntity = ({ onEntityAdded, isCustomer = true }: AddEntityProps) 
   });
 
   const onSubmit = async (values: { name: string}) => {
-    console.log("Formulario enviado con valores:", values);
     const response = await addEntity({name: values.name, type: isCustomer ? "customer" : "supplier"});
-    console.log("Respuesta de la API:", response);
+    if (response.error) {
+      toast({
+        variant: "destructive",
+        title: "Uh! Algo salió mal",
+        description: response.error
+      })
+    }
     setOpen(false);
-    console.log("response", response)
     if (response) {
-      console.log("Se agregó la entidad con éxito");
       onEntityAdded(); 
     }
   };

@@ -7,6 +7,7 @@ import {Placeholder} from "./components/Placeholder";
 import Home from "./components/pages/Home";
 import { Suppliers } from "./components/pages/Suppliers";
 import { Stadistic } from "./components/pages/Statistics";
+import { Toaster } from "./components/ui/toaster";
 
 export const App = () => {
   return (
@@ -20,6 +21,7 @@ export const App = () => {
         <Route path="/proveedores" element={<Suppliers />} />
         <Route path="/estadisticas" element={<Stadistic />} />
       </Routes>
+      <Toaster  />
     </div>
   );
 }
