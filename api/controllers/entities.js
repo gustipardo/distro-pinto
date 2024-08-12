@@ -1,3 +1,4 @@
+import { validateEntities } from "../schemas/Entities.js";
 
 export class EntitiesController {
     constructor({ entitiesModel }) {
@@ -14,14 +15,19 @@ export class EntitiesController {
       }
     }
 
-    addEntity = async (req, res) => {
+    addEntity = async (req, res, next) => {
+      const validationResult = validateEntities(req.body);
+      if (!validationResult.success) {
+        const errorMessages = validationResult.errors.map(error => error.message);
+        return res.status(400).json({ errors: errorMessages });
+      }
       try {
         const { name, type } = req.body;
         const entity = await this.entitiesModel.addEntity({ name, type });
         res.json(entity);
       } catch (err) {
         console.log("Error adding entity:", err.message);
-        res.status(500).send("Error adding entity");
+        next(err);
       }
     }
 
