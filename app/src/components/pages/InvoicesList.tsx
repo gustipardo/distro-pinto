@@ -12,7 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { InvoiceAndPayments } from "@/commons/Interfaces";
-import { formatDateToYYYYMMDD } from "@/services/formatDate";
+import { formatDateToYYYYMMDD, formatDateToDDMMYYYY } from "@/services/formatDate";
 
 export const InvoicesList = () => {
   const [invoices, setInvoices] = useState<InvoiceAndPayments[]>([]);
@@ -73,7 +73,7 @@ export const InvoicesList = () => {
           {invoices.map((invoice) => (
             <TableRow key={invoice.id} className="text-left">
               <TableCell>{invoice.id}</TableCell>
-              <TableCell>{invoice.date}</TableCell>
+              <TableCell>{formatDateToDDMMYYYY(invoice.date)}</TableCell>
               <TableCell>{invoice.client}</TableCell>
               <TableCell>$ {invoice.amount}</TableCell>
               <TableCell>$ {invoice.cash}</TableCell>

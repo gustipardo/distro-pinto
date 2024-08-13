@@ -17,6 +17,7 @@ import { AddSupplierPayment } from "../AddSupplierPayment";
 import { PaymentsOnHover } from "../PaymentsOnHover";
 import { formatNumber } from "@/services/formatNumber";
 import { AddEntity } from "../AddEntity";
+import { formatDateToDDMMYYYY } from "@/services/formatDate";
 
 
 export const Suppliers = () => {
@@ -73,7 +74,7 @@ export const Suppliers = () => {
           <TableBody>
             {PendingInvoicesSuppliers.map((row, index) => (
               <TableRow key={index} className="text-left">
-                <TableCell>{row.invoice_date}</TableCell>
+                <TableCell>{formatDateToDDMMYYYY(row.invoice_date)}</TableCell>
                 <TableCell>{row.supplier_name}</TableCell>
                 <TableCell className="text-left">${formatNumber(parseInt(row.invoice_total))}</TableCell>
                 <TableCell className="text-left"><PaymentsOnHover amount={row.total_paid} invoice_id={row.invoice_id} updateCount={updateCount}/></TableCell>
