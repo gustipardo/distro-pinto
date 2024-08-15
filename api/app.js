@@ -22,6 +22,11 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsMo
   app.use("/entities", createEntitiesRouter({ entitiesModel }));
   app.use("/payments", createPaymentsRouter({ paymentsModel }));
 
+  // Ruta para mostrar mensaje en la raíz "/"
+  app.get("/", (req, res) => {
+    res.send("Welcome to the Distro-API!");
+  });
+
   // Manejo de errores de SQL
   app.use(sqlErrorHandler);
   app.use(errorHandler);
