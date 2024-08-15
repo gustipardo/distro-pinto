@@ -1,15 +1,16 @@
 {
     "version": 2,
     "builds": [
-        {
-            "src": "./dist/index.js",
-            "use": "@vercel/node"
-        }
+      {
+        "src": "server-with-sqlite-local.js",
+        "use": "@vercel/node"
+      }
     ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/"
-        }
+      {
+        "src": "/(.*)",
+        "dest": "server-with-sqlite-local.js"
+      }
     ]
-}
+  }
+  
