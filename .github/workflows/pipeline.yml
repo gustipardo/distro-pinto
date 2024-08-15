@@ -17,5 +17,6 @@ jobs:
           node-version: 18
       - name : Install dependencies
         run: npm ci
-      
+      - name: Force an error
+        run: exit 1 
       
