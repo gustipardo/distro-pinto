@@ -47,7 +47,7 @@ export class invoicesModel {
     }
   }
 
-  static async getInvoicesByDate(from, to = null, entityType, status, entityId = null) {
+  static async getInvoicesByParams(from, to = null, entityType, status, entityId = null) {
     try {
       // Si 'to' no se proporciona, establece 'to' igual a 'from'
       if (!to && from) {
@@ -98,7 +98,6 @@ export class invoicesModel {
     
       // Ejecuta la consulta con los parámetros
       const invoices = await db.allAsync(query, params);
-      console.log("Modelo invoices", invoices, "params", params, "query", query);
       return invoices;
     } catch (err) {
       throw err;

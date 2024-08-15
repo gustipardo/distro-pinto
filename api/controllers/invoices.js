@@ -22,10 +22,9 @@ export class InvoicesController {
       status = 'paid';
     }
   
-    console.log("Controller", "from", from, "to", to, "isClient", isClient, "isPending", isPending, "isPaid", isPaid, "entityId", entityId);
     try {
       let invoices;
-      invoices = await this.invoicesModel.getInvoicesByDate(from, to, entityType, status, entityId);
+      invoices = await this.invoicesModel.getInvoicesByParams(from, to, entityType, status, entityId);
       res.json(invoices);
     } catch (err) {
       console.log("Error getting invoices:", err.message);
