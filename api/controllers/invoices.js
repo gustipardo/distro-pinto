@@ -6,20 +6,33 @@ export class InvoicesController {
   }
 
   getInvoices = async (req, res) => {
-    const { from, to } = req.query;
+    const { from, to, isClient, isPending, isPaid, entityId } = req.query;
+    const isClientBoolean = isClient === 'true';
+    const isPendingBoolean = isPending === 'true';
+    const isPaidBoolean = isPaid === 'true';
+  
+    const entityType = isClientBoolean ? 'customer' : 'supplier';
+    
+    let status;
+    if (isPendingBoolean && isPaidBoolean) {
+      status = 'pending,paid';
+    } else if (isPendingBoolean) {
+      status = 'pending';
+    } else if (isPaidBoolean) {
+      status = 'paid';
+    }
+  
+    console.log("Controller", "from", from, "to", to, "isClient", isClient, "isPending", isPending, "isPaid", isPaid, "entityId", entityId);
     try {
       let invoices;
-      if (from) {
-        invoices = await this.invoicesModel.getInvoicesByDate(from, to);
-      } else {
-        invoices = await this.invoicesModel.getAllInvoices();
-      }
+      invoices = await this.invoicesModel.getInvoicesByDate(from, to, entityType, status, entityId);
       res.json(invoices);
     } catch (err) {
       console.log("Error getting invoices:", err.message);
       res.status(500).send("Error getting invoices");
     }
   };
+  
   
   addInvoice = async (req, res) => {
     const validationResult = validateInvoice(req.body);

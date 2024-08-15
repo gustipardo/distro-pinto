@@ -3,17 +3,28 @@ GET http://localhost:1234/invoices
 Accept: application/json
 
 ### GET Invoices by date
-GET http://localhost:1234/invoices?from=2024-08-08&to=2024-08-10
-Accept: application/json
+GET http://localhost:1234/invoices?from=2024-08-08&to=2024-9-10
+
+### GET Invoices of client
+GET http://localhost:1234/invoices?from=2024-08-08&to=2024-08-10&isClient=true
+
+### GET Invoices of supplier
+GET http://localhost:1234/invoices?from=2024-08-08&to=2024-08-10&isClient=false
+
+### Get invoices of client paid
+GET http://localhost:1234/invoices?isClient=false&isPaid=true&isPending=true
+
+### Get invoices of a specific client and also paid 
+GET http://localhost:1234/invoices?from=2024-08-08&to=2024-09-10&isClient=true&isPaid=false&isPending=true&entityId=12
 
 ### Add invoice
 POST http://localhost:1234/invoices
 Content-Type: application/json
 
 {
-    "date": "2020-12-01",
-    "entity_id": 1,
-    "total": 1000
+    "date": "2024-08-15",
+    "entity_id": 12,
+    "total": 9999
 }
 
 ### Get Pending Invoices from suppliers

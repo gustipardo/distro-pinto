@@ -47,13 +47,15 @@ export class invoicesModel {
     }
   }
 
-  static async getInvoicesByDate(from, to = null) {
+  static async getInvoicesByDate(from, to = null, entityType, status, entityId = null) {
     try {
       // Si 'to' no se proporciona, establece 'to' igual a 'from'
-      if (!to) {
+      if (!to && from) {
         to = from;
       }
-      const query = `
+    
+      // Construir la consulta SQL con la cláusula de estado
+      let query = `
         SELECT
           i.id AS "id",
           i.date AS "date",
@@ -65,18 +67,46 @@ export class invoicesModel {
         FROM invoices i
         JOIN entities e ON i.entity_id = e.id
         LEFT JOIN payments p ON i.id = p.invoice_id
-        WHERE i.date BETWEEN ? AND ?
+        WHERE e.type = ?
+      `;
+    
+      // Agregar la condición de fecha a la consulta si 'from' está definido
+      const params = [entityType];
+      if (from) {
+        query += " AND i.date BETWEEN ? AND ?";
+        params.push(from);
+        params.push(to || from);
+      }
+    
+      // Agregar la condición de estado a la consulta si es necesario
+      if (status === 'pending') {
+        query += " AND i.status = 'pending'";
+      } else if (status === 'paid') {
+        query += " AND i.status = 'paid'";
+      }
+    
+      // Agregar la condición de entityId si se proporciona
+      if (entityId) {
+        query += " AND i.entity_id = ?";
+        params.push(parseInt(entityId));
+      }
+    
+      query += `
         GROUP BY i.id, i.date, e.name, i.total
         ORDER BY i.date, i.id;
       `;
-  
-      // Ejecuta la consulta con los parámetros 'from' y 'to'
-      const invoices = await db.allAsync(query, [from, to]);
+    
+      // Ejecuta la consulta con los parámetros
+      const invoices = await db.allAsync(query, params);
+      console.log("Modelo invoices", invoices, "params", params, "query", query);
       return invoices;
     } catch (err) {
       throw err;
     }
   }
+  
+  
+  
   
 
   static async getPendingInvoicesFromSuppliers() {
