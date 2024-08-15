@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
       {
-        "src": "server-with-sqlite-local.js",
+        "src": "server-with-sqlite-turso.js",
         "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "server-with-sqlite-local.js"
+        "dest": "server-with-sqlite-turso.js"
       }
     ]
   }
