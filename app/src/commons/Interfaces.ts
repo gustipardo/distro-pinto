@@ -58,3 +58,15 @@ export const paymentMethodDictionary = {
   mp_vani: "Mp Vani",
   mp_gus: "Mp Gus",
 }
+
+export interface InvoiceQueryParams {
+  range: {
+    from: string;
+    to: string;
+  };
+  isPending: boolean;
+  isPaid: boolean;
+  isClient: boolean;
+  entityId: string;
+
+}

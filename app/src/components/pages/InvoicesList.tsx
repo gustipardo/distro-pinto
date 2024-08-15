@@ -27,6 +27,7 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ChevronDownIcon } from "lucide-react";
 import { formatNumber } from "@/services/formatNumber";
+import { InvoiceQueryParams } from "@/commons/Interfaces";
 
 export type Payment = {
   id: number
@@ -67,7 +68,7 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => <div className="text-left">{formatDateToDDMMYYYY(row.original.date)}</div>
   },
   {
-    accessorKey: "entidad",
+    accessorKey: "client",
     enableHiding: false,
     header: ({column}) => {
       return (
@@ -110,7 +111,7 @@ export const InvoicesList = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] =useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = useState({})
-  const [values, setValues] = useState({ range: { from: '', to: '' }, isPending: true, isPaid: true, isClient: true, entityId: '' })
+  const [values, setValues] = useState<InvoiceQueryParams>({ range: { from: '', to: '' }, isPending: true, isPaid: true, isClient: true, entityId: '' })
   
   const table = useReactTable({
     data: invoices,
