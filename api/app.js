@@ -27,6 +27,11 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsMo
     res.send("Welcome to the Distro-API!");
   });
 
+  app.get('/health', (req, res) => {
+    res.send('OK')
+  })
+
+
   // Manejo de errores de SQL
   app.use(sqlErrorHandler);
   app.use(errorHandler);

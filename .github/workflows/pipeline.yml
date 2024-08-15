@@ -19,4 +19,7 @@ jobs:
         run: npm ci
       - name: Force an error
         run: exit 1 
-      
+
+# Github Context Object https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs
+# Redundant Builds: styfle/cancel-workflow-action@0.9.1 access_token:  github.token 
+    
