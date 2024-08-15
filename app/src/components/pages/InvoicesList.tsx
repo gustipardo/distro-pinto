@@ -155,7 +155,7 @@ export const InvoicesList = () => {
   
   const handleClick = async () => {
     try {
-      const data = await getInvoices(values.range.from, values.range.to);
+      const data = await getInvoices(values);
       console.log("data", data);
       setInvoices(data);
     } catch (error) {
