@@ -5,7 +5,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableFooter,
   TableHead,
@@ -18,7 +17,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { InvoiceAndPayments } from "@/commons/Interfaces";
 import { formatDateToYYYYMMDD, formatDateToDDMMYYYY } from "@/services/formatDate";
 import { Label } from "@/components/ui/label";
 import { SelectEntities } from "../reusable/SelectEntities";
@@ -29,8 +27,6 @@ import { ColumnDef, ColumnFiltersState, flexRender, getCoreRowModel, getFiltered
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { ChevronDownIcon } from "lucide-react";
 import { formatNumber } from "@/services/formatNumber";
-import { Switch } from "@/components/ui/switch"
-import { set } from "date-fns";
 
 export type Payment = {
   id: number
