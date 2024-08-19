@@ -11,7 +11,7 @@ export const getInvoices = async ({ range, isPending, isPaid, isClient, entityId
     if (isPaid !== undefined) url.searchParams.append('isPaid', isPaid.toString());
     if (isClient !== undefined) url.searchParams.append('isClient', isClient.toString());
     if (entityId) url.searchParams.append('entityId', entityId);
-
+    console.log(" url ", url.toString());
     const response = await fetch(url.toString());
     if (!response.ok) {
       throw new Error("Error getting invoices");

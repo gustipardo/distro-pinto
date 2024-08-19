@@ -1,7 +1,15 @@
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
 import sqlite3 from "sqlite3";
-import { promisify } from "util"; // Sirve para convertir la función de callback en promesas
+import { promisify } from "util";
 
-const db = new sqlite3.Database("database/distribuidora-dev.db", (err) => {
+// Obtener la ruta del archivo actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const dbPath = resolve(__dirname, "../database/distribuidora-dev.db");
+
+const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error("Error on open database:", err.message);
   } else {
@@ -11,5 +19,6 @@ const db = new sqlite3.Database("database/distribuidora-dev.db", (err) => {
 
 // Promisify the db.all method
 db.allAsync = promisify(db.all);
+
 
 export { db };
