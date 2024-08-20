@@ -40,9 +40,9 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsMo
 
   const PORT = process.env.PORT ?? 1238;
 
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`Server started on port http://localhost:${PORT}`);
   });
 
-  return app ;
+  return {app, server};
 };

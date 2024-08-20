@@ -20,5 +20,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
 // Promisify the db.all method
 db.allAsync = promisify(db.all);
 
+db.closeAsync = promisify(db.close);
+
 
 export { db };
