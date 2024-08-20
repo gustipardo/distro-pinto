@@ -1,9 +1,8 @@
-name: Pipeline
+name: Production
 
 env:
     VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
     VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 
 on: 
   push:
@@ -19,7 +18,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22.6
       - name: Install dependencies
         run: npm ci
       - name: Run backend lint
@@ -33,13 +32,13 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22.6
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
 
-  test:
+  backend-test:
     needs: [lint, build]
     runs-on: ubuntu-22.04
     steps:
@@ -48,13 +47,13 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22.6
       - name: Install dependencies
         run: npm ci
       - name: Run backend tests
         run: npm run test:api
   deploy:
-    needs: [test]
+    needs: [backend-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
