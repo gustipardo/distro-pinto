@@ -1,5 +1,4 @@
 import React from "react";
-import { DataTableDemo } from "../DataTableExample";
 
 const Home: React.FC = () => {
 
