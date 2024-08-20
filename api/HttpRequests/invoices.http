@@ -23,8 +23,8 @@ Content-Type: application/json
 
 {
     "date": "2024-08-15",
-    "entity_id": 12,
-    "total": 9999
+    "entity_id": 1,
+    "total": "9999"
 }
 
 ### Get Pending Invoices from suppliers

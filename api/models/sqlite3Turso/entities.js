@@ -2,59 +2,37 @@ import { config } from 'dotenv'
 import { db } from '../../database/connectionTurso.js'
 
 config()
+
 export class entitiesModel {
   static async getAllEntities () {
-    try {
-      const entities = await db.execute('SELECT * FROM entities')
-      return entities.rows
-    } catch (err) {
-      throw err
-    }
+    const entities = await db.execute('SELECT * FROM entities')
+    return entities.rows
   }
 
   static async addEntity ({ name, type }) {
-    try {
-      const query = 'INSERT INTO entities (NAME, TYPE) VALUES (?, ?)'
-      const entity = await db.execute({ sql: query, args: [name, type] })
-      return entity.rows
-    } catch (err) {
-      throw err
-    }
+    const query = 'INSERT INTO entities (name, type) VALUES (?, ?)'
+    const result = await db.execute({ sql: query, args: [name, type] })
+    return result.rows
   }
 
   static async getEntityById (id) {
-    try {
-      const entity = await db.execute('SELECT * FROM entities WHERE id = ?', id)
-      return entity
-    } catch (err) {
-      throw err
-    }
+    const result = await db.execute('SELECT * FROM entities WHERE id = ?', [id])
+    return result.rows
   }
 
   static async updateEntityById ({ id, name, type }) {
-    try {
-      const entity = await db.execute('UPDATE entities SET name = ?, type = ? WHERE id = ?', [name, type, id])
-      return entity
-    } catch (err) {
-      throw err
-    }
+    const query = 'UPDATE entities SET name = ?, type = ? WHERE id = ?'
+    const result = await db.execute({ sql: query, args: [name, type, id] })
+    return result.rows
   }
 
   static async getAllCustomers () {
-    try {
-      const entities = await db.execute("SELECT * FROM entities WHERE type = 'customer'")
-      return entities.rows
-    } catch (err) {
-      throw err
-    }
+    const result = await db.execute("SELECT * FROM entities WHERE type = 'customer'")
+    return result.rows
   }
 
   static async getAllSuppliers () {
-    try {
-      const entities = await db.execute("SELECT * FROM entities WHERE type = 'supplier'")
-      return entities.rows
-    } catch (err) {
-      throw err
-    }
+    const result = await db.execute("SELECT * FROM entities WHERE type = 'supplier'")
+    return result.rows
   }
 }

@@ -2,29 +2,19 @@ import { db } from '../../database/connection.js'
 
 export class usersModel {
   static async getAllUsers () {
-    try {
-      const user = await db.allAsync('SELECT * FROM users')
-      return user
-    } catch (err) {
-      throw err
-    }
+    const users = await db.allAsync('SELECT * FROM users')
+    return users
   }
 
   static async addUser ({ name, role }) {
-    try {
-      const user = await db.allAsync('INSERT INTO users (name, role) VALUES (?, ?)', [name, role])
-      return user
-    } catch (err) {
-      throw err
-    }
+    const query = 'INSERT INTO users (name, role) VALUES (?, ?)'
+    const result = await db.allAsync(query, [name, role])
+    return result
   }
 
   static async getUserById (id) {
-    try {
-      const user = await db.allAsync('SELECT * FROM users WHERE id = ?', id)
-      return user
-    } catch (err) {
-      throw err
-    }
+    const query = 'SELECT * FROM users WHERE id = ?'
+    const user = await db.allAsync(query, id)
+    return user
   }
 }

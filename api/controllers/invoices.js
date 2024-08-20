@@ -23,8 +23,7 @@ export class InvoicesController {
     }
 
     try {
-      let invoices
-      invoices = await this.invoicesModel.getInvoicesByParams(from, to, entityType, status, entityId)
+      const invoices = await this.invoicesModel.getInvoicesByParams(from, to, entityType, status, entityId)
       res.json(invoices)
     } catch (err) {
       console.log('Error getting invoices:', err.message)
@@ -39,8 +38,8 @@ export class InvoicesController {
     }
 
     try {
-      const { date, entity_id, total } = req.body
-      const invoice = await this.invoicesModel.addInvoice({ date, entity_id, total })
+      const { date, entityId, total } = req.body
+      const invoice = await this.invoicesModel.addInvoice({ date, entityId, total })
       res.status(200).json({ message: 'Invoice added', invoice })
     } catch (err) {
       console.log('Error adding invoice:', err.message)

@@ -38,7 +38,7 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsMo
     res.status(500).send('Internal Server Error')
   })
 
-  const PORT = process.env.PORT ?? 1238
+  const PORT = process.env.PORT ?? 1234
 
   const server = app.listen(PORT, () => {
     console.log(`Server started on port http://localhost:${PORT}`)

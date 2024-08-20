@@ -4,10 +4,10 @@ export class PaymentsController {
   }
 
   getAllPayments = async (req, res) => {
-    const { invoice_id } = req.query
+    const { invoiceId } = req.query
     try {
-      if (invoice_id) {
-        const payments = await this.paymentsModel.getPaymentsByInvoiceId(invoice_id)
+      if (invoiceId) {
+        const payments = await this.paymentsModel.getPaymentsByInvoiceId(invoiceId)
         res.json(payments)
       } else {
         const payments = await this.paymentsModel.getAllPayments()
@@ -21,8 +21,8 @@ export class PaymentsController {
 
   addPayment = async (req, res) => {
     try {
-      const { invoice_id, date, amount, payment_method, type } = req.body
-      const result = await this.paymentsModel.addPayment({ invoice_id, date, amount, payment_method, type })
+      const { invoiceId, date, amount, paymentMethod, type } = req.body
+      const result = await this.paymentsModel.addPayment({ invoiceId, date, amount, paymentMethod, type })
       if (result.success) {
         res.json(result)
       } else {
