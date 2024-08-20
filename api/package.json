@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "start:sqlite3-turso": "node --watch server-with-sqlite-turso.js",
-    "start:sqlite3-local": "node --watch server-with-sqlite-local.js"
+    "start:sqlite3-local": "node --watch server-with-sqlite-local.js",
+    "lint": "npx standard"
   },
   "repository": {
     "type": "git",
