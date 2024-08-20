@@ -7,7 +7,6 @@ const Home: React.FC = () => {
   return (
     <div>
       Home
-      <DataTableDemo />
     </div>
   );
 }
