@@ -1,8 +1,7 @@
-import { db } from "../../database/connection.js";
+import { db } from '../../database/connection.js'
 
 export class invoicesModel {
-
-  static async getAllInvoices() {
+  static async getAllInvoices () {
     try {
       const query = `
         SELECT
@@ -18,42 +17,42 @@ export class invoicesModel {
         LEFT JOIN payments p ON i.id = p.invoice_id
         GROUP BY i.id, i.date, e.name, i.total
         ORDER BY i.date, i.id;
-      `;
-      const invoices = await db.allAsync(query);
-      return invoices;
+      `
+      const invoices = await db.allAsync(query)
+      return invoices
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  static async addInvoice({ date, entity_id, total }) {
+  static async addInvoice ({ date, entity_id, total }) {
     try {
       const result = await new Promise((resolve, reject) => {
         db.run(
-          "INSERT INTO invoices (date, entity_id, total) VALUES (?, ?, ?)",
+          'INSERT INTO invoices (date, entity_id, total) VALUES (?, ?, ?)',
           [date, entity_id, total],
           function (err) {
             if (err) {
-              reject(err);
+              reject(err)
             } else {
-              resolve({ id: this.lastID }); // `this.lastID` gives the ID of the inserted row
+              resolve({ id: this.lastID }) // `this.lastID` gives the ID of the inserted row
             }
           }
-        );
-      });
-      return result;
+        )
+      })
+      return result
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 
-  static async getInvoicesByParams(from, to = null, entityType, status, entityId = null) {
+  static async getInvoicesByParams (from, to = null, entityType, status, entityId = null) {
     try {
       // Si 'to' no se proporciona, establece 'to' igual a 'from'
       if (!to && from) {
-        to = from;
+        to = from
       }
-    
+
       // Construir la consulta SQL con la cláusula de estado
       let query = `
         SELECT
@@ -68,47 +67,43 @@ export class invoicesModel {
         JOIN entities e ON i.entity_id = e.id
         LEFT JOIN payments p ON i.id = p.invoice_id
         WHERE e.type = ?
-      `;
-    
+      `
+
       // Agregar la condición de fecha a la consulta si 'from' está definido
-      const params = [entityType];
+      const params = [entityType]
       if (from) {
-        query += " AND i.date BETWEEN ? AND ?";
-        params.push(from);
-        params.push(to || from);
+        query += ' AND i.date BETWEEN ? AND ?'
+        params.push(from)
+        params.push(to || from)
       }
-    
+
       // Agregar la condición de estado a la consulta si es necesario
       if (status === 'pending') {
-        query += " AND i.status = 'pending'";
+        query += " AND i.status = 'pending'"
       } else if (status === 'paid') {
-        query += " AND i.status = 'paid'";
+        query += " AND i.status = 'paid'"
       }
-    
+
       // Agregar la condición de entityId si se proporciona
       if (entityId) {
-        query += " AND i.entity_id = ?";
-        params.push(parseInt(entityId));
+        query += ' AND i.entity_id = ?'
+        params.push(parseInt(entityId))
       }
-    
+
       query += `
         GROUP BY i.id, i.date, e.name, i.total
         ORDER BY i.date, i.id;
-      `;
-    
+      `
+
       // Ejecuta la consulta con los parámetros
-      const invoices = await db.allAsync(query, params);
-      return invoices;
+      const invoices = await db.allAsync(query, params)
+      return invoices
     } catch (err) {
-      throw err;
+      throw err
     }
   }
-  
-  
-  
-  
 
-  static async getPendingInvoicesFromSuppliers() {
+  static async getPendingInvoicesFromSuppliers () {
     try {
       const query = `
               SELECT
@@ -125,11 +120,11 @@ export class invoicesModel {
               GROUP BY i.id, e.name, i.total
               HAVING remaining_amount > 0;
 
-      `;
-      const invoices = await db.allAsync(query);
-      return invoices;
+      `
+      const invoices = await db.allAsync(query)
+      return invoices
     } catch (err) {
-      throw err;
+      throw err
     }
   }
 }

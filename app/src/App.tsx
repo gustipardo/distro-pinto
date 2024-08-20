@@ -1,11 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import {Sidebar} from "./components/Sidebar";
+import { Sidebar } from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
-import {AddInvoice} from "./components/pages/AddInvoice";
-import {Placeholder} from "./components/Placeholder";
+import { AddInvoice } from "./components/pages/AddInvoice";
+import { Placeholder } from "./components/Placeholder";
 import Home from "./components/pages/Home";
-import { Suppliers } from "./components/pages/Suppliers";
+import { Suppliers } from './components/pages/Suppliers';
 import { Stadistic } from "./components/pages/Statistics";
 import { Toaster } from "./components/ui/toaster";
 
@@ -21,7 +21,7 @@ export const App = () => {
         <Route path="/proveedores" element={<Suppliers />} />
         <Route path="/estadisticas" element={<Stadistic />} />
       </Routes>
-      <Toaster  />
+      <Toaster />
     </div>
   );
 }
