@@ -10,6 +10,11 @@ on:
       - master
 
 jobs:
+  force-Error:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail
+        run: exit 1
   lint:
     runs-on: ubuntu-22.04
     steps:
@@ -53,24 +58,8 @@ jobs:
       - name: Run backend tests
         run: npm run test:api
 
-  deploy-api:
-    needs: [backend-test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-      - name: Install dependencies
-        run: npm ci
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
-      - name: Deploy API
-        run: RAILWAY_TOKEN=$RAILWAY_TOKEN railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-
   deploy-app:
-    needs: [backend-test, deploy-api]
+    needs: [backend-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
