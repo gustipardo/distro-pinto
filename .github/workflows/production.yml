@@ -10,11 +10,6 @@ on:
       - master
 
 jobs:
-  force-Error:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fail
-        run: exit 1
   lint:
     runs-on: ubuntu-22.04
     steps:
