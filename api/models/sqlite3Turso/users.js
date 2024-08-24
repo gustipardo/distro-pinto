@@ -30,13 +30,10 @@ export class usersModel {
   static async register ({ username, password }) {
     // Validar si el usuario existe
     const previousQuery = 'SELECT * FROM users WHERE username = ?'
-    console.log('previousQuery', username)
     const user = await db.execute({ sql: previousQuery, args: [username] })
-    console.log('user', user)
     if (user.rows.length > 0) throw new Error('User already exists')
 
     const id = crypto.randomUUID()
-    console.log('salt', process.env.SALT_ROUNDS)
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS))
     const roleId = 4
     const query = 'INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, ?)'

@@ -21,6 +21,7 @@ import {
   CookieIcon
 } from "@radix-ui/react-icons";
 import { Link, useLocation } from 'react-router-dom'; // Importa useLocation
+import { logout } from "@/services/logout";
 
 const links = [
   { label: "Agregar facturas", path: "/agregar-facturas", icon: <PlusIcon className="h-6 w-6" /> },
@@ -31,6 +32,11 @@ const links = [
 
 export const Sidebar = () => {
   const location = useLocation(); // Obtén la ubicación actual
+
+  const handleLogout = async () => {
+    await logout();
+    window.location.href = "/login";
+  };
 
   return (
     <div className="w-full bg-gray">
@@ -77,6 +83,9 @@ export const Sidebar = () => {
                   </SheetClose>
                 </NavigationMenuItem>
               ))}
+              <Button onClick={handleLogout}>
+                Cerrar sesión
+              </Button>
             </NavigationMenuList>
           </NavigationMenu>
 
@@ -108,6 +117,9 @@ export const Sidebar = () => {
                 <span className="ml-2">{label}</span>
               </Link>
             ))}
+              <Button onClick={handleLogout}>
+                Cerrar sesión
+              </Button>
           </NavigationMenuList>
 
         </div>

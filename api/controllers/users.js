@@ -32,8 +32,6 @@ export class UsersController {
   }
 
   login = async (req, res) => {
-    console.log('Login request received')
-
     const validationResult = validateLogin(req.body)
     if (!validationResult.success) {
       const errorMessages = validationResult.errors.map(error => error.message)
@@ -42,9 +40,6 @@ export class UsersController {
 
     try {
       const { username, password } = req.body
-      console.log('username', username)
-      console.log('password', password)
-
       const user = await this.usersModel.login({ username, password })
 
       // Generar accessToken
@@ -86,7 +81,6 @@ export class UsersController {
   }
 
   register = async (req, res) => {
-    console.log('Register request received')
     const validationResult = validateRegister(req.body)
     if (!validationResult.success) {
       const errorMessages = validationResult.errors.map(error => error.message)
@@ -95,9 +89,6 @@ export class UsersController {
 
     try {
       const { username, password } = req.body
-      console.log('username', username)
-      console.log('password', password)
-
       const id = await this.usersModel.register({ username, password })
       res.send({ id })
     } catch (err) {

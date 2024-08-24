@@ -1,12 +1,9 @@
 import React from "react";
 
 const Home: React.FC = () => {
-
-
   return (
-    <div>
+    <div className="flex justify-center items-center h-screen">
       Home
-      Branch 1
     </div>
   );
 }

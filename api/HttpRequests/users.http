@@ -11,7 +11,7 @@ POST http://localhost:1234/users/login
 Content-Type: application/json
 
 {
-    "username": "gustav",
+    "username": "gus",
     "password": "123456"
 }
 
@@ -20,7 +20,7 @@ POST http://localhost:1234/users/register
 Content-Type: application/json
 
 {
-    "username": "gustavo",
+    "username": "gustavos",
     "password": "123456"
 }
 

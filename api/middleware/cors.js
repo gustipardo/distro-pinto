@@ -8,15 +8,12 @@ const ACCEPTED_ORIGINS = [
 ]
 
 export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
-  // Creamos una funcion que al ejecutarla devuelva la funcionalidad del cors
   cors({
     origin: (origin, callback) => {
-      if (acceptedOrigins.includes(origin)) {
-        return callback(null, true)
-      }
-      if (!origin) {
+      if (acceptedOrigins.includes(origin) || !origin) {
         return callback(null, true)
       }
       return callback(new Error('Not allowed by CORS', origin))
-    }
+    },
+    credentials: true // Permite el uso de credenciales (cookies, autorizaciones HTTP, etc.)
   })
