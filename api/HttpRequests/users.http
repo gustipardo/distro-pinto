@@ -2,16 +2,27 @@
 GET http://localhost:1234/users
 Accept: application/json
 
-### POST /users
-POST http://localhost:1234/users
+### GET /users/:id
+GET http://localhost:1234/users/fd50e252-4eee-4b4b-92a1-2b21aa724184
+Accept: application/json
+
+### Login
+POST http://localhost:1234/users/login
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "role": "admin"
+    "username": "gustav",
+    "password": "123456"
 }
 
-### GET /users/:id
-GET http://localhost:1234/users/3
-Accept: application/json
+### Register
+POST http://localhost:1234/users/register
+Content-Type: application/json
 
+{
+    "username": "gustavo",
+    "password": "123456"
+}
+
+### Logout
+POST http://localhost:1234/users/logout

@@ -33,12 +33,20 @@ CREATE TABLE action_history (
   date DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
-
 CREATE TABLE users (
-  id INTEGER PRIMARY KEY,
-  name VARCHAR NOT NULL,
-  role VARCHAR NOT NULL
+  id UUID PRIMARY KEY,
+  username VARCHAR NOT NULL UNIQUE,
+  password VARCHAR NOT NULL,
+  role_id INTEGER,
+  FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+CREATE TABLE roles (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role_name VARCHAR NOT NULL UNIQUE,
+  description TEXT
+);
+
 
 -- Insertar datos en `users`
 INSERT INTO users (id, name, role) VALUES (1, 'Vanina', 'admin');
@@ -114,3 +122,10 @@ LEFT JOIN payments p ON i.id = p.invoice_id
 WHERE e.type = 'supplier' AND i.status = 'pending'
 GROUP BY i.id, e.name, i.total
 HAVING remaining_amount > 0;
+
+
+-- No reflejado en producción
+INSERT INTO roles (role_name, description) VALUES
+  ('administrator', 'User with administrative privileges'),
+  ('delivery_person', 'User responsible for delivering products'),
+  ('sales_person', 'User responsible for taking orders and selling products in stores');

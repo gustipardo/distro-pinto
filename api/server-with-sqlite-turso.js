@@ -4,4 +4,4 @@ import { usersModel } from './models/sqlite3Turso/users.js'
 import { entitiesModel } from './models/sqlite3Turso/entities.js'
 import { paymentsModel } from './models/sqlite3Turso/payments.js'
 
-createApp({ invoicesModel, usersModel, entitiesModel, paymentsModel })
+export const { app, server } = createApp({ invoicesModel, usersModel, entitiesModel, paymentsModel })
