@@ -6,6 +6,9 @@ Accept: application/json
 GET http://localhost:1234/users/fd50e252-4eee-4b4b-92a1-2b21aa724184
 Accept: application/json
 
+### refreshAccessToken
+GET http://localhost:1234/users/refresh-token
+
 ### Login
 POST http://localhost:1234/users/login
 Content-Type: application/json
@@ -28,5 +31,3 @@ Content-Type: application/json
 ### Logout
 POST http://localhost:1234/users/logout
 
-### refreshAccessToken
-GET http://localhost:1234/users/refres-token

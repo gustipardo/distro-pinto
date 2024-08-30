@@ -5,6 +5,8 @@ export const createUsersRouter = ({ usersModel }) => {
   const UsersRouter = Router()
   const usersController = new UsersController({ usersModel })
 
+  UsersRouter.get('/refresh-token', usersController.refreshAcessToken)
+
   UsersRouter.get('/', usersController.getAllUsers)
 
   UsersRouter.get('/:id', usersController.getUserById)
@@ -15,7 +17,6 @@ export const createUsersRouter = ({ usersModel }) => {
 
   UsersRouter.post('/register', usersController.register)
 
-  UsersRouter.get('/refresh-token', usersController.refreshAcessToken)
 
   return UsersRouter
 }

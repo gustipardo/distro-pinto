@@ -2,7 +2,7 @@ import { validateLogin, validateRegister } from '../schemas/Autentication.js'
 import jwt from 'jsonwebtoken'
 
 export class UsersController {
-  constructor ({ usersModel }) {
+  constructor({ usersModel }) {
     this.usersModel = usersModel
   }
 
@@ -30,6 +30,38 @@ export class UsersController {
       res.status(500).send('Error getting user by id')
     }
   }
+
+  refreshAcessToken = async (req, res) => {
+    const refreshToken = req.cookies.refresh_token; // Asegúrate de que el nombre coincide
+    console.log("refresh_token", refreshToken);
+
+    if (!refreshToken) {
+      return res.status(401).send('Refresh token not provided');
+    }
+
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.SECRET_JWT_KEY);
+      const user = decoded.user;
+
+      // Generar un nuevo accessToken
+      const newAccessToken = jwt.sign({ user }, process.env.SECRET_JWT_KEY, {
+        expiresIn: '1h'
+      });
+
+      res
+        .cookie('access_token', newAccessToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 1000 * 60 * 60 // 1 hora
+        })
+        .send({ accessToken: newAccessToken });
+    } catch (err) {
+      console.log('Error refreshing access token:', err.message);
+      res.status(403).send('Invalid refresh token');
+    }
+  }
+
 
   login = async (req, res) => {
     const validationResult = validateLogin(req.body)
@@ -94,36 +126,6 @@ export class UsersController {
     } catch (err) {
       console.log('Error registering:', err.message)
       res.status(500).send('Error registering')
-    }
-  }
-
-  refreshAccessToken = async (req, res) => {
-    const { refreshToken } = req.cookies
-
-    if (!refreshToken) {
-      return res.status(401).send('Refresh token not provided')
-    }
-
-    try {
-      const decoded = jwt.verify(refreshToken, process.env.SECRET_JWT_KEY)
-      const user = decoded.user
-
-      // Generar un nuevo accessToken
-      const newAccessToken = jwt.sign({ user }, process.env.SECRET_JWT_KEY, {
-        expiresIn: '1h'
-      })
-
-      res
-        .cookie('access_token', newAccessToken, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'strict',
-          maxAge: 1000 * 60 * 60 // 1 hora
-        })
-        .send({ accessToken: newAccessToken })
-    } catch (err) {
-      console.log('Error refreshing access token:', err.message)
-      res.status(403).send('Invalid refresh token')
     }
   }
 }
