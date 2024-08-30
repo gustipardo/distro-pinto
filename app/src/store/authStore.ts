@@ -1,5 +1,8 @@
 import { login as loginService } from '@/services/login';
 import { logout as logoutService } from '@/services/logout';
+import { refreshToken as refreshTokenService } from '@/services/refresAccessToken';
+import { validateAccessToken as validateAccessTokenService } from '@/services/validateAcessToken';
+
 import { create } from 'zustand'
 
 
@@ -17,7 +20,8 @@ type Store = {
     setAuthenticated: (isAthenticated: boolean) => void
     logout: () => void
     setAccessToken: (accessToken: string) => void
-
+    refreshAcessToken: () => Promise<void>
+    validateAccessToken: () => Promise<void>
 }
 
 export const authStore = create<Store>()((set) => ({
@@ -51,15 +55,31 @@ export const authStore = create<Store>()((set) => ({
             console.error(error);
             throw new Error('Invalid username or password');
         }
-    }
-    /*     refreshAcessToken: async (): Promise<void> => {
-            try {
-                const response = await refreshTokenService();
-                set({ isAuthenticated: true, userData: response.user, accessToken: response.accessToken });
-                return response; // Response.message?
-            } catch (error) {
-                console.error(error);
-                throw new Error('Invalid username or password');
+    },
+    refreshAcessToken: async (): Promise<void> => {
+        try {
+            const response = await refreshTokenService();
+            console.log("RESPONSE2", response);
+            set({ accessToken: response.accessToken });
+            console.log(response.accessToken)
+            return response;
+        } catch (error) {
+            console.error("error", error);
+            throw new Error('Error refreshing access token');
+        }
+    },
+    validateAccessToken: async (): Promise<void> => {
+        try {
+            const response = await validateAccessTokenService();
+            if (response.ok) {
+                set({ isAuthenticated: true, userData: response.user });
             }
-        } */
+            console.log("accesstoken", response.accessToken)
+            return response;
+        } catch (error) {
+            set({ isAuthenticated: false, userData: null, accessToken: null });
+            console.error("error", error);
+            throw new Error('Error refreshing access token');
+        }
+    }
 }))

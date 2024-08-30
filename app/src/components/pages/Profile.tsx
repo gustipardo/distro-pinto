@@ -10,10 +10,15 @@ export const Profile: React.FC = () => {
     const accessToken = authStore((state) => state.accessToken);
     const navigate = useNavigate();
     const logout = authStore((state) => state.logout);
+    const refreshAcessToken = authStore((state) => state.refreshAcessToken);
 
     const handleLogout = async () => {
         navigate('/login');
         await logout();
+    };
+
+    const handleRefresToken = async () => {
+        await refreshAcessToken();
     };
     return (
         <Card className="flex justify-center items-center h-screen">
@@ -23,6 +28,7 @@ export const Profile: React.FC = () => {
                 <p className="text-gray-700 mb-4"><strong>Rol:</strong> {userData?.role_name}</p>
                 {accessToken}
                 <Button onClick={handleLogout}>Cerrar sesión</Button>
+                <Button onClick={handleRefresToken}>Refrescar Access Token</Button>
             </div>
         </Card>
     );

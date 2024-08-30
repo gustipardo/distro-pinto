@@ -6,7 +6,7 @@ import { Forbidden } from "./pages/Forbidden"
 const ProtectedRoutes = () => {
     const userData = authStore((state) => state.userData)
 
-    return (userData?.role_name === 'administrator') ? <Outlet /> : <Forbidden />
+    return (userData?.role_name !== 'administrator') ? <Forbidden /> : <Outlet />
 
 
 }

@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 import { Sidebar } from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
@@ -15,9 +15,32 @@ import { Register } from "./components/pages/Register";
 import { NotFound } from "./components/pages/NotFound";
 import { Profile } from "./components/pages/Profile";
 import ProtectedRoutesByRole from "./components/ProtectedRoutesByRole";
+import { useEffect, useState } from "react";
 
 export const App = () => {
+  const [loading, setLoading] = useState(true);
   const isAuthenticated = authStore((state) => state.isAuthenticated)
+  const validateAccessTokenStore = authStore((state) => state.validateAccessToken)
+
+  useEffect(() => {
+    const validateAccessToken = async () => {
+      try {
+        await validateAccessTokenStore();
+      } catch {
+        // Handle any errors if needed
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    validateAccessToken();
+    console.log('isAthtenticated', isAuthenticated);
+  }, [validateAccessTokenStore]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Or a more sophisticated loading indicator
+  }
+
 
   return (
     <div className="App">
@@ -33,10 +56,11 @@ export const App = () => {
           <Route path="/proveedores" element={<Suppliers />} />
           <Route path="/estadisticas" element={<Statistic />} />
           <Route path="/facturas" element={<InvoicesList />} />
+          <Route element={<ProtectedRoutesByRole />}>
+            <Route path="/perfil" element={<Profile />} />
+          </Route>
         </Route>
-        <Route element={<ProtectedRoutesByRole />}>
-          <Route path="/perfil" element={<Profile />} />
-        </Route>
+
         <Route path="*" element={<NotFound />} />
 
       </Routes>

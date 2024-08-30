@@ -7,6 +7,8 @@ export const createUsersRouter = ({ usersModel }) => {
 
   UsersRouter.get('/refresh-token', usersController.refreshAcessToken)
 
+  UsersRouter.get('/me', usersController.validateAccessToken)
+
   UsersRouter.get('/', usersController.getAllUsers)
 
   UsersRouter.get('/:id', usersController.getUserById)
