@@ -65,7 +65,7 @@ export class UsersController {
           sameSite: 'strict',
           maxAge: 1000 * 60 * 60 * 24 * 7 // 7 días
         })
-        .send({ user })
+        .send({ user, accessToken })
     } catch (err) {
       console.log('Error logging in:', err.message)
       res.status(500).send('Error logging in')
@@ -88,12 +88,42 @@ export class UsersController {
     }
 
     try {
-      const { username, password } = req.body
-      const id = await this.usersModel.register({ username, password })
+      const { username, password, roleId } = req.body
+      const id = await this.usersModel.register({ username, password, roleId })
       res.send({ id })
     } catch (err) {
       console.log('Error registering:', err.message)
       res.status(500).send('Error registering')
+    }
+  }
+
+  refreshAccessToken = async (req, res) => {
+    const { refreshToken } = req.cookies
+
+    if (!refreshToken) {
+      return res.status(401).send('Refresh token not provided')
+    }
+
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.SECRET_JWT_KEY)
+      const user = decoded.user
+
+      // Generar un nuevo accessToken
+      const newAccessToken = jwt.sign({ user }, process.env.SECRET_JWT_KEY, {
+        expiresIn: '1h'
+      })
+
+      res
+        .cookie('access_token', newAccessToken, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 1000 * 60 * 60 // 1 hora
+        })
+        .send({ accessToken: newAccessToken })
+    } catch (err) {
+      console.log('Error refreshing access token:', err.message)
+      res.status(403).send('Invalid refresh token')
     }
   }
 }

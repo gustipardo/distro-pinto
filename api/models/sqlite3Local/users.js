@@ -35,7 +35,7 @@ export class usersModel {
   }
 
   static async login ({ username, password }) {
-    const query = 'SELECT * FROM users WHERE username = ?'
+    const query = 'SELECT * FROM users JOIN roles ON users.role_id = roles.id WHERE username = ?'
     const user = await db.allAsync(query, [username])
     if (user.length === 0) throw new Error('User not found')
 
@@ -45,7 +45,7 @@ export class usersModel {
     return publicUser
   }
 
-  static async register ({ username, password }) {
+  static async register ({ username, password, roleId }) {
     // Validar si el usuario existe
     const previousQuery = 'SELECT * FROM users WHERE username = ?'
     const user = await db.allAsync(previousQuery, [username])
@@ -54,9 +54,8 @@ export class usersModel {
 
     const id = crypto.randomUUID()
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS))
-    const roleId = 4
     const query = 'INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, ?)'
-    await db.allAsync(query, [id, username, hashPassword, roleId])
+    await db.allAsync(query, [id, username, hashPassword, parseInt(roleId)])
     return id
   }
 }

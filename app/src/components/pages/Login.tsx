@@ -1,37 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
-import { login } from "@/services/login";
-import { getCookie } from "@/services/getCookie";
+import { authStore } from "@/store/authStore";
+import { useNavigate } from "react-router-dom";
 
-const Login: React.FC = () => {
+export const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-
-  const access_token = getCookie("access_token");
-   
-  useEffect(() => {
-    console.log("access_token", access_token);
-  }, [access_token]);
+  const login = authStore((state) => state.login)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
     try {
       const result = await login({ username, password });
-      if (result.error) {
-        setError(result.error); // Ajusta esto según cómo manejes los errores en tu respuesta
-      } else {
-        // Maneja la respuesta exitosa, por ejemplo, redirigiendo al usuario
-        console.log("Login successful:", result);
-        // Redirigir al usuario o realizar otras acciones aquí
-      }
-      window.location.href = "/";
+      /*       if (!result) {
+              setError(result); // Ajusta esto según cómo manejes los errores en tu respuesta
+            } else {
+              // Maneja la respuesta exitosa, por ejemplo, redirigiendo al usuario
+              console.log("Login successful:", result);
+              // Redirigir al usuario o realizar otras acciones aquí
+            } */
+      /*  navigate("/") */
+      navigate('/');
+      return result
     } catch (err) {
       setError("Hubo un error al intentar iniciar sesión");
       console.error("Login error:", err);
@@ -52,9 +49,9 @@ const Login: React.FC = () => {
           </div>
           <form onSubmit={handleSubmit} className="grid gap-4">
             <div className="grid gap-2">
-                <div className="flex items-center">
-                    <Label htmlFor="login-username">Nombre de usuario</Label>
-                </div>
+              <div className="flex items-center">
+                <Label htmlFor="login-username">Nombre de usuario</Label>
+              </div>
               <Input
                 id="login-username"
                 type="text"
@@ -109,5 +106,3 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
-export default Login;

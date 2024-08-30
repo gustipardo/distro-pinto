@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { register } from "@/services/register";
 
-const Register: React.FC = () => {
+export const Register: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -14,7 +14,7 @@ const Register: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    
+
     try {
       const result = await register({ username, password });
       if (result.error) {
@@ -98,5 +98,3 @@ const Register: React.FC = () => {
     </div>
   );
 };
-
-export default Register;

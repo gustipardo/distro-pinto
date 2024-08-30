@@ -15,5 +15,7 @@ export const createUsersRouter = ({ usersModel }) => {
 
   UsersRouter.post('/register', usersController.register)
 
+  UsersRouter.get('/refresh-token', usersController.refreshAcessToken)
+
   return UsersRouter
 }
