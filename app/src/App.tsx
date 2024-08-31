@@ -15,19 +15,19 @@ import { Register } from "./components/pages/Register";
 import { NotFound } from "./components/pages/NotFound";
 import { Profile } from "./components/pages/Profile";
 import ProtectedRoutesByRole from "./components/ProtectedRoutesByRole";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 export const App = () => {
   const [loading, setLoading] = useState(true);
   const isAuthenticated = authStore((state) => state.isAuthenticated)
   const validateAccessTokenStore = authStore((state) => state.validateAccessToken)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const validateAccessToken = async () => {
       try {
         await validateAccessTokenStore();
-      } catch {
-        // Handle any errors if needed
+      } catch (err) {
+        console.log('Error validating access token:', err)
       } finally {
         setLoading(false);
       }

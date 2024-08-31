@@ -1,36 +1,39 @@
-import { authStore } from "@/store/authStore";
+import { refreshToken as refreshTokenService } from '@/services/refreshAccessToken';
+import { authStore } from '@/store/authStore';
+
+export const fetchWithTokenRefresh = async (url: string, options?: RequestInit): Promise<Response> => {
+  const accessToken = authStore((state) => state.accessToken)
 
 
-export const fetchWithTokenRefresh = async (url: string, options: RequestInit = {}) => {
-  const accessToken = authStore((state) => state.accessToken);
-  const refreshAcessToken = authStore((state) => state.refreshAcessToken);
-  const logout = authStore((state) => state.logout);
+  // Configura el header Authorization
+  const headers = {
+    ...options?.headers,
+    Authorization: `Bearer ${accessToken}`,
+    'Content-Type': 'application/json',
+  };
 
-  let response = await fetch(url, {
-    ...options,
-    headers: {
-      ...options.headers,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
+  // Realiza la primera petición
+  let response = await fetch(url, { ...options, headers });
 
-  if (response.status === 401) { // Token expirado o inválido
-    // Intentar refrescar el token
-    const refreshResponse = await refreshAcessToken();
+  // Si la respuesta es 401, intentamos refrescar el token
+  if (response.status === 401) {
+    try {
+      const newTokenData = await refreshTokenService();
+      authStore.setState({ accessToken: newTokenData.accessToken });
 
-    if (refreshResponse.ok) {
-      // Reintentar la petición original con el nuevo token
-      response = await fetch(url, {
-        ...options,
-        headers: {
-          ...options.headers,
-          Authorization: `Bearer ${accessToken}`, // Nuevo access-token
-        },
-      });
-    } else {
-      // Redirigir al login si el refresh token es inválido o ha expirado
-      await logout();
-      window.location.href = '/login'; // O usando un router navigate('/login');
+      // Reintentamos la petición con el nuevo token
+      const newHeaders = {
+        ...headers,
+        Authorization: `Bearer ${newTokenData.accessToken}`,
+      };
+
+      response = await fetch(url, { ...options, headers: newHeaders });
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      // Si el refresh token falla, redirige al usuario al login
+      authStore.getState().logout();
+      window.location.href = '/login';
+      return response; // O retorna un error personalizado
     }
   }
 

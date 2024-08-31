@@ -2,7 +2,7 @@ import { validateLogin, validateRegister } from '../schemas/Autentication.js'
 import jwt from 'jsonwebtoken'
 
 export class UsersController {
-  constructor({ usersModel }) {
+  constructor ({ usersModel }) {
     this.usersModel = usersModel
   }
 
@@ -32,22 +32,22 @@ export class UsersController {
   }
 
   refreshAcessToken = async (req, res) => {
-    const refreshToken = req.cookies.refresh_token; // Asegúrate de que el nombre coincide
-    console.log("refresh_token", refreshToken);
+    const refreshToken = req.cookies.refresh_token // Asegúrate de que el nombre coincide
+    console.log('refresh_token', refreshToken)
 
     if (!refreshToken) {
-      console.log('refresh_token not provided');
-      return res.status(401).send('Refresh token not provided');
+      console.log('refresh_token not provided')
+      return res.status(401).send('Refresh token not provided')
     }
 
     try {
-      const decoded = jwt.verify(refreshToken, process.env.SECRET_JWT_KEY);
-      const user = decoded.user;
+      const decoded = jwt.verify(refreshToken, process.env.SECRET_JWT_KEY)
+      const user = decoded.user
 
       // Generar un nuevo accessToken
       const newAccessToken = jwt.sign({ user }, process.env.SECRET_JWT_KEY, {
         expiresIn: '1h'
-      });
+      })
 
       res
         .cookie('access_token', newAccessToken, {
@@ -56,35 +56,32 @@ export class UsersController {
           sameSite: 'strict',
           maxAge: 1000 * 60 * 60 // 1 hora
         })
-        .send({ accessToken: newAccessToken });
+        .send({ accessToken: newAccessToken })
     } catch (err) {
-      console.log('Error refreshing access token:', err.message);
-      res.status(403).send('Invalid refresh token');
+      console.log('Error refreshing access token:', err.message)
+      res.status(403).send('Invalid refresh token')
     }
   }
 
   validateAccessToken = async (req, res) => {
-    const accessToken = req.cookies.access_token; // Asegúrate de que el nombre coincide
-    console.log("access_token", accessToken);
+    const accessToken = req.cookies.access_token // Asegúrate de que el nombre coincide
+    console.log('access_token', accessToken)
 
     if (!accessToken) {
-      console.log('Access token not provided');
-      return res.status(401).send('Access token not provided');
+      console.log('Access token not provided')
+      return res.status(401).send('Access token not provided')
     }
 
     try {
-      const decoded = jwt.verify(accessToken, process.env.SECRET_JWT_KEY);
-      const user = decoded.user;
+      const decoded = jwt.verify(accessToken, process.env.SECRET_JWT_KEY)
+      const user = decoded.user
       // Si el token es válido, simplemente lo devolvemos
-      res.send({ user, accessToken: accessToken });
+      res.send({ user, accessToken })
     } catch (err) {
-      console.log('Error validating access token:', err.message);
-      res.status(403).send('Invalid access token');
+      console.log('Error validating access token:', err.message)
+      res.status(403).send('Invalid access token')
     }
-  };
-
-
-
+  }
 
   login = async (req, res) => {
     const validationResult = validateLogin(req.body)

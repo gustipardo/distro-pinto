@@ -5,9 +5,6 @@ export const validateAccessToken = async () => {
             method: 'GET',
             credentials: 'include', // Asegúrate de incluir las cookies
         });
-        if (!response.ok) {
-            throw new Error('Failed to validate access token');
-        }
         return response.json();
     } catch (error) {
         console.error(error);

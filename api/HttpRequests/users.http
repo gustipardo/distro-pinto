@@ -9,7 +9,7 @@ Accept: application/json
 ### refreshAccessToken
 GET http://localhost:1234/users/refresh-token
 
-### validate acessToken
+### validate accessToken
 GET http://localhost:1234/users/me
 
 

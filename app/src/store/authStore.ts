@@ -1,6 +1,6 @@
 import { login as loginService } from '@/services/login';
 import { logout as logoutService } from '@/services/logout';
-import { refreshToken as refreshTokenService } from '@/services/refresAccessToken';
+import { refreshToken as refreshTokenService } from '@/services/refreshAccessToken';
 import { validateAccessToken as validateAccessTokenService } from '@/services/validateAcessToken';
 
 import { create } from 'zustand'
@@ -71,13 +71,14 @@ export const authStore = create<Store>()((set) => ({
     validateAccessToken: async (): Promise<void> => {
         try {
             const response = await validateAccessTokenService();
-            if (response.ok) {
+            console.log("response", response)
+            console.log("response status", response.status)
+            if (response.status !== 401) {
                 set({ isAuthenticated: true, userData: response.user });
             }
             console.log("accesstoken", response.accessToken)
             return response;
         } catch (error) {
-            set({ isAuthenticated: false, userData: null, accessToken: null });
             console.error("error", error);
             throw new Error('Error refreshing access token');
         }
