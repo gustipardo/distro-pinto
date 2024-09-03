@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import { Sidebar } from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
@@ -15,31 +15,11 @@ import { Register } from "./components/pages/Register";
 import { NotFound } from "./components/pages/NotFound";
 import { Profile } from "./components/pages/Profile";
 import ProtectedRoutesByRole from "./components/ProtectedRoutesByRole";
-import { useLayoutEffect, useState } from "react";
 
 export const App = () => {
-  const [loading, setLoading] = useState(true);
   const isAuthenticated = authStore((state) => state.isAuthenticated)
-  const validateAccessTokenStore = authStore((state) => state.validateAccessToken)
 
-  useLayoutEffect(() => {
-    const validateAccessToken = async () => {
-      try {
-        await validateAccessTokenStore();
-      } catch (err) {
-        console.log('Error validating access token:', err)
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    validateAccessToken();
-    console.log('isAthtenticated', isAuthenticated);
-  }, [validateAccessTokenStore]);
-
-  if (loading) {
-    return <div>Loading...</div>; // Or a more sophisticated loading indicator
-  }
 
 
   return (
@@ -47,7 +27,6 @@ export const App = () => {
       {isAuthenticated && <Sidebar />}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Home />} />
           <Route path="/agregar-facturas" element={<AddInvoice />} />
@@ -58,6 +37,7 @@ export const App = () => {
           <Route path="/facturas" element={<InvoicesList />} />
           <Route element={<ProtectedRoutesByRole />}>
             <Route path="/perfil" element={<Profile />} />
+            <Route path="/register" element={<Register />} />
           </Route>
         </Route>
 
