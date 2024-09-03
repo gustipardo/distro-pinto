@@ -18,7 +18,8 @@ import {
   PlusIcon,
   MagnifyingGlassIcon,
   AngleIcon,
-  CookieIcon
+  CookieIcon,
+  PersonIcon
 } from "@radix-ui/react-icons";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { authStore } from "@/store/authStore";
@@ -28,7 +29,9 @@ const links = [
   { label: "Consultar facturas", path: "/facturas", icon: <MagnifyingGlassIcon className="h-6 w-6" />, roleRequired: 'administrator' },
   { label: "Estadísticas", path: "/estadisticas", icon: <AngleIcon className="h-6 w-6" />, roleRequired: 'administrator' },
   { label: "Proveedores", path: "/proveedores", icon: <CookieIcon className="h-6 w-6" />, roleRequired: 'administrator' },
-  { label: "Perfil", path: "/perfil", icon: <CookieIcon className="h-6 w-6" />, roleRequired: null },
+  { label: "Perfil", path: "/perfil", icon: <PersonIcon className="h-6 w-6" />, roleRequired: null },
+  { label: "Usuarios", path: "/register", icon: <PersonIcon className="h-6 w-6" />, roleRequired: 'administrator' },
+
 ];
 
 export const Sidebar = () => {

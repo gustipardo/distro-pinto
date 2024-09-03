@@ -18,6 +18,18 @@ export class UsersController {
     }
   }
 
+  getAllRoles = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized')
+    try {
+      const roles = await this.usersModel.getAllRoles()
+      res.json(roles)
+    } catch (err) {
+      console.log('Error getting roles:', err.message)
+      res.status(500).send('Error getting roles')
+    }
+  }
+
   getUserById = async (req, res) => {
     const { user } = req.session
     if (!user) return res.status(403).send('Access not authorized')
@@ -33,7 +45,6 @@ export class UsersController {
 
   refreshAcessToken = async (req, res) => {
     const refreshToken = req.cookies.refresh_token // Asegúrate de que el nombre coincide
-    console.log('refresh_token', refreshToken)
 
     if (!refreshToken) {
       console.log('refresh_token not provided')
@@ -65,7 +76,6 @@ export class UsersController {
 
   validateAccessToken = async (req, res) => {
     const accessToken = req.cookies.access_token // Asegúrate de que el nombre coincide
-    console.log('access_token', accessToken)
 
     if (!accessToken) {
       console.log('Access token not provided')
@@ -125,7 +135,6 @@ export class UsersController {
   }
 
   logout = async (req, res) => {
-    console.log('Logout request received')
     res
       .clearCookie('access_token')
       .clearCookie('refresh_token')

@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { UsersController } from '../controllers/users.js'
-import { authenticateToken } from '../middleware/authenticateToken.js'
 
 export const createUsersRouter = ({ usersModel }) => {
   const UsersRouter = Router()
@@ -10,9 +9,11 @@ export const createUsersRouter = ({ usersModel }) => {
 
   UsersRouter.get('/me', usersController.validateAccessToken)
 
-  UsersRouter.get('/', authenticateToken, usersController.getAllUsers)
+  UsersRouter.get('/', usersController.getAllUsers)
 
-  UsersRouter.get('/:id', authenticateToken, usersController.getUserById)
+  UsersRouter.get('/roles', usersController.getAllRoles)
+
+  UsersRouter.get('/:id', usersController.getUserById)
 
   UsersRouter.post('/login', usersController.login)
 

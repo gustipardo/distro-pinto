@@ -10,6 +10,14 @@ export class usersModel {
     return user.rows
   }
 
+  static async getAllRoles () {
+    const query = `
+      SELECT * FROM roles 
+    `
+    const roles = await db.execute(query)
+    return roles.rows
+  }
+
   static async getUserById (id) {
     const query = 'SELECT * FROM users WHERE id = ?'
     const user = await db.execute({ sql: query, args: [id] })
@@ -27,7 +35,7 @@ export class usersModel {
     return publicUser
   }
 
-  static async register ({ username, password }) {
+  static async register ({ username, password, roleId }) {
     // Validar si el usuario existe
     const previousQuery = 'SELECT * FROM users WHERE username = ?'
     const user = await db.execute({ sql: previousQuery, args: [username] })
@@ -35,9 +43,8 @@ export class usersModel {
 
     const id = crypto.randomUUID()
     const hashPassword = await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS))
-    const roleId = 4
     const query = 'INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, ?)'
-    await db.execute({ sql: query, args: [id, username, hashPassword, roleId] })
+    await db.execute({ sql: query, args: [id, username, hashPassword, parseInt(roleId)] })
     return id
   }
 }

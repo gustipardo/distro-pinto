@@ -19,6 +19,14 @@ export class usersModel {
     return users
   }
 
+  static async getAllRoles () {
+    const query = `
+      SELECT * FROM roles 
+    `
+    const roles = await db.allAsync(query)
+    return roles
+  }
+
   static async getUserById (id) {
     const query = `
       SELECT 

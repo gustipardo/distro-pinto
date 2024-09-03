@@ -3,10 +3,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 
 const formSchemaExample = z.object({
-    username: z.string().min(2, {
-      message: "El nombre de usuario debe tener al menos 2 caracteres.",
-    }),
-  });
+  username: z.string().min(2, {
+    message: "El nombre de usuario debe tener al menos 2 caracteres.",
+  }),
+});
 
 export const formSchemaExampleResolver = zodResolver(formSchemaExample);
 
@@ -15,7 +15,7 @@ const addSupplierInvoiceSchema = z.object({
   date: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "La fecha debe ser válida",
   }),
-  entity_id: z.number({message: "Se debe seleccionar un proveedor"}).int().positive({ message: "El ID de la entidad debe ser un entero positivo" }),
+  entity_id: z.number({ message: "Se debe seleccionar un proveedor" }).int().positive({ message: "El ID de la entidad debe ser un entero positivo" }),
   total: z.string()
     .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val) && val > 0, {
@@ -48,3 +48,18 @@ const addEntitySchema = z.object({
 });
 
 export const addEntitySchemaResolver = zodResolver(addEntitySchema);
+
+const regiterUserSchema = z.object({
+  username: z.string().min(3, { message: "El nombre de usuario debe tener al menos 3 caracteres." }).max(20, { message: "El nombre de usuario no puede tener mas de 20 caracteres." }),
+  password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres." }).max(20, { message: "La contraseña no puede tener mas de 20 caracteres." }),
+  roleId: z.number().int()
+})
+
+export const regiterUserSchemaResolver = zodResolver(regiterUserSchema);
+
+const logUserSchema = z.object({
+  username: z.string().min(3).max(20),
+  password: z.string().min(6).max(20)
+})
+
+export const logUserSchemaRedsolver = zodResolver(logUserSchema);

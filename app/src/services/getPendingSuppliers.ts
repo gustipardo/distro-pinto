@@ -3,7 +3,9 @@ import { fetchWithTokenRefresh } from "@/commons/ApiClient";
 export const getPendingInvoicesFromSuppliers = async () => {
   try {
     const url = `${import.meta.env.VITE_API_URL}/invoices/pending-suppliers`;
-    const response = await fetchWithTokenRefresh(url); // Usando fetchWithTokenRefresh
+    const response = await fetchWithTokenRefresh(url, {
+      credentials: 'include',
+    }); // Usando fetchWithTokenRefresh
     if (!response.ok) {
       throw new Error("Error getting pending invoices from suppliers");
     }

@@ -85,12 +85,6 @@ export const Login: React.FC = () => {
               {loading ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
           </form>
-          <div className="mt-4 text-center text-sm">
-            ¿No tienes una cuenta?{" "}
-            <a href="/register" className="underline">
-              Regístrate
-            </a>
-          </div>
         </div>
       </div>
       <div className="hidden lg:flex items-center justify-center bg-zinc-200">

@@ -2,7 +2,8 @@ import { z } from 'zod'
 
 const registerSchema = z.object({
   username: z.string().min(3).max(20),
-  password: z.string().min(6).max(20)
+  password: z.string().min(6).max(20),
+  roleId: z.number().int()
 })
 
 export function validateRegister (input) {
