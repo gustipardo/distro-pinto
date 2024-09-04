@@ -20,7 +20,7 @@ export const createApp = ({ invoicesModel, usersModel, entitiesModel, paymentsMo
 
   app.use((req, res, next) => {
     const token = req.cookies.access_token
-    console.log('token', token)
+
     req.session = { user: null } // Modificamos la peticion para agregar la informacion correspondiente a la sesion del usuario
     try {
       const data = jwt.verify(token, process.env.SECRET_JWT_KEY)

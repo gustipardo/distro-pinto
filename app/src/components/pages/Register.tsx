@@ -18,7 +18,6 @@ export const Register: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Inicializa useForm con zodResolver
   const form = useForm({
     resolver: regiterUserSchemaResolver,
     defaultValues: {

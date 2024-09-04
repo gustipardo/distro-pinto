@@ -52,6 +52,7 @@ export const addEntitySchemaResolver = zodResolver(addEntitySchema);
 const regiterUserSchema = z.object({
   username: z.string().min(3, { message: "El nombre de usuario debe tener al menos 3 caracteres." }).max(20, { message: "El nombre de usuario no puede tener mas de 20 caracteres." }),
   password: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres." }).max(20, { message: "La contraseña no puede tener mas de 20 caracteres." }),
+  confirmPassword: z.string().min(6, { message: "La contraseña debe tener al menos 6 caracteres." }).max(20, { message: "La contraseña no puede tener mas de 20 caracteres." }),
   roleId: z.number().int()
 })
 
