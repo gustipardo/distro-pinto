@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { Label } from "../ui/label";
 import { register } from "@/services/register";
 import { SelectRol } from "../reusable/SelectRole";
 import { regiterUserSchemaResolver } from "@/commons/Schemas";
@@ -98,7 +97,7 @@ export const Register: React.FC = () => {
               <FormField
                 control={form.control}
                 name="roleId"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel className="text-left block">Seleccione el rol del usuario:</FormLabel>
                     <SelectRol onSelectRol={handleRolSelect} />
