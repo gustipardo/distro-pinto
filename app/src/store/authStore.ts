@@ -39,7 +39,8 @@ export const authStore = create<Store>()((set) => ({
             set({ isAuthenticated: true });
             const { user, accessToken } = userData
             set({ isAuthenticated: true, userData: user, accessToken });
-            console.log(accessToken)
+            console.log("accessTOKen", accessToken)
+            console.log("Userdata", userData)
             return userData;
         } catch (error) {
             console.error(error);

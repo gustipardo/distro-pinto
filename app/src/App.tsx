@@ -19,9 +19,6 @@ import ProtectedRoutesByRole from "./components/ProtectedRoutesByRole";
 export const App = () => {
   const isAuthenticated = authStore((state) => state.isAuthenticated)
 
-
-
-
   return (
     <div className="App">
       {isAuthenticated && <Sidebar />}

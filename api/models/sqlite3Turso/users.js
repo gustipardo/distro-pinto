@@ -25,7 +25,7 @@ export class usersModel {
   }
 
   static async login ({ username, password }) {
-    const query = 'SELECT * FROM users WHERE username = ?'
+    const query = 'SELECT * FROM users JOIN roles ON users.role_id = roles.id WHERE username = ?'
     const user = await db.execute({ sql: query, args: [username] })
     if (user.rows.length === 0) throw new Error('User not found')
 
