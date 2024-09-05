@@ -7,8 +7,8 @@ export class UsersController {
   }
 
   getAllUsers = async (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('Access not authorized')
+    /* const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized') */
     try {
       const users = await this.usersModel.getAllUsers()
       res.json(users)
@@ -19,8 +19,8 @@ export class UsersController {
   }
 
   getAllRoles = async (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('Access not authorized')
+    /* const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized') */
     try {
       const roles = await this.usersModel.getAllRoles()
       res.json(roles)
@@ -31,9 +31,9 @@ export class UsersController {
   }
 
   getUserById = async (req, res) => {
-    const { user } = req.session
+    /*     const { user } = req.session
     if (!user) return res.status(403).send('Access not authorized')
-    try {
+ */ try {
       const { id } = req.params
       const user = await this.usersModel.getUserById(id)
       res.json(user)
@@ -159,8 +159,8 @@ export class UsersController {
   }
 
   deleteUser = async (req, res) => {
-    const { user } = req.session
-    if (!user) return res.status(403).send('Access not authorized')
+    /*     const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized') */
     try {
       const { id } = req.params
       await this.usersModel.deleteUser({ id })

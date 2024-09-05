@@ -5,7 +5,7 @@ export const getUsers = async () => {
             credentials: 'include',
         });
         if (!response.ok) {
-            throw new Error("Error getting pending invoices from suppliers");
+            throw new Error("Error getting users");
         }
         const data = await response.json();
         return data;
