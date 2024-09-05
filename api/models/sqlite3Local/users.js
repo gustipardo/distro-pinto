@@ -10,7 +10,6 @@ export class usersModel {
       SELECT 
         users.id, 
         users.username, 
-        users.password, 
         roles.role_name 
       FROM users 
       JOIN roles ON users.role_id = roles.id
@@ -65,5 +64,11 @@ export class usersModel {
     const query = 'INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, ?)'
     await db.allAsync(query, [id, username, hashPassword, parseInt(roleId)])
     return id
+  }
+
+  static async deleteUser ({ id }) {
+    const query = 'DELETE FROM users WHERE id = ?'
+    await db.allAsync(query, [id])
+    return 'User deleted'
   }
 }

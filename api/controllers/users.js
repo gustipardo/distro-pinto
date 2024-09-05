@@ -157,4 +157,17 @@ export class UsersController {
       res.status(500).send('Error registering')
     }
   }
+
+  deleteUser = async (req, res) => {
+    const { user } = req.session
+    if (!user) return res.status(403).send('Access not authorized')
+    try {
+      const { id } = req.params
+      await this.usersModel.deleteUser({ id })
+      res.send({ message: 'User deleted' })
+    } catch (err) {
+      console.log('Error deleting user:', err.message)
+      res.status(500).send('Error deleting user')
+    }
+  }
 }

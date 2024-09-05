@@ -6,7 +6,15 @@ config()
 
 export class usersModel {
   static async getAllUsers () {
-    const user = await db.execute('SELECT * FROM users')
+    const query = `
+    SELECT 
+      users.id, 
+      users.username, 
+      roles.role_name 
+    FROM users 
+    JOIN roles ON users.role_id = roles.id
+  `
+    const user = await db.execute(query)
     return user.rows
   }
 
@@ -46,5 +54,11 @@ export class usersModel {
     const query = 'INSERT INTO users (id, username, password, role_id) VALUES (?, ?, ?, ?)'
     await db.execute({ sql: query, args: [id, username, hashPassword, parseInt(roleId)] })
     return id
+  }
+
+  static async deleteUser ({ id }) {
+    const query = 'DELETE FROM users WHERE id = ?'
+    await db.execute({ sql: query, args: [id] })
+    return 'User deleted'
   }
 }

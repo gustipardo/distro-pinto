@@ -21,5 +21,7 @@ export const createUsersRouter = ({ usersModel }) => {
 
   UsersRouter.post('/register', usersController.register)
 
+  UsersRouter.delete('/:id', usersController.deleteUser)
+
   return UsersRouter
 }

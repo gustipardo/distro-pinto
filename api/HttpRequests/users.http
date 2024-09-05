@@ -37,6 +37,8 @@ Content-Type: application/json
     "roleId": 4
 }
 
-### Logout
+### LogoutallAsync
 POST http://localhost:1234/users/logout
 
+### Delete User
+DELETE http://localhost:1234/users/061b56b0-2bb3-4660-a932-dd6f0b0a22f0

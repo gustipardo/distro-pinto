@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 import { register } from "@/services/register";
-import { SelectRol } from "../reusable/SelectRole";
+import { SelectRol } from "./reusable/SelectRole";
 import { regiterUserSchemaResolver } from "@/commons/Schemas";
 import { useForm } from "react-hook-form";
 import {
@@ -54,7 +54,6 @@ export const Register: React.FC = () => {
         setError(result.error); // Ajusta esto según cómo manejes los errores en tu respuesta
       } else {
         console.log("Registration successful:", result);
-        window.location.href = "/login";
       }
     } catch (err) {
       setError("Hubo un error al intentar registrarse");

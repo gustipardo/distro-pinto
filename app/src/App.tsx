@@ -11,7 +11,6 @@ import { Toaster } from "./components/ui/toaster";
 import { Login } from "./components/pages/Login";
 import ProtectedRoutes from "./components/ProtectedRoutes";
 import { authStore } from "./store/authStore";
-import { Register } from "./components/pages/Register";
 import { NotFound } from "./components/pages/NotFound";
 import { Profile } from "./components/pages/Profile";
 import ProtectedRoutesByRole from "./components/ProtectedRoutesByRole";
@@ -34,7 +33,6 @@ export const App = () => {
           <Route path="/facturas" element={<InvoicesList />} />
           <Route element={<ProtectedRoutesByRole />}>
             <Route path="/perfil" element={<Profile />} />
-            <Route path="/register" element={<Register />} />
           </Route>
         </Route>
 
