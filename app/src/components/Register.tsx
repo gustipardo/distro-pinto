@@ -54,6 +54,7 @@ export const Register: React.FC = () => {
         setError(result.error); // Ajusta esto según cómo manejes los errores en tu respuesta
       } else {
         console.log("Registration successful:", result);
+        form.reset(); // Resetea los valores del formulario después de un registro exitoso
       }
     } catch (err) {
       setError("Hubo un error al intentar registrarse");
@@ -68,7 +69,7 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">

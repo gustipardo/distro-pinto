@@ -7,47 +7,47 @@ import {
 import { formatNumber } from "@/services/formatNumber"
 import { getPayments } from "@/services/getPayments"
 import { useEffect, useState } from "react"
-  
+
 interface paymentsOnHoverProps {
     amount: number,
     invoice_id: number,
     updateCount: number
 }
 
-export const PaymentsOnHover = ({amount, invoice_id, updateCount}: paymentsOnHoverProps) => {
+export const PaymentsOnHover = ({ amount, invoice_id, updateCount }: paymentsOnHoverProps) => {
     const [Payments, setPayments] = useState<any[]>([])
     useEffect(() => {
-        console.log("invoice_id " + invoice_id)
+        /* console.log("invoice_id " + invoice_id) */
         const fetchPayments = async () => {
             const response = await getPayments(invoice_id);
             setPayments(response)
         }
         fetchPayments()
-        
+
     }, [updateCount])
 
     useEffect(() => {
-        console.log("Payments" + Payments[0]?.amount)
+        /* console.log("Payments" + Payments[0]?.amount) */
     }, [Payments])
 
     return (
         <HoverCard>
-        <HoverCardTrigger>${formatNumber(amount)}</HoverCardTrigger>
-        <HoverCardContent>
-            <div className="space-y-2">
-            {Payments.length === 0 ? (
-                <p className="text-xs text-muted-foreground">Ningún pago registrado</p>
-            ) : (
-                Payments.map((payment) => (
-                <div key={payment.id} className="flex justify-start">
-                    <p className="text-xs text-muted-foreground">
-                    $ {formatNumber(payment.amount)} de {paymentMethodDictionary[payment.payment_method as PaymentMethod]} el {payment.date}
-                    </p>
+            <HoverCardTrigger>${formatNumber(amount)}</HoverCardTrigger>
+            <HoverCardContent>
+                <div className="space-y-2">
+                    {Payments.length === 0 ? (
+                        <p className="text-xs text-muted-foreground">Ningún pago registrado</p>
+                    ) : (
+                        Payments.map((payment) => (
+                            <div key={payment.id} className="flex justify-start">
+                                <p className="text-xs text-muted-foreground">
+                                    $ {formatNumber(payment.amount)} de {paymentMethodDictionary[payment.payment_method as PaymentMethod]} el {payment.date}
+                                </p>
+                            </div>
+                        ))
+                    )}
                 </div>
-                ))
-            )}
-            </div>
-        </HoverCardContent>
+            </HoverCardContent>
         </HoverCard>
     )
 }

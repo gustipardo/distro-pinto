@@ -8,7 +8,6 @@ export const getRoles = async () => {
             throw new Error("Error getting roles");
         }
         const data = await response.json();
-        console.log('data', data)
         return data;
     } catch (error) {
         console.error(error);

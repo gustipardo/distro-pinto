@@ -39,8 +39,6 @@ export const authStore = create<Store>()((set) => ({
             set({ isAuthenticated: true });
             const { user, accessToken } = userData
             set({ isAuthenticated: true, userData: user, accessToken });
-            console.log("accessTOKen", accessToken)
-            console.log("Userdata", userData)
             return userData;
         } catch (error) {
             console.error(error);
@@ -60,9 +58,7 @@ export const authStore = create<Store>()((set) => ({
     refreshAcessToken: async (): Promise<void> => {
         try {
             const response = await refreshTokenService();
-            console.log("RESPONSE2", response);
             set({ accessToken: response.accessToken });
-            console.log(response.accessToken)
             return response;
         } catch (error) {
             console.error("error", error);
@@ -72,12 +68,9 @@ export const authStore = create<Store>()((set) => ({
     validateAccessToken: async (): Promise<void> => {
         try {
             const response = await validateAccessTokenService();
-            console.log("response", response)
-            console.log("response status", response.status)
             if (response.status !== 401) {
                 set({ isAuthenticated: true, userData: response.user });
             }
-            console.log("accesstoken", response.accessToken)
             return response;
         } catch (error) {
             console.error("error", error);

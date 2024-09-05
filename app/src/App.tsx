@@ -3,7 +3,6 @@ import "./App.css";
 import { Sidebar } from "./components/Sidebar";
 import InvoicesList from "./components/pages/InvoicesList";
 import { AddInvoice } from "./components/pages/AddInvoice";
-import { Placeholder } from "./components/Placeholder";
 import { Home } from "./components/pages/Home";
 import { Suppliers } from './components/pages/Suppliers';
 import { Statistic } from "./components/pages/Statistics";
@@ -25,13 +24,11 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/" element={<Home />} />
-          <Route path="/agregar-facturas" element={<AddInvoice />} />
-          <Route path="/placeholder" element={<Placeholder />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/proveedores" element={<Suppliers />} />
-          <Route path="/estadisticas" element={<Statistic />} />
-          <Route path="/facturas" element={<InvoicesList />} />
           <Route element={<ProtectedRoutesByRole />}>
+            <Route path="/agregar-facturas" element={<AddInvoice />} />
+            <Route path="/proveedores" element={<Suppliers />} />
+            <Route path="/estadisticas" element={<Statistic />} />
+            <Route path="/facturas" element={<InvoicesList />} />
             <Route path="/perfil" element={<Profile />} />
           </Route>
         </Route>

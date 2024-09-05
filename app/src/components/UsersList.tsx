@@ -18,15 +18,6 @@ export type User = {
 export const columns: ColumnDef<User>[] = [
     {
         id: "select",
-        header: ({ table }) => (
-            <Checkbox
-                checked={
-                    table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
-                }
-                onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-                aria-label="Select all"
-            />
-        ),
         cell: ({ row }) => (
             <Checkbox
                 checked={row.getIsSelected()}
@@ -39,7 +30,7 @@ export const columns: ColumnDef<User>[] = [
     },
     {
         accessorKey: "username",
-        header: "Nombre de Usuario",
+        header: "Usuario",
         enableHiding: false,
         cell: ({ row }) => <div className="text-left">{row.original.username}</div>
     },
@@ -113,7 +104,7 @@ export const UserList: React.FC = () => {
         try {
             const usersData = await getUsers();
             setUsers(usersData);
-            console.log(usersData);
+            /* console.log(usersData); */
         } catch (error) {
             console.error(error);
         } finally {
