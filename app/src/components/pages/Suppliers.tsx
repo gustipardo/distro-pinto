@@ -77,7 +77,7 @@ export const Suppliers = () => {
               <TableCell>{formatDateToDDMMYYYY(row.invoice_date)}</TableCell>
               <TableCell>{row.supplier_name}</TableCell>
               <TableCell className="text-left">${formatNumber(parseInt(row.invoice_total))}</TableCell>
-              <TableCell className="text-left"><PaymentsOnHover amount={row.total_paid} invoice_id={row.invoice_id} updateCount={updateCount} /></TableCell>
+              <TableCell className="text-left"><PaymentsOnHover amount={row.total_paid} invoiceId={row.invoice_id} updateCount={updateCount} /></TableCell>
               <TableCell className="text-left text-red-500">${formatNumber(row.remaining_amount)}</TableCell>
               <TableCell className="text-left"><AddSupplierPayment invoice_id={row.invoice_id} onPaymentAdded={handleOperationMade} /></TableCell>
             </TableRow>

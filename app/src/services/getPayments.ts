@@ -1,8 +1,10 @@
-export const getPayments = async (invoice_id?: number) => {
+export const getPayments = async (invoiceId?: number) => {
   try {
-    const url = invoice_id
-      ? `${import.meta.env.VITE_API_URL}/payments?invoice_id=${invoice_id}`
+
+    const url = invoiceId
+      ? `${import.meta.env.VITE_API_URL}/payments?invoiceId=${invoiceId}`
       : `${import.meta.env.VITE_API_URL}/payments`;
+      console.log("payments on hover", url);
     const response = await fetch(url, {
       credentials: 'include',
     });

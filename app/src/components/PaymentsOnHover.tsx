@@ -10,16 +10,16 @@ import { useEffect, useState } from "react"
 
 interface paymentsOnHoverProps {
     amount: number,
-    invoice_id: number,
+    invoiceId: number,
     updateCount: number
 }
 
-export const PaymentsOnHover = ({ amount, invoice_id, updateCount }: paymentsOnHoverProps) => {
+export const PaymentsOnHover = ({ amount, invoiceId, updateCount }: paymentsOnHoverProps) => {
     const [Payments, setPayments] = useState<any[]>([])
     useEffect(() => {
         /* console.log("invoice_id " + invoice_id) */
         const fetchPayments = async () => {
-            const response = await getPayments(invoice_id);
+            const response = await getPayments(invoiceId);
             setPayments(response)
         }
         fetchPayments()
