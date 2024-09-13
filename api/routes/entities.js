@@ -11,6 +11,8 @@ export const createEntitiesRouter = ({ entitiesModel }) => {
 
   EntitiesRouter.get('/suppliers', entitiesController.getAllSuppliers)
 
+  EntitiesRouter.get('/search/customer/:name', entitiesController.getCustomerByName)
+
   EntitiesRouter.post('/', entitiesController.addEntity)
 
   EntitiesRouter.get('/:id', entitiesController.getEntityById)

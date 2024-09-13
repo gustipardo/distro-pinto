@@ -29,8 +29,8 @@ POST http://localhost:1234/entities
 Content-Type: application/json
 
 {
-  "name": "2Daniel",
-  "type": "supplier"
+  "name": "Customer7111711111a2111a11111",
+  "type": "customer"
 }
 
 ### GET All Customers
@@ -40,3 +40,6 @@ Accept: application/json
 ### GET All Suppliers
 GET http://localhost:1234/entities/suppliers
 Accept: application/json
+
+### GET Customer By name
+GET http://localhost:1234/entities/search/customer/Customer7111711111a2111a11111

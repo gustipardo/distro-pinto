@@ -30,4 +30,10 @@ export class entitiesModel {
     const entities = await db.allAsync("SELECT * FROM entities WHERE type = 'supplier'")
     return entities
   }
+
+  static async getCustomerByName (name) {
+    const entity = await db.allAsync('SELECT * FROM entities WHERE type = "customer" AND name LIKE ?', [`%${name}%`])
+    return entity
+  }
+
 }

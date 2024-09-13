@@ -17,4 +17,11 @@ export const formatDateToDDMMYYYY = (isoDate: string) => {
   
     // Devuelve la fecha en formato dd-mm-yyyy
     return `${day}-${month}-${year}`;
-  }
+}
+
+
+export const formatDateDDMMYYYYToYYYYMMDD = (dateString: string): string => {
+  const [day, month, year] = dateString.split("/");
+  const formattedDate = new Date(`${year}-${month}-${day}`);
+  return formattedDate.toISOString().split("T")[0]; // Devuelve en formato YYYY-MM-DD
+};

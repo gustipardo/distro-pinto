@@ -73,4 +73,15 @@ export class EntitiesController {
       res.status(500).send('Error getting suppliers')
     }
   }
+
+  getCustomerByName = async (req, res) => {
+    try {
+      const { name } = req.params
+      const customer = await this.entitiesModel.getCustomerByName(name)
+      res.json(customer)
+    } catch (err) {
+      console.log('Error getting customer by name:', err.message)
+      res.status(500).send('Error getting customer by name')
+    }
+  }
 }
