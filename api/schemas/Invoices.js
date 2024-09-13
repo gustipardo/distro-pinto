@@ -4,7 +4,7 @@ const addInvoiceSchema = z.object({
   date: z.string().refine(dateStr => !isNaN(Date.parse(dateStr)), {
     message: 'Invalid date format'
   }),
-  entity_id: z.number().int().positive(), // Assuming entity_id should be a positive integer
+  entityId: z.number().int().positive(), // Assuming entity_id should be a positive integer
   total: z.number().positive() // Assuming total should be a positive number
 })
 

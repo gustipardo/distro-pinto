@@ -19,7 +19,7 @@ export const addPayment = async ({ invoice_id, date, amount, payment_method, typ
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ invoice_id, date, amount, payment_method, type })
+      body: JSON.stringify({ invoiceId: invoice_id, date, amount, paymentMethod: payment_method, type })
     });
     return response.json();
   } catch (error) {
