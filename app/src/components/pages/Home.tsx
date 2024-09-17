@@ -59,13 +59,15 @@ export const Home: React.FC = () => {
     ]);
   };
 
-
+  const handleDateChange = (date: Date | undefined) => {
+    console.log("Fecha seleccionada:", date);
+  };
 
   return (
     <div className="flex justify-center items-center flex-col h-full">
       <Card>
         <Label>Seleccion fecha de hoja de ruta</Label>
-        <CalendarPicker />
+        <CalendarPicker onDateChange={handleDateChange} />
       </Card>
       <Card>
         <div className="p-6">

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Card } from "../ui/card";
 import {
     Table,
@@ -9,7 +8,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { Button } from "../ui/button";
 
 export const Balance: React.FC = () => {
 
