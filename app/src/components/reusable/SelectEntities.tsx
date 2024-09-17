@@ -33,9 +33,9 @@ export const SelectEntities = ({ isCustomer = true, onSelectEntity }: SelectEnti
     fetchData();
   }, [isCustomer]);
 
-/*   useEffect(() => {
-    console.log("Selected Entity:", selectedEntity);
-  }, [selectedEntity]); */
+  /*   useEffect(() => {
+      console.log("Selected Entity:", selectedEntity);
+    }, [selectedEntity]); */
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -44,7 +44,7 @@ export const SelectEntities = ({ isCustomer = true, onSelectEntity }: SelectEnti
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between whitespace-normal "
+          className="w-full justify-between whitespace-normal overflow-hidden"
         >
           {selectedEntity ? selectedEntity.name : `Seleccionar ${EntityType}...`}
           <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
