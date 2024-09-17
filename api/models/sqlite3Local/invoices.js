@@ -20,6 +20,20 @@ export class invoicesModel {
     return db.allAsync(query)
   }
 
+  static async getRoadmapByDate (date) {
+    const query = 'SELECT id FROM roadmap WHERE date = ?'
+    const roadmapId = await db.allAsync(query, [date]) // Espera a que la promesa se resuelva
+    console.log('roadmap id', roadmapId)
+    return roadmapId[0].id
+  }
+
+  static async getInvoicesByRoadmapId (roadmapId) {
+    const query = 'SELECT * FROM roadmap_invoices WHERE roadmap_id = ?'
+    const invoices = await db.allAsync(query, [roadmapId]) // Espera a que la promesa se resuelva
+    console.log('roadmap invoices', invoices)
+    return invoices
+  }
+
   static async addInvoice ({ date, entityId, total }) {
     return new Promise((resolve, reject) => {
       db.run(
@@ -34,6 +48,27 @@ export class invoicesModel {
         }
       )
     })
+  }
+
+  static async addRoadmap ({ date }) {
+    return new Promise((resolve, reject) => {
+      db.run(
+        'INSERT INTO roadmap (date) VALUES (?)',
+        [date],
+        function (err) {
+          if (err) {
+            reject(err)
+          } else {
+            resolve({ id: this.lastID }) // `this.lastID` gives the ID of the inserted row
+          }
+        }
+      )
+    })
+  }
+
+  static async addInvoiceToRoadmap ({ invoiceId, roadmapId }) {
+    const query = 'INSERT INTO roadmap_invoices (roadmap_id, invoice_id) VALUES (?,?)'
+    return db.allAsync(query, [roadmapId, invoiceId])
   }
 
   static async getInvoicesByParams (from, to = null, entityType, status, entityId = null) {

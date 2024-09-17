@@ -47,6 +47,28 @@ CREATE TABLE roles (
   description TEXT
 );
 
+CREATE TABLE movement (
+  id INTEGER PRIMARY KEY,
+  description TEXT,
+  date DATE,
+  amount DECIMAL(10, 2),
+  type VARCHAR CHECK (type IN ('income', 'expense')),
+  payment_method VARCHAR CHECK (payment_method IN ('cash', 'mp_vani', 'mp_gus'))
+);
+
+CREATE TABLE roadmap (
+  id INTEGER PRIMARY KEY,
+  date DATE NOT NULL
+);
+
+CREATE TABLE roadmap_invoices (
+  roadmap_id INTEGER,
+  invoice_id INTEGER,
+  FOREIGN KEY (roadmap_id) REFERENCES roadmap(id),
+  FOREIGN KEY (invoice_id) REFERENCES invoices(id),
+  PRIMARY KEY (roadmap_id, invoice_id)
+);
+
 
 -- Insertar datos en `users`
 INSERT INTO users (id, name, role) VALUES (1, 'Vanina', 'admin');
@@ -129,3 +151,73 @@ INSERT INTO roles (role_name, description) VALUES
   ('administrator', 'User with administrative privileges'),
   ('delivery_person', 'User responsible for delivering products'),
   ('sales_person', 'User responsible for taking orders and selling products in stores');
+
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Compra de suministros', '2024-08-08', 5000, 'expense', 'cash');
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Venta de producto A', '2024-08-08', 1740, 'income', 'mp_vani');
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Pago de alquiler', '2024-08-09', 125000, 'expense', 'cash');
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Ingreso de cliente B', '2024-08-10', 1000000, 'income', 'mp_gus');
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Compra de insumos', '2024-08-12', 1000, 'expense', 'cash');
+
+INSERT INTO movement (description, date, amount, type, payment_method)
+VALUES ('Servicio técnico', '2024-08-15', 9999, 'expense', 'mp_vani');
+
+
+INSERT INTO roadmap (date)
+VALUES ('2024-08-15');      
+
+-- Asociamos movimientos al roadmap (ID 1)
+INSERT INTO roadmap_movements (roadmap_id, movement_id)
+VALUES (1, 1), (1, 2), (1, 3);
+
+-- Asociamos facturas al roadmap (ID 1)
+INSERT INTO roadmap_invoices (roadmap_id, invoice_id)
+VALUES (1, 1), (1, 2), (1, 3), (1, 5), (1, 9);
+
+SELECT 
+  i.id AS invoice_id,
+  i.entity_id,
+  i.date AS invoice_date,
+  i.total AS invoice_total,
+  i.credit_note,
+  i.status
+FROM roadmap r
+JOIN roadmap_invoices ri ON r.id = ri.roadmap_id
+JOIN invoices i ON ri.invoice_id = i.id
+WHERE r.id = 1; -- Reemplaza con el ID de la hoja de ruta que quieras consultar
+
+
+SELECT * FROM movement WHERE type = 'income' AND date = '2024-08-08';
+
+SELECT * FROM movement WHERE type = 'expense' AND date = '2024-08-09';
+
+SELECT p.*
+FROM payments p
+JOIN invoices i ON p.invoice_id = i.id
+JOIN entities e ON i.entity_id = e.id
+WHERE e.type = 'supplier' AND p.date = 'YYYY-MM-DD';
+
+
+SELECT p.*
+FROM payments p
+JOIN invoices i ON p.invoice_id = i.id
+JOIN roadmap_invoices ri ON i.id = ri.invoice_id
+JOIN roadmap r ON ri.roadmap_id = r.id
+WHERE p.date = '2024-08-15';
+
+INSERT INTO payments ( invoice_id, date, amount, type, payment_method) VALUES
+( 5, '2024-09-17', 11.00, 'income', 'cash');
+
+
+SELECT *
+FROM payments
+WHERE invoice_id = 5 AND date = '2024-09-17';

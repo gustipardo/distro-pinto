@@ -30,3 +30,23 @@ Content-Type: application/json
 ### Get Pending Invoices from suppliers
 GET http://localhost:1234/invoices/pending-suppliers
 Accept: application/json
+
+### Add Roadmap
+POST http://localhost:1234/invoices/roadmap
+Content-Type: application/json
+
+{
+    "date": "2024-09-19"
+}
+
+### Relate invoice to roadmap
+POST http://localhost:1234/invoices/roadmap/related
+Content-Type: application/json
+
+{
+    "invoiceId": 8,
+    "roadmapId": 3
+}
+
+### Get Invoices by roadmap date
+GET http://localhost:1234/invoices/roadmap/date/2024-09-17

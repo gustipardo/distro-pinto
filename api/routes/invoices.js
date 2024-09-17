@@ -9,7 +9,13 @@ export const createInvoicesRouter = ({ invoicesModel }) => {
 
   InvoicesRouter.get('/pending-suppliers', invoicesController.getPendingInvoicesFromSuppliers)
 
+  InvoicesRouter.get('/roadmap/date/:date', invoicesController.getInvoicesByRoadmapDate)
+
   InvoicesRouter.post('/', invoicesController.addInvoice)
+
+  InvoicesRouter.post('/roadmap', invoicesController.addRoadmap)
+
+  InvoicesRouter.post('/roadmap/related', invoicesController.addInvoiceToRoadmap)
 
   return InvoicesRouter
 }

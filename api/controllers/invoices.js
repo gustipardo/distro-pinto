@@ -1,4 +1,4 @@
-import { validateInvoice } from '../schemas/Invoices.js'
+import { validateAddInvoiceToRoadmap, validateInvoice, validateRoadmap } from '../schemas/Invoices.js'
 
 export class InvoicesController {
   constructor ({ invoicesModel }) {
@@ -31,6 +31,19 @@ export class InvoicesController {
     }
   }
 
+  getInvoicesByRoadmapDate = async (req, res) => {
+    const { date } = req.params
+
+    try {
+      const roadmapId = await this.invoicesModel.getRoadmapByDate(date)
+      const invoices = await this.invoicesModel.getInvoicesByRoadmapId(roadmapId)
+      res.json(invoices)
+    } catch (err) {
+      console.log('Error getting invoices by roadmap date:', err.message)
+      res.status(500).send('Error getting invoices by roadmap date')
+    }
+  }
+
   addInvoice = async (req, res) => {
     const validationResult = validateInvoice(req.body)
     if (!validationResult.success) {
@@ -54,6 +67,38 @@ export class InvoicesController {
     } catch (err) {
       console.log('Error getting pending invoices from suppliers:', err.message)
       res.status(500).send('Error getting pending invoices from suppliers')
+    }
+  }
+
+  addRoadmap = async (req, res) => {
+    const validationResult = validateRoadmap(req.body)
+    if (!validationResult.success) {
+      return res.status(400).json({ errors: validationResult.errors })
+    }
+
+    try {
+      const { date } = req.body
+      const roadmap = await this.invoicesModel.addRoadmap({ date })
+      res.status(200).json({ message: 'Roadmap added', roadmap })
+    } catch (err) {
+      console.log('Error adding roadmap:', err.message)
+      res.status(500).send('Error adding roadmap')
+    }
+  }
+
+  addInvoiceToRoadmap = async (req, res) => {
+    const validationResult = validateAddInvoiceToRoadmap(req.body)
+    if (!validationResult.success) {
+      return res.status(400).json({ errors: validationResult.errors })
+    }
+
+    try {
+      const { invoiceId, roadmapId } = req.body
+      const roadmap = await this.invoicesModel.addInvoiceToRoadmap({ invoiceId, roadmapId })
+      res.status(200).json({ message: 'Invoice added to roadmap', roadmap })
+    } catch (err) {
+      console.log('Error adding invoice to roadmap:', err.message)
+      res.status(500).send('Error adding invoice to roadmap')
     }
   }
 }

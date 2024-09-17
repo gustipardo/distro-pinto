@@ -24,6 +24,23 @@ export class invoicesModel {
     return result.rows
   }
 
+  static async getRoadmapByDate (date) {
+    const query = {
+      sql: 'SELECT id FROM roadmap WHERE date = ?',
+      args: [date]
+    }
+    const roadmapId = await db.execute(query) // Espera a que la promesa se resuelva
+    console.log('roadmap id', roadmapId)
+    return roadmapId.rows[0].id
+  }
+
+  static async getInvoicesByRoadmapId (roadmapId) {
+    const query = { sql: 'SELECT * FROM roadmap_invoices WHERE roadmap_id = ?', args: [roadmapId] }
+    const invoices = await db.execute(query) // Espera a que la promesa se resuelva
+    console.log('roadmap invoices', invoices)
+    return invoices.rows
+  }
+
   static async addInvoice ({ date, entityId, total }) {
     const query = {
       sql: 'INSERT INTO invoices (date, entity_id, total) VALUES (?, ?, ?)',
@@ -31,6 +48,24 @@ export class invoicesModel {
     }
     const result = await db.execute(query)
     return result.rows
+  }
+
+  static async addRoadmap ({ date }) {
+    const query = {
+      sql: 'INSERT INTO roadmap (date) VALUES (?)',
+      args: [date]
+    }
+    const result = await db.execute(query)
+    return result
+  }
+
+  static async addInvoiceToRoadmap ({ invoiceId, roadmapId }) {
+    const query = {
+      sql: 'INSERT INTO roadmap_invoices (roadmap_id, invoice_id) VALUES (?,?)',
+      args: [roadmapId, invoiceId]
+    }
+    const result = await db.execute(query)
+    return result
   }
 
   static async getInvoicesByParams (from, to = null, entityType, status, entityId = null) {
