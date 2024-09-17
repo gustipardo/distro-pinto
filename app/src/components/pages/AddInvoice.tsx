@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import * as XLSX from "xlsx";
 import { addInvoice } from "../../services/addInvoice";
 import { Input } from "@/components/ui/input";
@@ -19,6 +19,7 @@ import { CalendarPicker } from "../reusable/CalendarPicker";
 import { formatDateDDMMYYYYToYYYYMMDD, formatDateToYYYYMMDD } from "@/services/formatDate";
 import { getCustomerByName } from "@/services/getCustomerByName";
 import { addEntity } from "@/services/addEntity";
+import { formatNumber } from "@/services/formatNumber";
 
 export const AddInvoice = () => {
   const [fileData, setFileData] = useState<any[]>([]);
@@ -28,7 +29,7 @@ export const AddInvoice = () => {
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
+
     const reader = new FileReader();
     reader.onload = (e) => {
       const data = new Uint8Array(e.target?.result as ArrayBuffer);
@@ -36,7 +37,7 @@ export const AddInvoice = () => {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-  
+
       const rows = jsonData.slice(3, -1).map((row: any) => ({
         // Modifica la fecha al formato dd-mm-yyyy
         Fecha: row[3] ? formatDateDDMMYYYYToYYYYMMDD(row[3]) : null,
@@ -47,7 +48,7 @@ export const AddInvoice = () => {
     };
     reader.readAsArrayBuffer(file);
   };
-  
+
 
   const handleClick = async () => {
     // Solo procesamos los datos del Excel (fileData)
@@ -55,14 +56,14 @@ export const AddInvoice = () => {
       fileData.map(async (row) => {
         // Buscar cliente por nombre
         let customer = await getCustomerByName(row.Cliente);
-        
+
         // Si no se encuentra, agregar el cliente y luego volver a buscarlo
         if (customer.length === 0) {
           console.log("Cliente no encontrado, agregando...");
           await addEntity({ name: row.Cliente, type: "customer" });
           customer = await getCustomerByName(row.Cliente); // Buscar nuevamente el cliente para obtener su ID
         }
-        
+
         // Formatear el dato con el cliente como ID
         return {
           ...row,
@@ -70,14 +71,14 @@ export const AddInvoice = () => {
         };
       })
     );
-  
+
     // Combinar los datos procesados del Excel con las facturas manuales
     const combinedData = [...processedFileData, ...manualInvoices];
-    
+
     console.log("Facturas enviadas:", combinedData);
-  
+
     // Enviar las facturas
-    for (const row of combinedData) {  
+    for (const row of combinedData) {
       console.log("Enviando factura:", row);
       const response = await addInvoice({
         date: row.Fecha,
@@ -87,7 +88,7 @@ export const AddInvoice = () => {
       console.log("Factura enviada:", response);
     }
   };
-  
+
 
   const handleAddRow = () => {
     const today = new Date(); // Obtenemos la fecha actual
@@ -113,6 +114,15 @@ export const AddInvoice = () => {
     handleManualInvoiceChange(index, "Fecha", formatDateToYYYYMMDD(date));
   };
 
+  const totalSum = useMemo(() => {
+    const fileDataTotal = fileData.reduce((acc, row) => acc + (row.Total || 0), 0);
+    const manualInvoicesTotal = manualInvoices.reduce(
+      (acc, invoice) => acc + (invoice.Total || 0),
+      0
+    );
+    return fileDataTotal + manualInvoicesTotal;
+  }, [fileData, manualInvoices]);
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Agregar Facturas</h1>
@@ -126,17 +136,17 @@ export const AddInvoice = () => {
           <TableCaption>Datos importados desde el archivo Excel.</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[150px]">Fecha</TableHead>
-              <TableHead className="w-[150px]">Cliente</TableHead>
-              <TableHead className="text-right">Total</TableHead>
+              <TableHead className="w-[200px] text-center">Fecha</TableHead>
+              <TableHead className="text-left">Cliente</TableHead>
+              <TableHead className="text-right w-[200px]">Total</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {fileData.map((row, index) => (
               <TableRow key={index}>
                 <TableCell>{row.Fecha}</TableCell>
-                <TableCell>{row.Cliente}</TableCell>
-                <TableCell className="text-right">{row.Total}</TableCell>
+                <TableCell className="text-left">{row.Cliente}</TableCell>
+                <TableCell className="text-right">{formatNumber(row.Total)}</TableCell>
               </TableRow>
             ))}
             {additionalRows.map((_, index) => (
@@ -171,7 +181,7 @@ export const AddInvoice = () => {
             <TableRow>
               <TableCell colSpan={2}>Total</TableCell>
               <TableCell className="text-right">
-                {/* Suma total si es necesario */}
+                <TableCell className="text-right">{formatNumber(totalSum)}</TableCell>
               </TableCell>
             </TableRow>
           </TableFooter>
