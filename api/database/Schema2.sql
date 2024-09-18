@@ -58,7 +58,7 @@ CREATE TABLE movement (
 
 CREATE TABLE roadmap (
   id INTEGER PRIMARY KEY,
-  date DATE NOT NULL
+  date DATE NOT NULL UNIQUE
 );
 
 CREATE TABLE roadmap_invoices (

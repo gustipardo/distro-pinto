@@ -1,4 +1,4 @@
-import { validateAddInvoiceToRoadmap, validateInvoice, validateRoadmap } from '../schemas/Invoices.js'
+import { validateAddInvoiceToRoadmap, validateAddInvoiceToRoadmapBYDate, validateInvoice, validateRoadmap } from '../schemas/Invoices.js'
 
 export class InvoicesController {
   constructor ({ invoicesModel }) {
@@ -94,6 +94,23 @@ export class InvoicesController {
 
     try {
       const { invoiceId, roadmapId } = req.body
+      const roadmap = await this.invoicesModel.addInvoiceToRoadmap({ invoiceId, roadmapId })
+      res.status(200).json({ message: 'Invoice added to roadmap', roadmap })
+    } catch (err) {
+      console.log('Error adding invoice to roadmap:', err.message)
+      res.status(500).send('Error adding invoice to roadmap')
+    }
+  }
+
+  addInvoiceToRoadmapByDate = async (req, res) => {
+    const validationResult = validateAddInvoiceToRoadmapBYDate(req.body)
+    if (!validationResult.success) {
+      return res.status(400).json({ errors: validationResult.errors })
+    }
+
+    try {
+      const { invoiceId, roadmapDate } = req.body
+      const roadmapId = await this.invoicesModel.getRoadmapByDate(roadmapDate)
       const roadmap = await this.invoicesModel.addInvoiceToRoadmap({ invoiceId, roadmapId })
       res.status(200).json({ message: 'Invoice added to roadmap', roadmap })
     } catch (err) {

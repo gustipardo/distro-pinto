@@ -17,5 +17,7 @@ export const createInvoicesRouter = ({ invoicesModel }) => {
 
   InvoicesRouter.post('/roadmap/related', invoicesController.addInvoiceToRoadmap)
 
+  InvoicesRouter.post('/roadmap/relatedByDate', invoicesController.addInvoiceToRoadmapByDate)
+
   return InvoicesRouter
 }

@@ -42,3 +42,18 @@ export function validateAddInvoiceToRoadmap (input) {
   }
   return { success: true }
 }
+
+const addInvoiceToRoadmapByDateSchema = z.object({
+  invoiceId: z.number().int().positive(),
+  roadmapDate: z.string().refine(dateStr => !isNaN(Date.parse(dateStr)), {
+    message: 'Invalid date format'
+  })
+})
+
+export function validateAddInvoiceToRoadmapBYDate (input) {
+  const result = addInvoiceToRoadmapByDateSchema.safeParse(input)
+  if (!result.success) {
+    return { success: false, errors: result.error.errors }
+  }
+  return { success: true }
+}

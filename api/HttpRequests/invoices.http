@@ -36,7 +36,7 @@ POST http://localhost:1234/invoices/roadmap
 Content-Type: application/json
 
 {
-    "date": "2024-09-19"
+    "date": "2024-09-21"
 }
 
 ### Relate invoice to roadmap
@@ -45,8 +45,17 @@ Content-Type: application/json
 
 {
     "invoiceId": 8,
-    "roadmapId": 3
+    "roadmapId": 1
+}
+
+### Relate invoice to roadmap by date
+POST http://localhost:1234/invoices/roadmap/relatedByDate
+Content-Type: application/json
+
+{
+    "invoiceId": 9,
+    "roadmapDate": "2024-09-21"
 }
 
 ### Get Invoices by roadmap date
-GET http://localhost:1234/invoices/roadmap/date/2024-09-17
+GET http://localhost:1234/invoices/roadmap/date/2024-09-21
