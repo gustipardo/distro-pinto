@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Card } from "../ui/card";
 import {
   Table,
@@ -42,28 +42,6 @@ export const Home: React.FC = () => {
   const userData = authStore((state) => state.userData);
   const [roadmapDate, setRoadmapDate] = useState<string>('')
   const [invoices, setInvoices] = useState<Invoice[]>([]);
-
-
-  const data = [
-    {
-      id: 1,
-      date: "2023-01-01",
-      client: "Cliente 1",
-      total: 100
-    },
-    {
-      id: 2,
-      date: "2023-01-02",
-      client: "Cliente 2",
-      total: 200
-    },
-    {
-      id: 3,
-      date: "2023-01-03",
-      client: "Cliente 3",
-      total: 300
-    }
-  ]
 
   const handleAddRow = () => {
     setAdditionalRows([...additionalRows, additionalRows.length]);
@@ -148,7 +126,7 @@ export const Home: React.FC = () => {
               <TableBody>
                 {invoices.map((invoice, index) => {
                   return (
-                    <TableRow key={invoice.id}>
+                    <TableRow key={index}>
                       <TableCell>{invoice.date}</TableCell>
                       <TableCell className="text-left">{invoice.client}</TableCell>
                       <TableCell className="text-right">${invoice.amount}</TableCell>
