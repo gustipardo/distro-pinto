@@ -36,7 +36,16 @@ export class invoicesModel {
 
   static async getInvoicesById (invoiceId) {
     const query = {
-      sql: 'SELECT * FROM invoices WHERE id = ?',
+      sql: `
+      SELECT 
+        i.id AS "id",
+        i.date AS "date",
+        e.name AS "client",
+        i.total AS "amount"
+      FROM invoices i
+      JOIN entities e ON i.entity_id = e.id
+      WHERE i.id = ?
+    `,
       args: [invoiceId]
     }
     const invoice = await db.execute(query) // Espera a que la promesa se resuelva

@@ -17,6 +17,9 @@ GET http://localhost:1234/invoices?isClient=true&isPaid=true&isPending=true
 ### Get invoices of a specific client and also paid 
 GET http://localhost:1234/invoices?from=2024-08-08&to=2024-09-10&isClient=true&isPaid=false&isPending=true&entityId=12
 
+### Get invoices by id
+GET http://localhost:1234/invoices/13
+
 ### Add invoice
 POST http://localhost:1234/invoices
 Content-Type: application/json
@@ -53,8 +56,8 @@ POST http://localhost:1234/invoices/roadmap/relatedByDate
 Content-Type: application/json
 
 {
-    "invoiceId": 9,
-    "roadmapDate": "2024-09-21"
+    "invoiceId": 8,
+    "roadmapDate": "2024-09-19"
 }
 
 ### Get Invoices by roadmap date

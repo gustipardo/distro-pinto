@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "../ui/card";
 import {
   Table,
@@ -24,11 +24,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { formatDateToYYYYMMDD } from "@/services/formatDate";
+import { getRoadmapByDate } from "@/services/getRoadmapByDate";
+import { getInvoiceById } from "@/services/getInvoiceById";
+
+interface Invoice {
+  id: number;
+  client: string;
+  date: string;
+  amount: number;
+  credit_note: number;
+}
 
 export const Home: React.FC = () => {
   const [manualInvoices, setManualInvoices] = useState<any[]>([]);
   const [additionalRows, setAdditionalRows] = useState<number[]>([]);
   const userData = authStore((state) => state.userData);
+  const [roadmapDate, setRoadmapDate] = useState<string>('')
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
 
 
   const data = [
@@ -61,13 +74,60 @@ export const Home: React.FC = () => {
 
   const handleDateChange = (date: Date | undefined) => {
     console.log("Fecha seleccionada:", date);
+    if (date) {
+      setRoadmapDate(formatDateToYYYYMMDD(date))
+
+    }
   };
+
+  const handleClick = async () => {
+    try {
+      // Vaciar el estado de invoices antes de hacer las nuevas peticiones
+      setInvoices([]);
+
+      const data = await getRoadmapByDate(roadmapDate);
+      const invoiceIds = data.map((item: { invoice_id: number; }) => item.invoice_id);
+      console.log("data", invoiceIds);
+
+      // Usar Promise.all para esperar todas las peticiones antes de actualizar el estado
+      const invoicePromises = invoiceIds.map(async (id: number) => {
+        console.log("Peticion", id);
+        try {
+          const response = await getInvoiceById(id);
+          return response[0]; // Asumiendo que response[0] es la factura correcta
+        } catch (error) {
+          console.error(`Error fetching invoice with id ${id}:`, error);
+          return null; // Devolver null en caso de error
+        }
+      });
+
+      const fetchedInvoices = await Promise.all(invoicePromises);
+
+      // Filtrar facturas válidas (no nulas)
+      const validInvoices = fetchedInvoices.filter((invoice) => invoice !== null);
+
+      // Verificar si hay facturas duplicadas y añadir solo las nuevas
+      setInvoices((prevInvoices) => {
+        const newInvoices = validInvoices.filter(
+          (newInvoice) => !prevInvoices.some((existingInvoice) => existingInvoice.id === newInvoice.id)
+        );
+        return [...prevInvoices, ...newInvoices];
+      });
+
+      console.log("Invoices", validInvoices);
+    } catch (error) {
+      console.error("Error loading roadmap:", error);
+    }
+  };
+
 
   return (
     <div className="flex justify-center items-center flex-col h-full">
       <Card>
         <Label>Seleccion fecha de hoja de ruta</Label>
         <CalendarPicker onDateChange={handleDateChange} />
+        <Button onClick={handleClick}>Consultar Hoja de ruta</Button>
+
       </Card>
       <Card>
         <div className="p-6">
@@ -86,12 +146,12 @@ export const Home: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((row, index) => {
+                {invoices.map((invoice, index) => {
                   return (
-                    <TableRow key={index}>
-                      <TableCell>{row.date}</TableCell>
-                      <TableCell className="text-left">{row.client}</TableCell>
-                      <TableCell className="text-right">${row.total}</TableCell>
+                    <TableRow key={invoice.id}>
+                      <TableCell>{invoice.date}</TableCell>
+                      <TableCell className="text-left">{invoice.client}</TableCell>
+                      <TableCell className="text-right">${invoice.amount}</TableCell>
                       <TableCell className="text-right"><Input></Input></TableCell>
                       <TableCell className="text-right"><Input></Input></TableCell>
                       <TableCell className="text-right"><Input></Input></TableCell>
