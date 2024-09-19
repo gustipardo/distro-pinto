@@ -34,6 +34,15 @@ export class invoicesModel {
     return roadmapId.rows[0].id
   }
 
+  static async getInvoicesById (invoiceId) {
+    const query = {
+      sql: 'SELECT * FROM invoices WHERE id = ?',
+      args: [invoiceId]
+    }
+    const invoice = await db.execute(query) // Espera a que la promesa se resuelva
+    return invoice.rows
+  }
+
   static async getInvoicesByRoadmapId (roadmapId) {
     const query = { sql: 'SELECT * FROM roadmap_invoices WHERE roadmap_id = ?', args: [roadmapId] }
     const invoices = await db.execute(query) // Espera a que la promesa se resuelva

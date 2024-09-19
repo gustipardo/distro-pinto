@@ -23,8 +23,13 @@ export class invoicesModel {
   static async getRoadmapByDate (date) {
     const query = 'SELECT id FROM roadmap WHERE date = ?'
     const roadmapId = await db.allAsync(query, [date]) // Espera a que la promesa se resuelva
-    console.log('roadmap id', roadmapId)
     return roadmapId[0].id
+  }
+
+  static async getInvoicesById (invoiceId) {
+    const query = 'SELECT * FROM invoices WHERE id = ?'
+    const invoice = await db.allAsync(query, [invoiceId]) // Espera a que la promesa se resuelva
+    return invoice
   }
 
   static async getInvoicesByRoadmapId (roadmapId) {

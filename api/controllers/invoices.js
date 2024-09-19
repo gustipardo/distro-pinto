@@ -31,6 +31,18 @@ export class InvoicesController {
     }
   }
 
+  getInvoicesById = async (req, res) => {
+    const { invoiceId } = req.params
+
+    try {
+      const invoices = await this.invoicesModel.getInvoicesById(invoiceId)
+      res.json(invoices)
+    } catch (err) {
+      console.log('Error getting invoice:', err.message)
+      res.status(500).send('Error getting invoice')
+    }
+  }
+
   getInvoicesByRoadmapDate = async (req, res) => {
     const { date } = req.params
 
