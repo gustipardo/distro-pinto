@@ -7,7 +7,11 @@ export const createPaymentsRouter = ({ paymentsModel }) => {
 
   PaymentsRouter.get('/', paymentsController.getAllPayments)
 
+  PaymentsRouter.get('/movement/:date', paymentsController.getMovementsByDate)
+
   PaymentsRouter.post('/', paymentsController.addPayment)
+
+  PaymentsRouter.post('/movement', paymentsController.addMovement)
 
   return PaymentsRouter
 }

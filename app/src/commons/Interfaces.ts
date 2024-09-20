@@ -1,30 +1,30 @@
 export interface InvoiceAndPayments {
-    id: number;
-    entities_id: number;
-    date: string;
-    client: string;
-    amount: number;
-    cash: number;
-    mp_vani: number;
-    mp_gus: number;
-    created_at: string;
-  }
+  id: number;
+  entities_id: number;
+  date: string;
+  client: string;
+  amount: number;
+  cash: number;
+  mp_vani: number;
+  mp_gus: number;
+  created_at: string;
+}
 
 export interface PendingInvoiceFromSupplier {
-    invoice_id: number;
-    invoice_date: string;
-    supplier_name: string;
-    invoice_total: string;
-    total_paid: number;
-    remaining_amount: number;
+  invoice_id: number;
+  invoice_date: string;
+  supplier_name: string;
+  invoice_total: string;
+  total_paid: number;
+  remaining_amount: number;
 }
 
 export interface SupplierInvoice {
-    invoice_id: number;
-    supplier_name: string;
-    invoice_total: number;
-    total_paid: number;
-    remaining_amount: number;
+  invoice_id: number;
+  supplier_name: string;
+  invoice_total: number;
+  total_paid: number;
+  remaining_amount: number;
 }
 
 export interface Invoice {
@@ -39,15 +39,15 @@ export interface Invoice {
   created_at: string;
 }
 
-  export interface Payment {
-    id: number;
-    invoice_id: number;
-    date: string;
-    amount: number;
-    type: string;
-    payment_method: string;
-    created_at: string;
-  }
+export interface Payment {
+  id: number;
+  invoice_id: number;
+  date: string;
+  amount: number;
+  type: string;
+  payment_method: string;
+  created_at: string;
+}
 
 export type PaymentMethod = "cash" | "mp_vani" | "mp_gus";
 
@@ -69,4 +69,12 @@ export interface InvoiceQueryParams {
   isClient: boolean;
   entityId: string;
 
+}
+
+export interface Movement {
+  date: string;
+  description: string;
+  amount: number;
+  type: PaymentType
+  payment_method: PaymentMethod;
 }

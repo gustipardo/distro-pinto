@@ -8,17 +8,28 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { useEffect } from "react";
 
-export const Balance: React.FC = () => {
+interface BalanceProps {
+    date: string;
+}
 
+export const Balance = (props: BalanceProps) => {
 
+    /*     const getBalanceData = async () => {
+            const data = await getBalanceByDate(props.date);
+            console.log("data", data);
+        } */
 
+    useEffect(() => {
+        console.log("asd")
+    }, [])
 
     return (
         <div className="flex justify-center items-center flex-col h-full">
             <Card>
                 <div className="p-6">
-                    <h1 className="text-2xl font-bold mb-4">Balance de FECHA</h1>
+                    <h1 className="text-2xl font-bold mb-4">Balance de {props.date}</h1>
                     <div>
                         <h2 className="text-xl font-bold mb-4 text-left">Ingresos</h2>
                         <h3 className="text-l font-bold mb-4 text-left">Clientes</h3>
@@ -159,7 +170,7 @@ export const Balance: React.FC = () => {
                                     <TableCell className="text-center">data</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>Balance en Fecha</TableCell>
+                                    <TableCell>Balance en {props.date}</TableCell>
                                     <TableCell className="text-center">data</TableCell>
                                     <TableCell className="text-center">data</TableCell>
                                 </TableRow>
@@ -169,7 +180,7 @@ export const Balance: React.FC = () => {
                                     <TableCell className="text-center">data</TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>Saldo actual en FECHA</TableCell>
+                                    <TableCell>Saldo actual en {props.date}</TableCell>
                                     <TableCell className="text-center">data</TableCell>
                                     <TableCell className="text-center">data</TableCell>
                                 </TableRow>

@@ -2,19 +2,36 @@
 GET http://localhost:1234/payments
 Accept: application/json
 
-### GET payments by invpuce id
+### GET payments by invoice id
 GET http://localhost:1234/payments?invoice_id=1
 Accept: application/json
 
 ### Add payment
-POST http://localhost:1238/payments
+POST http://localhost:1234/payments
 Content-Type: application/json
 
 {
-    "invoice_id": 1,
+    "invoiceId": 13,
     "date": "2024-08-02",
-    "amount": "asd",
-    "payment_method": "cash",
+    "amount": 1,
+    "paymentMethod": "cash",
     "type": "expense"
 }
 
+### Add Movement
+POST http://localhost:1234/payments/movement
+Content-Type: application/json
+
+{
+    "date": "2024-08-08",
+    "description": "comida",
+    "amount": 1200,
+    "type": "expense",
+    "paymentMethod": "cash"
+}
+
+### Get Movements by date
+GET http://localhost:1234/payments/movement/2024-09-20
+
+### Get Balance Data (getSuppliersPaymentsByDate, getCustomerPaymentsByDate, getIncomesByDate, getExpensesByDate)
+GET http://localhost:1234/payments/balance

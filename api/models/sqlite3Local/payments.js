@@ -7,6 +7,14 @@ export class paymentsModel {
     return payments
   }
 
+  static async getMovementsByDate ({ date }) {
+    const query = `
+    SELECT * FROM movement WHERE date = ?
+  `
+    const movements = await db.allAsync(query, [date])
+    return movements
+  }
+
   static async getPaymentsByInvoiceId (invoiceId) {
     const query = `
       SELECT * FROM payments WHERE invoice_id = ?
@@ -22,5 +30,14 @@ export class paymentsModel {
       [invoiceId, date, amount, paymentMethod, type]
     )
     return { success: true, rows: payment }
+  }
+
+  static async addMovement ({ date, description, amount, type, paymentMethod }) {
+    const runAsync = promisify(db.run).bind(db)
+    const movement = await runAsync(
+      'INSERT INTO movement (description, date, amount, type, payment_method) VALUES (?, ?, ?, ?, ?)',
+      [description, date, amount, type, paymentMethod]
+    )
+    return { success: true, rows: movement }
   }
 }
