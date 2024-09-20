@@ -6,12 +6,19 @@ export class PaymentsController {
   }
 
   getAllPayments = async (req, res) => {
-    const { invoiceId } = req.query
+    const { invoiceId, date } = req.query
+    console.log('invoiceId', invoiceId, 'date', date)
     try {
-      if (invoiceId) {
+      if (date && invoiceId) {
+        console.log('Date and invoice id')
+        const payments = await this.paymentsModel.getPaymentsByInvoiceIdAndDate({ invoiceId, date })
+        res.json(payments)
+      } else if (invoiceId) {
+        console.log('Invoice id')
         const payments = await this.paymentsModel.getPaymentsByInvoiceId(invoiceId)
         res.json(payments)
       } else {
+        console.log('All payments')
         const payments = await this.paymentsModel.getAllPayments()
         res.json(payments)
       }
@@ -30,6 +37,30 @@ export class PaymentsController {
     } catch (err) {
       console.log('Error getting movements by date:', err.message)
       res.status(500).send('Error getting movements by date')
+    }
+  }
+
+  getSupplierPaymentsByDate = async (req, res) => {
+    const { date } = req.params
+    try {
+      const payments = await this.paymentsModel.getSupplierPaymentsByDate({ date })
+
+      res.json(payments)
+    } catch (err) {
+      console.log('Error getting supplier payments by date:', err.message)
+      res.status(500).send('Error getting supplier payments by date')
+    }
+  }
+
+  getPaymentsByInvoiceIdAndDate = async (req, res) => {
+    const { invoiceId, date } = req.query
+    try {
+      const payments = await this.paymentsModel.getPaymentsByInvoiceIdAndDate({ invoiceId, date })
+
+      res.json(payments)
+    } catch (err) {
+      console.log('Error getting payments by invoice id and date:', err.message)
+      res.status(500).send('Error getting payments by invoice id and date')
     }
   }
 

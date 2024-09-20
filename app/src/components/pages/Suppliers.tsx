@@ -27,6 +27,7 @@ export const Suppliers = () => {
   useEffect(() => {
     const fetchSuppliers = async () => {
       const response = await getPendingInvoicesFromSuppliers();
+      console.log("suppliers", response)
       setPendingInvoicesSuppliers(response)
     }
     fetchSuppliers()

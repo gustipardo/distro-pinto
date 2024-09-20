@@ -56,6 +56,18 @@ export class InvoicesController {
     }
   }
 
+  getPendingInvoicesFromSuppliers = async (req, res) => {
+    console.log('getPendingInvoicesFromSuppliers')
+    try {
+      const invoices = await this.invoicesModel.getPendingInvoicesFromSuppliers()
+      console.log('invoices', invoices)
+      res.json(invoices)
+    } catch (err) {
+      console.log('Error getting pending invoices from suppliers:', err.message)
+      res.status(500).send('Error getting pending invoices from suppliers')
+    }
+  }
+
   addInvoice = async (req, res) => {
     const validationResult = validateInvoice(req.body)
     if (!validationResult.success) {
@@ -69,16 +81,6 @@ export class InvoicesController {
     } catch (err) {
       console.log('Error adding invoice:', err.message)
       res.status(500).send('Error adding invoice')
-    }
-  }
-
-  getPendingInvoicesFromSuppliers = async (req, res) => {
-    try {
-      const invoices = await this.invoicesModel.getPendingInvoicesFromSuppliers()
-      res.json(invoices)
-    } catch (err) {
-      console.log('Error getting pending invoices from suppliers:', err.message)
-      res.status(500).send('Error getting pending invoices from suppliers')
     }
   }
 

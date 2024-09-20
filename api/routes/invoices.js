@@ -5,11 +5,11 @@ export const createInvoicesRouter = ({ invoicesModel }) => {
   const InvoicesRouter = Router()
   const invoicesController = new InvoicesController({ invoicesModel })
 
+  InvoicesRouter.get('/pending-suppliers', invoicesController.getPendingInvoicesFromSuppliers)
+
   InvoicesRouter.get('/', invoicesController.getInvoices)
 
   InvoicesRouter.get('/:invoiceId', invoicesController.getInvoicesById)
-
-  InvoicesRouter.get('/pending-suppliers', invoicesController.getPendingInvoicesFromSuppliers)
 
   InvoicesRouter.get('/roadmap/date/:date', invoicesController.getInvoicesByRoadmapDate)
 

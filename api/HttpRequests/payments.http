@@ -3,7 +3,7 @@ GET http://localhost:1234/payments
 Accept: application/json
 
 ### GET payments by invoice id
-GET http://localhost:1234/payments?invoice_id=1
+GET http://localhost:1234/payments?invoiceId=5
 Accept: application/json
 
 ### Add payment
@@ -35,6 +35,9 @@ GET http://localhost:1234/payments/movement/2024-08-08
 
 ### GET Supplier Payments by date
 GET http://localhost:1234/payments/supplier/2024-08-08
+
+### GET Customer Payments by date and invoice id
+GET http://localhost:1234/payments?date=2024-08-08&invoiceId=1
 
 
 ### Get Balance Data (getSuppliersPaymentsByDate, getCustomerPaymentsByDate, getMovementByDate)

@@ -26,6 +26,62 @@ export class paymentsModel {
     return payments.rows
   }
 
+  static async getSupplierPaymentsByDate ({ date }) {
+    const query = {
+      sql: `
+    SELECT 
+      p.id AS payment_id,
+      p.date AS payment_date,
+      p.amount AS payment_amount,
+      p.payment_method,
+      i.id AS invoice_id,
+      i.total AS invoice_total,
+      i.date AS invoice_date,
+      e.name AS supplier_name
+    FROM 
+      payments p
+    JOIN 
+      invoices i ON p.invoice_id = i.id
+    JOIN 
+      entities e ON i.entity_id = e.id
+    WHERE 
+      p.type = 'expense'
+      AND p.date = ?
+    `,
+      args: [date]
+    }
+    const payments = await db.execute(query)
+    return payments.rows
+  }
+
+  static async getPaymentsByInvoiceIdAndDate ({ invoiceId, date }) {
+    const query = {
+      sql: `
+        SELECT 
+          p.id AS payment_id,
+          p.date AS payment_date,
+          p.amount AS payment_amount,
+          p.payment_method,
+          i.id AS invoice_id,
+          i.total AS invoice_total,
+          i.date AS invoice_date,
+          e.name AS supplier_name
+        FROM 
+          payments p
+        JOIN 
+          invoices i ON p.invoice_id = i.id
+        JOIN 
+          entities e ON i.entity_id = e.id
+        WHERE 
+          p.date = ?
+          AND i.id = ?
+        `,
+      args: [date, invoiceId]
+    }
+    const payments = await db.execute(query)
+    return payments.rows
+  }
+
   static async addPayment ({ invoiceId, date, amount, paymentMethod, type }) {
     const query = 'INSERT INTO payments (invoice_id, date, amount, payment_method, type) VALUES (?, ?, ?, ?, ?)'
 
