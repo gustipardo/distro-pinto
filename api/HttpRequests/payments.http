@@ -31,7 +31,11 @@ Content-Type: application/json
 }
 
 ### Get Movements by date
-GET http://localhost:1234/payments/movement/2024-09-20
+GET http://localhost:1234/payments/movement/2024-08-08
 
-### Get Balance Data (getSuppliersPaymentsByDate, getCustomerPaymentsByDate, getIncomesByDate, getExpensesByDate)
+### GET Supplier Payments by date
+GET http://localhost:1234/payments/supplier/2024-08-08
+
+
+### Get Balance Data (getSuppliersPaymentsByDate, getCustomerPaymentsByDate, getMovementByDate)
 GET http://localhost:1234/payments/balance
