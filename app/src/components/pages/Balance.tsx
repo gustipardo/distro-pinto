@@ -8,6 +8,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { getMovementByDate } from "@/services/getMovementByDate";
+import { getPaymentsByIdAndDate } from "@/services/getPaymentsByIdAndDate";
+import { getSuppliersPaymentsByDate } from "@/services/getSuppliersPaymentsByDate";
 import { useEffect } from "react";
 
 interface BalanceProps {
@@ -16,18 +19,36 @@ interface BalanceProps {
 
 export const Balance = (props: BalanceProps) => {
 
-    /*     const getBalanceData = async () => {
-            const data = await getBalanceByDate(props.date);
-            console.log("data", data);
-        } */
+
+
+    const getMovements = async () => {
+        const data = await getMovementByDate('2024-08-08');
+        console.log("getMovements", data);
+    }
+
+    const getSuppliersPayments = async () => {
+        const data = await getSuppliersPaymentsByDate('2024-08-08');
+        console.log("getSuppliersPayments", data);
+    }
+
+    const getCustomerPayments = async () => {
+        console.log("getPaymentsByIdAndDate", '2024-08-08', 1);
+        const data = await getPaymentsByIdAndDate({ date: '2024-08-08', invoiceId: 1 });
+        console.log("getCustomerPayments", data);
+    }
+
 
     useEffect(() => {
-        console.log("asd")
+
+        console.log("useEffect")
     }, [])
 
     return (
         <div className="flex justify-center items-center flex-col h-full">
             <Card>
+                <button onClick={getMovements}>getMovements</button>
+                <button onClick={getSuppliersPayments}>getSuppliersPayments</button>
+                <button onClick={getCustomerPayments}>getCustomerPayments</button>
                 <div className="p-6">
                     <h1 className="text-2xl font-bold mb-4">Balance de {props.date}</h1>
                     <div>
