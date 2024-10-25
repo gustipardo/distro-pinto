@@ -142,6 +142,9 @@ https://github.com/user-attachments/assets/70a822df-82cb-44b8-91d7-4a03ebf07141
 
 ### Consultar Facturas pendientes de proveedores
 https://github.com/user-attachments/assets/b02b39a1-eb38-4813-8d24-6c9afbd6148b
+Popup Historial de pagos de una factura:
+![image](https://github.com/user-attachments/assets/5ad2823a-7cec-499f-b4c1-2a6748b99ce2)
 
+### Mobile Friendly
 
 
