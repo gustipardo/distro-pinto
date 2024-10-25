@@ -146,5 +146,6 @@ Popup Historial de pagos de una factura:
 ![image](https://github.com/user-attachments/assets/5ad2823a-7cec-499f-b4c1-2a6748b99ce2)
 
 ### Mobile Friendly
+https://github.com/user-attachments/assets/f0756168-fcb1-4b8a-b9c0-32b97a3728ae
 
 
