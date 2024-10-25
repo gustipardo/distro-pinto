@@ -100,7 +100,7 @@ El balance y actualizable es decir que si se realiza el balance de una fecha y l
 
 ## Aspectos Técnicos
 ### Tecnologías
-Este projecto es un monorepositorio donde contiene el Frontend en la carpeta /app hecho en React con componentes de ShadCn y lógica de tablas de TanStack Table. Por otra parte la API o Backend se encuentra de /api hecho en Express con arquitectura Model–View–Controller, con autenticación de usuarios en JWT, testing con SuperTest, bases de datos local en sqlite y en producción con Turso. Tanto Front como Back utilizan Zod para las validaciones.
+Este proyecto es un monorepositorio donde contiene el Frontend en la carpeta /app hecho en React con componentes de ShadCn y lógica de tablas de TanStack Table. Por otra parte la API o Backend se encuentra de /api hecho en Express con arquitectura Model–View–Controller, con autenticación de usuarios en JWT, testing con SuperTest, bases de datos local en sqlite y en producción con Turso. Tanto Front como Back utilizan Zod para las validaciones.
 
 El repositorio ha sido configurado con Github Actions las cuales verifican que al hacer un commit no se encuentren errores en la build o en los test del backend antes de permitir a Vercel que lleve a produccion el commit.
 ### Instalación
