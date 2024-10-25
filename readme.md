@@ -126,3 +126,15 @@ Luego de agregar estas variables con sus respectivos valores puedes iniciar la A
 
 ## Estado del proyecto
 Este proyecto se ha detenido debido al cierre de la empresa, el desarrollador tuve que haber apuntado a una solucion mas sencilla (MVP) para poder iterar en el desarrollo.
+
+### Imagenes de la pagina
+#### Login
+![image](https://github.com/user-attachments/assets/d70fd918-9cf4-45bf-b710-0ca5d5d0d7e7)
+
+#### Home
+![image](https://github.com/user-attachments/assets/5f886f57-934a-4dae-9c62-f02a7ca40a73)
+
+
+https://github.com/user-attachments/assets/6f902d8c-aeaa-49ce-a12b-66b085dbfd24
+
+
