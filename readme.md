@@ -135,9 +135,13 @@ Este proyecto se ha detenido debido al cierre de la empresa, el desarrollador tu
 ![image](https://github.com/user-attachments/assets/5f886f57-934a-4dae-9c62-f02a7ca40a73)
 
 #### Agregar Facturas
-![image](https://github.com/user-attachments/assets/2cfdb1fa-621c-4fd8-b734-21140884380a)
-
+https://github.com/user-attachments/assets/094f8d7f-0dc1-426e-bda5-68884a080e87
 
 ### Consultar Facturas
+https://github.com/user-attachments/assets/70a822df-82cb-44b8-91d7-4a03ebf07141
+
+### Consultar Facturas pendientes de proveedores
+https://github.com/user-attachments/assets/b02b39a1-eb38-4813-8d24-6c9afbd6148b
+
 
 
