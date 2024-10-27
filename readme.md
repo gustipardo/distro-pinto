@@ -4,17 +4,17 @@
 
 ### **Actores:**
 
-**1 (Hermana) Encargado de pagos a proveedores.**
+**1  Encargado de pagos a proveedores.**
 
-**2 (2 empleados) Repartidor de pedidos.**
+**2  Repartidor de pedidos.**
 
-**2 (Hermana y padre) Levanta pedido.**
+**2  Levanta pedido.**
 
-**1 (Gusti) El que hace el balance del negocio.**
+**1  El que hace el balance del negocio.**
 
-**1 (Gusti o hermana) Factura los pedidos**
+**1 Factura los pedidos**
 
-**1 (Todos) Prepara los pedidos de los clientes**
+**1 Prepara los pedidos de los clientes**
 
 ### **Descripción de la empresa:**
 
